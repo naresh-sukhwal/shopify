@@ -1,0 +1,132 @@
+import {
+  NavigatorScreenParams,
+  CompositeScreenProps,
+} from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { CMS_TYPE, ERoles, EStatusFeedbackType } from './general.type';
+
+/* -------------------------------------------------------------------------- */
+/*                                 Root Stack                                 */
+/* -------------------------------------------------------------------------- */
+
+export type TRootStack = {
+  SplashScreen: undefined;
+
+  // These must wrap child stacks in NavigatorScreenParams
+  MainStack: NavigatorScreenParams<TMainStack>;
+  AuthStack: NavigatorScreenParams<TAuthStack>;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                 Auth Stack                                 */
+/* -------------------------------------------------------------------------- */
+
+export type TAuthStack = {
+  LandingScreen: undefined;
+  Login: {
+    referralCode?: string;
+    role: ERoles;
+  };
+  Signup: {
+    role: ERoles;
+  };
+  OtpVerification: {
+    countryCode: string;
+    phoneNumber: string;
+  };
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                Drawer Stack                                */
+/* -------------------------------------------------------------------------- */
+
+export type TDrawerStack = {
+  TabStack: NavigatorScreenParams<TBottomTabStack>;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                 Main Stack                                 */
+/* -------------------------------------------------------------------------- */
+
+export type TAddressObj = {
+  place_id: string;
+  description: string;
+  title: string;
+  subtitle: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  photo_url?: string;
+};
+
+export type TMainStack = {
+  TabStack: NavigatorScreenParams<TBottomTabStack>;
+  DrawerStack: NavigatorScreenParams<TDrawerStack>;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                Bottom Tab Stack                            */
+/* -------------------------------------------------------------------------- */
+
+export type TBottomTabStack = {
+  HomeScreen: undefined;
+  SearchScreen: undefined;
+  StoreScreen: undefined;
+  LibraryScreen: undefined;
+  ProfileScreen: undefined;
+};
+
+export type THomeScreenProps = StackScreenProps<TBottomTabStack, 'HomeScreen'>;
+export type TSearchScreenProps = StackScreenProps<
+  TBottomTabStack,
+  'SearchScreen'
+>;
+export type TStoreScreenProps = StackScreenProps<
+  TBottomTabStack,
+  'StoreScreen'
+>;
+export type TLibraryScreenProps = StackScreenProps<
+  TBottomTabStack,
+  'LibraryScreen'
+>;
+export type TProfileScreenProps = StackScreenProps<
+  TBottomTabStack,
+  'ProfileScreen'
+>;
+
+/* -------------------------------------------------------------------------- */
+/*                                 Screen Props                               */
+/* -------------------------------------------------------------------------- */
+
+export type TRootStackProps = StackScreenProps<TRootStack, 'MainStack'>;
+
+export type TSplashStackProps = StackScreenProps<TRootStack, 'SplashScreen'>;
+
+/* ---------------------- Auth Stacks ------------------------------ */
+
+export type TLandingScreenStackProps = StackScreenProps<
+  TAuthStack,
+  'LandingScreen'
+>;
+
+export type TLoginStackProps = StackScreenProps<TAuthStack, 'Login'>;
+
+export type TSignupStackProps = StackScreenProps<TAuthStack, 'Signup'>;
+
+export type TOtpVerificationStackProps = StackScreenProps<
+  TAuthStack,
+  'OtpVerification'
+>;
+
+/* -------------------------------------------------------------------------- */
+/*                             Composite Props Example                         */
+/* -------------------------------------------------------------------------- */
+
+export type SigninProps = CompositeScreenProps<
+  StackScreenProps<TAuthStack, 'Login'>,
+  CompositeScreenProps<
+    StackScreenProps<TRootStack, 'MainStack'>,
+    StackScreenProps<TMainStack>
+  >
+>;

@@ -1,0 +1,34 @@
+{
+  "auth": {
+    "sign_in": "Sign In"
+  },
+   "tabs": {
+    "home": "Home",
+    "jobs": "Jobs",
+    "application": "Application",
+    "message": "Message",
+    "profile": "Profile",
+    "dashBoard":"Dashboard",
+    "applied":"Applied",
+    "saved":"Saved"
+  },
+  "home":{
+    "trending":"रुझान",
+    "news":"समाचार",
+    "propertyListing":"अपने घर का विवरण जोड़ें",
+    "bestInLocal":"सबसे अच्छा स्थान",
+    "basicHouseholdNeeds":"आधारभूत घरेलू आवश्यकताएं",
+    "administrationInformation":"प्रशासन और जानकारी",
+    "allTravelNeeds":"सभी यात्रा आवश्यकताएं",
+    "allTouristSpots":"सभी पर्यटक स्थल",
+    "foodDining":"भोजन और डिनिंग",
+    "hotelsStay":"होटल और रहने के लिए",
+    "ourTourPlans":"हमारे टूर प्लान",
+    "toDoListItinerary":"टू डॉ लिस्ट और इटरनरी",
+    "emergencyHelpline":"आपराधिक सहायता और हेलपाईलाइन",
+    "transportNavigation":"यातायात और नेविगेशन",
+    "search":"खोज",
+    "BestCafes":"सबसे अच्छा कैफे",
+    "BestTemple":"सबसे अच्छा मंदिर"
+  }
+}
