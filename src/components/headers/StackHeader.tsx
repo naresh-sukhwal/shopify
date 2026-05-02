@@ -1,23 +1,25 @@
 import {
+  StyleProp,
   StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
-  StyleProp,
-  ViewStyle,
   TextStyle,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { navigateBack } from '@/utils/navigation.utils';
-import { fontFamily, fontSize, MaterialIcons } from '@/utils/fontIcon.utils';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { Ionicons, fontFamily, fontSize } from '@/utils/fontIcon.utils';
 import { themeType } from '@/interface/theme.type';
+import { hp, wp } from '@/utils/responsive.utils';
+import LinearGradient from 'react-native-linear-gradient';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
 
 interface StackHeaderProps {
   title?: string;
+  subtitle?: string;
   onBackPress?: () => void;
-  titleColor?: string;
   style?: StyleProp<ViewStyle>;
   titleStyle?: TextStyle;
   showBackIcon?: boolean;
@@ -25,53 +27,96 @@ interface StackHeaderProps {
 
 export default function StackHeader({
   title = '',
+  subtitle = '',
   onBackPress,
-  titleColor = '#333',
   style,
   titleStyle,
   showBackIcon = true,
 }: StackHeaderProps) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
+
   return (
     <View style={[styles.headerContainer, style]}>
-      {showBackIcon && (
-        <MaterialIcons
-          name="arrow-back"
-          size={28}
-          color={themeColor.text}
-          onPress={onBackPress ? onBackPress : () => navigateBack()}
-        />
-      )}
-      <Text style={[styles.title, titleStyle]}>{title}</Text>
-      {showBackIcon && <View style={styles.rightSpace} />}
+      <View style={styles.contentRow}>
+        {showBackIcon && (
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={onBackPress ? onBackPress : () => navigateBack()}
+            activeOpacity={0.7}
+          >
+            <Ionicons
+              name="arrow-back"
+              size={fontSize.f20}
+              color={themeColor.secondary}
+            />
+          </TouchableOpacity>
+        )}
+        <View style={styles.titleContainer}>
+          <Text style={[styles.title, titleStyle]}>{title}</Text>
+          {subtitle !== '' && (
+            <Text style={[styles.subtitle, { color: themeColor.textS2 }]}>
+              {subtitle}
+            </Text>
+          )}
+        </View>
+      </View>
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        colors={[
+          'rgba(212, 175, 55, 0)',
+          'rgba(212, 175, 55, 0.4)',
+          'rgba(212, 175, 55, 0)',
+        ]}
+        style={styles.bottomLine}
+      />
     </View>
   );
 }
 
-const createStyle = (themeColor: themeType) =>
+const createStyle = (theme: themeType) =>
   StyleSheet.create({
     headerContainer: {
+      paddingHorizontal: wp('5%'),
+      paddingVertical: hp('2%'),
+    },
+    contentRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      height: 56,
-      paddingHorizontal: 16,
-      backgroundColor: themeColor.backgroundColor,
     },
     backButton: {
-      width: 40,
+      width: 48,
+      height: 48,
+      borderRadius: 15,
+      backgroundColor: theme.backgroundColorS1,
       justifyContent: 'center',
-      alignItems: 'flex-start',
-      backgroundColor: 'white',
+      alignItems: 'center',
+      elevation: 4,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 5,
+    },
+    titleContainer: {
+      marginLeft: 15,
+      justifyContent: 'center',
     },
     title: {
-      textAlign: 'center',
-      fontSize: fontSize.f16,
+      fontSize: fontSize.f22,
       fontFamily: fontFamily.bold,
-      color: themeColor.text,
-      marginLeft: 10,
+      color: theme.secondary,
     },
-    rightSpace: {
-      width: 40,
+    subtitle: {
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      marginTop: -2,
+    },
+    bottomLine: {
+      height: 1.5,
+      width: wp('100%'),
+      position: 'absolute',
+      bottom: 0,
+      alignSelf: 'center',
     },
   });

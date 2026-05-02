@@ -18,16 +18,16 @@ export default function App() {
 
     const syncTheme = () => {
       const scheme = Appearance.getColorScheme();
-      store.dispatch(setSystemTheme(scheme));
+      store.dispatch(setSystemTheme('light'));
     };
 
     syncTheme(); // Sync on launch
 
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      store.dispatch(setSystemTheme(colorScheme));
-    });
+    // const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+    //   store.dispatch(setSystemTheme(colorScheme));
+    // });
 
-    return () => subscription.remove();
+    // return () => subscription.remove();
   }, []);
   return (
     <SafeAreaProvider>

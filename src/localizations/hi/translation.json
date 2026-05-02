@@ -1,34 +1,36 @@
 {
   "auth": {
-    "sign_in": "Sign In"
+    "invest_title": "विश्वास के साथ\nसोने में निवेश करें",
+    "invest_subtitle": "बीमाकृत वॉल्ट्स द्वारा समर्थित डिजिटल सोना\nखरीदें, स्टोर करें और बेचें।",
+    "login_label": "लॉगिन",
+    "otp_label": "ओटीपी",
+    "trusted_vault": "विश्वसनीय वॉल्ट",
+    "continue_mobile": "मोबाइल के साथ जारी रखें",
+    "mobile_number": "मोबाइल नंबर",
+    "mobile_placeholder": "10 अंकों का नंबर दर्ज करें",
+    "otp_helper": "हम आपका नंबर सत्यापित करने के लिए 6 अंकों का ओटीपी भेजेंगे। मानक एसएमएस शुल्क लागू हो सकते हैं।",
+    "continue_btn": "जारी रखें",
+    "terms_privacy_start": "जारी रखकर, आप हमारे ",
+    "terms_privacy_link": "नियम और गोपनीयता से सहमत हैं",
+    "enter_otp_sent": "{{phone}} पर भेजा गया ओटीपी दर्ज करें",
+    "enter_otp_label": "ओटीपी दर्ज करें",
+    "change_number": "नंबर बदलें",
+    "resend_otp": "ओटीपी पुनः भेजें?"
   },
-   "tabs": {
+  "tabs": {
     "home": "Home",
     "jobs": "Jobs",
     "application": "Application",
     "message": "Message",
     "profile": "Profile",
-    "dashBoard":"Dashboard",
-    "applied":"Applied",
-    "saved":"Saved"
+    "dashBoard": "Dashboard",
+    "applied": "Applied",
+    "saved": "Saved"
   },
-  "home":{
-    "trending":"रुझान",
-    "news":"समाचार",
-    "propertyListing":"अपने घर का विवरण जोड़ें",
-    "bestInLocal":"सबसे अच्छा स्थान",
-    "basicHouseholdNeeds":"आधारभूत घरेलू आवश्यकताएं",
-    "administrationInformation":"प्रशासन और जानकारी",
-    "allTravelNeeds":"सभी यात्रा आवश्यकताएं",
-    "allTouristSpots":"सभी पर्यटक स्थल",
-    "foodDining":"भोजन और डिनिंग",
-    "hotelsStay":"होटल और रहने के लिए",
-    "ourTourPlans":"हमारे टूर प्लान",
-    "toDoListItinerary":"टू डॉ लिस्ट और इटरनरी",
-    "emergencyHelpline":"आपराधिक सहायता और हेलपाईलाइन",
-    "transportNavigation":"यातायात और नेविगेशन",
-    "search":"खोज",
-    "BestCafes":"सबसे अच्छा कैफे",
-    "BestTemple":"सबसे अच्छा मंदिर"
+  "errors": {
+    "phoneRequired": "मोबाइल नंबर आवश्यक है",
+    "invalidPhone": "कृपया 10 अंकों का मान्य नंबर दर्ज करें",
+    "otpRequired": "ओटीपी आवश्यक है",
+    "otpInvalid": "कृपया मान्य ओटीपी दर्ज करें"
   }
 }

@@ -60,6 +60,7 @@ export type TAddressObj = {
 export type TMainStack = {
   TabStack: NavigatorScreenParams<TBottomTabStack>;
   DrawerStack: NavigatorScreenParams<TDrawerStack>;
+  KycDetails: undefined;
 };
 
 /* -------------------------------------------------------------------------- */

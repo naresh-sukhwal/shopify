@@ -11,13 +11,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { themeType, TLanguageScreenProps } from '@/interface';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
-import GradiantBackground from '@/components/background/GradiantBackground';
 import { AppContext } from '@/context/ContextFile';
 import { ASYNC_KEYS, languageList } from '@/utils/contant.utils';
 import { useDebounce } from '@/hooks/useDebounce';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
-import { CustomButton } from '@/components';
+import { CustomButton, GradiantBackground } from '@/components';
 import { navigateAndSimpleReset } from '@/utils/navigation.utils';
 import { setAsyncStorage } from '@/utils/helper.utils';
 
@@ -138,8 +137,8 @@ export default function LanguageScreen({ navigation }: TLanguageScreenProps) {
             <CustomButton
               title="Continue"
               onPress={async () => {
-                await setAsyncStorage(ASYNC_KEYS.IS_LANGAUGE_SELECTED, "true")
-                navigateAndSimpleReset('AuthStack')
+                await setAsyncStorage(ASYNC_KEYS.IS_LANGAUGE_SELECTED, 'true');
+                navigateAndSimpleReset('AuthStack');
               }}
               style={[styles.button, { backgroundColor: themeColor.secondary }]}
               textStyle={styles.buttonText}
@@ -151,7 +150,6 @@ export default function LanguageScreen({ navigation }: TLanguageScreenProps) {
     </GradiantBackground>
   );
 }
-
 
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
@@ -187,7 +185,7 @@ const createStyle = (themeColor: themeType) =>
       paddingHorizontal: wp('4%'),
       height: 60,
       borderBottomWidth: 1,
-      backgroundColor: themeColor.backgroundColorS2
+      backgroundColor: themeColor.backgroundColorS2,
     },
     searchInput: {
       flex: 1,
@@ -207,7 +205,7 @@ const createStyle = (themeColor: themeType) =>
       height: 70,
       borderBottomWidth: 1,
       borderBottomColor: 'rgba(0,0,0,0.05)',
-      backgroundColor: themeColor.backgroundColorS2
+      backgroundColor: themeColor.backgroundColorS2,
     },
 
     itemLeft: {

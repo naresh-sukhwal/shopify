@@ -35,6 +35,7 @@ export { default as EmptyListComponent } from '@/components/layouts/emptyList/Em
 export { default as TabHeader } from '@/components/layouts/tabHeader/TabHeader';
 export { default as BottomTab } from '@/components/layouts/tabHeader/BottomTab';
 export { default as InfoComponent } from '@/components/layouts/common/InfoComponent';
+export { default as AuthComponent } from '@/components/layouts/auth/AuthComponent';
 
 // ==================== @/components/loaders ====================
 export { default as PageLoading } from '@/components/loaders/PageLoading';
@@ -47,3 +48,7 @@ export { default as UnAutheriseModal } from '@/components/modal/UnAutheriseModal
 export { default as InternetModal } from '@/components/modal/InternetModal';
 export { default as AppUpdateModal } from '@/components/modal/AppUpdateModal';
 export { default as OptionMenuComponent } from '@/components/modal/OptionMenuComponent';
+
+// ==================== @/components/background ====================
+export { default as AppBackground } from '@/components/background/AppBackground';
+export { default as GradiantBackground } from '@/components/background/GradiantBackground';

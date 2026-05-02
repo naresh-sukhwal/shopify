@@ -16,9 +16,7 @@ const SafeAreaWrapper = ({
   useSafeArea = true,
   style,
   statusBarColor = store.getState().ThemeManager.themeColor.backgroundColor,
-  StatusBarStyle = store.getState().ThemeManager.isDarkTheme
-    ? 'light-content'
-    : 'dark-content',
+  StatusBarStyle = 'light-content',
 }: SafeAreaWrapperProps) => {
   const Wrapper = useSafeArea ? SafeAreaView : View;
 
