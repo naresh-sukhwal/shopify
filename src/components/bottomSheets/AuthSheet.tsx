@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import BottomSheet from './BottomSheet';
 import { height } from '@/utils/responsive.utils';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
-import { useSelector } from 'react-redux';
 import { closeAuthSheet, globalRBSheetRef } from '@/utils/bottomSheetRef.utils';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import CustomButton from '../buttons/CustomButton';
 import { navigate } from '@/utils/navigation.utils';
 import { useTranslation } from 'react-i18next';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function AuthSheet() {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const { t } = useTranslation();
   const onPressButton = (screen: 'Login' | 'Signup') => {
     closeAuthSheet();

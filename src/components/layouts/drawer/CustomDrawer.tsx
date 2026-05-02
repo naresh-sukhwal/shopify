@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,8 @@ import { onLogout } from '@/utils/helper.utils';
 import { wp, hp } from '@/utils/responsive.utils';
 import { ERoles } from '@/interface';
 import { navigate } from '@/utils/navigation.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const userProfile = {
   name: 'Kat Deo',
@@ -24,9 +26,9 @@ const userProfile = {
 };
 
 const CustomDrawerContent = ({ navigation }: any) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const { role } = useSelector((state: RootState) => state.AuthManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
 
   const state = useNavigationState((state: any) => state);
   const currentRoute = state?.routes?.[state.index]?.name;
@@ -83,21 +85,21 @@ const CustomDrawerContent = ({ navigation }: any) => {
       label: 'Earn working as an EYE',
       iconName: 'file-tray-stacked-outline',
       screen: 'Earn',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.SEEKER],
     },
     {
       label: 'Refer a Friend',
       iconName: 'share-social-outline',
       screen: 'Refer',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {
       label: 'Legal',
       iconName: 'documents-outline',
       screen: 'Legal',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {

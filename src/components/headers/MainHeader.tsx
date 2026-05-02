@@ -14,6 +14,8 @@ import { OptionMenuComponent } from '@/components';
 import { MenuOptionItem } from '@/components/modal/OptionMenuComponent';
 import { useNavigation } from '@react-navigation/native';
 import { onLogout } from '@/utils/helper.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface HeaderProps {
   onProfilePress?: () => void;
@@ -21,15 +23,15 @@ interface HeaderProps {
 
 const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
   const navigation: any = useNavigation();
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const { walletData } = useSelector(
     (state: RootState) => state.GeneralManager,
   );
   const { user } = useSelector((state: RootState) => state.AuthManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
 
   const sidebarOptions: MenuOptionItem[] = [
-    { label: 'Profile', showDivider: true, action: () => { } },
+    { label: 'Profile', showDivider: true, action: () => {} },
     {
       label: 'Partners',
       renderRight: () => (
@@ -42,7 +44,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
     },
     { label: 'Social', action: () => navigation.navigate('SocialHome') },
     { label: 'My Bookings', action: () => navigation.navigate('MyBooking') },
-    { label: 'Legal', showDivider: true, action: () => { } },
+    { label: 'Legal', showDivider: true, action: () => {} },
     {
       label: 'Membership',
       renderRight: () => (
@@ -57,7 +59,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
       label: 'My Library',
       action: () => navigation.navigate('MyLibraryScreen'),
     },
-    { label: 'Ads Center', action: () => { } },
+    { label: 'Ads Center', action: () => {} },
     {
       label: 'Wallet',
       showDivider: true,
@@ -71,7 +73,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
         navigation.navigate('MyWallet');
       },
     },
-    { label: 'Settings', action: () => { } },
+    { label: 'Settings', action: () => {} },
     {
       label: 'Logout',
       action: () => {

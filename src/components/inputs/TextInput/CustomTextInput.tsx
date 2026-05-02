@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
   TextStyle,
   View,
   ViewStyle,
@@ -15,8 +16,10 @@ import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { themeType } from '@/interface/theme.type';
 import { isRTL } from '@/utils/helper.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
-type params = {
+type params = TextInputProps & {
   name?: string;
   placeholder: string;
   errorMsg?: string;
@@ -58,8 +61,8 @@ export default function CustomTextInput({
   leftIconStyle,
   ...props
 }: params) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const isSecure: boolean =
     (name?.includes('password') ||
       name?.includes('confirmPassword') ||

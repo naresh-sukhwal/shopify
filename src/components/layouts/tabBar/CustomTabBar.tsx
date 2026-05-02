@@ -1,18 +1,16 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import { Ionicons } from '@/utils/fontIcon.utils';
+import React, { useState } from 'react';
 import { width } from '@/utils/responsive.utils';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
-import { ERoles } from '@/interface/general.type';
 import { SeekerTabData } from '@/utils/contant.utils';
 import { SVG } from '@/assets';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function CustomTabBar({ state, descriptors, navigation }: any) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const [showCameraPopup, setShowCameraPopup] = useState(false);
 
   return (

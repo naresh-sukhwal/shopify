@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   tabData: Array<{ label: string; value: string }>;
@@ -16,8 +18,8 @@ export default function BottomTab({
   onTabChange,
   currentTab,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   return (
     <View style={styles.bottomTab}>

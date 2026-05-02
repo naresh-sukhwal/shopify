@@ -1,15 +1,16 @@
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   loading: boolean;
 };
 
 export default function FooterLoading({ loading }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   if (!loading) return null;
   return (
     <View

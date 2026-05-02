@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 interface DropdownProps {
   data: Array<string> | Array<{}>;
   placeHolder: string;
@@ -38,8 +38,8 @@ export default function DropDown({
   labelStyle,
   buttonStyle,
 }: DropdownProps) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const [text, setText] = useState();
   const selectDropdownRef = useRef(null);
   const FLAG_BASE_URL = 'https://flagcdn.com/w320/';

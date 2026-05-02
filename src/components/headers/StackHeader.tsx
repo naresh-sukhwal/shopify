@@ -103,12 +103,12 @@ const createStyle = (theme: themeType) =>
       justifyContent: 'center',
     },
     title: {
-      fontSize: fontSize.f22,
+      fontSize: fontSize.f18,
       fontFamily: fontFamily.bold,
       color: theme.secondary,
     },
     subtitle: {
-      fontSize: fontSize.f14,
+      fontSize: fontSize.f12,
       fontFamily: fontFamily.medium,
       marginTop: -2,
     },

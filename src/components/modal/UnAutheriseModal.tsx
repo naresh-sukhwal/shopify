@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { CustomButton, CustomModal } from '..';
-import { AntDesign, fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
+import { useDispatch } from 'react-redux';
 import { themeType } from '@/interface/theme.type';
 import { navigateAndSimpleReset } from '@/utils/navigation.utils';
 import { onLogout } from '@/utils/helper.utils';
 import { setIsUnAutharized } from '@/store/GeneralSlice';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   visible: boolean;
@@ -15,8 +16,8 @@ type props = {
 };
 
 export default function UnAutheriseModal({ visible, onClose }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const dispatch = useDispatch();
   return (
     <CustomModal visibleModel={visible} closeModal={onClose}>

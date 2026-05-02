@@ -1,18 +1,18 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { MaterialIcons, fontSize } from '@/utils/fontIcon.utils';
 import { wp } from '@/utils/responsive.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type FabIconProps = {
   onPress: () => void;
 };
 
 export default function FabIcon({ onPress }: FabIconProps) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   return (
     <TouchableOpacity

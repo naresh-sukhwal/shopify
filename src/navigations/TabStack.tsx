@@ -2,8 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TBottomTabStack } from '@/interface/navigation.type';
 import { CustomTabBar, SafeAreaWrapper } from '@/components';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import HomeScreen from '@/screens/main/tab/HomeScreen';
 import ProfileScreen from '@/screens/main/tab/ProfileScreen';
 import SearchScreen from '@/screens/main/tab/SearchScreen';
@@ -12,7 +10,6 @@ import LibraryScreen from '@/screens/main/tab/LibraryScreen';
 const Tab = createBottomTabNavigator<TBottomTabStack>();
 
 export default function TabStack() {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
   return (
     <SafeAreaWrapper useSafeArea={false}>
       <Tab.Navigator
