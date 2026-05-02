@@ -83,21 +83,21 @@ const CustomDrawerContent = ({ navigation }: any) => {
       label: 'Earn working as an EYE',
       iconName: 'file-tray-stacked-outline',
       screen: 'Earn',
-      onPress: () => {},
+      onPress: () => { },
       roles: [ERoles.SEEKER],
     },
     {
       label: 'Refer a Friend',
       iconName: 'share-social-outline',
       screen: 'Refer',
-      onPress: () => {},
+      onPress: () => { },
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {
       label: 'Legal',
       iconName: 'documents-outline',
       screen: 'Legal',
-      onPress: () => {},
+      onPress: () => { },
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {
@@ -166,7 +166,7 @@ const createStyle = (themeColor: themeType) =>
     },
     userName: {
       fontSize: fontSize.f20,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       color: themeColor.text,
     },
     menuList: {
@@ -191,7 +191,7 @@ const createStyle = (themeColor: themeType) =>
     },
     menuLabel: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: themeColor.text,
     },
   });

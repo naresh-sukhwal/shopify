@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: fontSize.f14,
-    fontFamily: fontFamily.montserratMedium,
+    fontFamily: fontFamily.medium,
     width: '90%',
   },
 });

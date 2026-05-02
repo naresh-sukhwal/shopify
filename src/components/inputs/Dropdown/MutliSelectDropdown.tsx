@@ -125,7 +125,7 @@ const createStyle = (theme: themeType) =>
     },
     labelStyle: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       color: theme.black,
     },
     requiredStyle: {

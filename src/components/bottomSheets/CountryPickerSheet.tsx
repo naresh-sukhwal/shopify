@@ -102,7 +102,7 @@ const createStyle = (theme: themeType) =>
     },
     title: {
       fontSize: fontSize.f18,
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: theme.text,
       marginBottom: 15,
       textAlign: 'center',
@@ -119,7 +119,7 @@ const createStyle = (theme: themeType) =>
     searchInput: {
       flex: 1,
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: theme.text,
       marginLeft: 10,
       padding: 0,
@@ -147,12 +147,12 @@ const createStyle = (theme: themeType) =>
     },
     countryName: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: theme.text,
     },
     dialCode: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       color: theme.textS2,
     },
   });

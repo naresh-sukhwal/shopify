@@ -91,7 +91,7 @@ const createStyle = (Colors: themeType) =>
       padding: 10,
       borderRadius: 7,
       textAlignVertical: 'top',
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       fontSize: fontSize.f14,
       color: Colors.text,
       height: 130,
@@ -99,7 +99,7 @@ const createStyle = (Colors: themeType) =>
     },
     label: {
       color: Colors.primaryS1,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f12,
       alignSelf: 'flex-start',
       marginLeft: 4,

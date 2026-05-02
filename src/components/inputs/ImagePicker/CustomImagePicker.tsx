@@ -284,12 +284,12 @@ const createStyle = (themeColor: themeType) =>
       justifyContent: 'center',
     },
     sheetTitle: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.text,
       fontSize: fontSize.f18,
     },
     sheetOptions: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.text,
       fontSize: fontSize.f16,
       marginTop: 10,
@@ -307,7 +307,7 @@ const createStyle = (themeColor: themeType) =>
     },
     contactSubContainer: { paddingVertical: 20, alignItems: 'center' },
     text: {
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       color: themeColor.gray,
       fontSize: fontSize.f16,
       marginTop: 10,
@@ -332,12 +332,12 @@ const createStyle = (themeColor: themeType) =>
     btnText: {
       fontSize: fontSize.f18,
       color: themeColor.primary,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
     },
     title: {
       fontSize: fontSize.f16,
       color: themeColor.gray,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       textAlign: 'center',
     },
     image: {
@@ -365,7 +365,7 @@ const createStyle = (themeColor: themeType) =>
       padding: 20,
     },
     documentText: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
       color: themeColor.text,
       textAlign: 'center',
@@ -385,14 +385,14 @@ const createStyle = (themeColor: themeType) =>
     },
     selectFileBtnText: {
       color: themeColor.secondary,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
     },
     maxSizeText: {
       marginTop: 15,
       color: '#8A94A6',
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       textAlign: 'center',
     },
     documentImage: {

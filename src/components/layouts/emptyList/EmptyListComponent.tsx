@@ -135,13 +135,13 @@ const createStyle = (themeColor: themeType) =>
     },
     title: {
       marginTop: 20,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f18,
       color: themeColor.text,
     },
     subtitle: {
       marginTop: 8,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       fontSize: fontSize.f14,
       color: themeColor.gray,
       textAlign: 'center',
@@ -156,7 +156,7 @@ const createStyle = (themeColor: themeType) =>
     },
     buttonText: {
       color: '#fff',
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f14,
     },
   });

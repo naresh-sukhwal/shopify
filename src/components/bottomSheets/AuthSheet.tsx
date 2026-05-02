@@ -62,7 +62,7 @@ const createStyle = (themeColor: themeType) =>
     },
     title: {
       fontSize: fontSize.f18,
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.text,
       borderBottomWidth: 0.5,
       padding: 10,

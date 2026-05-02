@@ -30,12 +30,12 @@ export default function InternetModal({ visible, onClose }: props) {
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     title: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.gray,
       fontSize: fontSize.f28,
     },
     subtitle: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: themeColor.lightTextBlack,
       fontSize: fontSize.f16,
       textAlign: 'center',

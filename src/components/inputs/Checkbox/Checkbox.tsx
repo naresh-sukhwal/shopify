@@ -63,7 +63,7 @@ const createStyle = (theme: themeType) =>
       gap: 10,
     },
     label: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
       color: theme.text,
     },

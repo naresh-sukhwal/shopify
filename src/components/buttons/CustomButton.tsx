@@ -56,7 +56,7 @@ export default function CustomButton({
     >
       <LinearGradient
         style={[styles.container, style]}
-        colors={[themeColor.primary, themeColor.secondary]}
+        colors={[themeColor.secondary, themeColor.secondaryS1, themeColor.secondaryS2]}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
       >
@@ -101,7 +101,7 @@ const createStyle = (theme: themeType) =>
     },
     text: {
       color: theme.white,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f16,
       textTransform: 'uppercase',
       letterSpacing: 1,

@@ -182,7 +182,7 @@ const createStyle = (theme: themeType) =>
     },
     labelStyle: {
       color: theme.gray,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f12,
       alignSelf: 'flex-start',
       marginLeft: 4,

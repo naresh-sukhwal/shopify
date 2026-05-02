@@ -93,12 +93,12 @@ const createStyle = (theme: themeType) =>
       borderColor: theme.borderColor,
     },
     text: {
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       fontSize: fontSize.f14,
     },
     label: {
       color: theme.text,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f16,
       alignSelf: 'flex-start',
       marginTop: 15,

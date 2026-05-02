@@ -72,6 +72,6 @@ const createStyle = (themeColor: themeType) =>
     },
     tabLabel: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
     },
   });

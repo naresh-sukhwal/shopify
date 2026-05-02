@@ -12,6 +12,7 @@ import MicIcon from './svg/MicIcon';
 export const IMAGES = {
   logoWithoutName: require('@/assets/images/logo.png'),
   logoWithName: require('@/assets/images/logoWithName.png'),
+  landImg1: require('@/assets/images/landImg1.png'),
   blankProfile: require('@/assets/images/blankProfile.png'),
   noData: require('@/assets/images/noDataFound.png'),
   rocket: require('@/assets/images/rocket.png'),

@@ -376,7 +376,7 @@ const createStyle = (themeColor: themeType) =>
     input: {
       flex: 1,
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       color: themeColor.text,
       height: 50,
       paddingHorizontal: 8,
@@ -450,13 +450,13 @@ const createStyle = (themeColor: themeType) =>
     },
     mainText: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: themeColor.text,
       marginBottom: 2,
     },
     secondaryText: {
       fontSize: fontSize.f12,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       color: themeColor.gray,
     },
   });

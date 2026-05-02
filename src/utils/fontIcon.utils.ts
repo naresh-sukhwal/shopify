@@ -30,12 +30,12 @@ const fontSize = {
 };
 
 const fontFamily = {
-  montserratRegular: 'Montserrat-Regular',
-  montserratBold: 'Montserrat-Bold',
-  montserratLight: 'Montserrat-Light',
-  montserratMedium: 'Montserrat-Medium',
-  montserratSemiBold: 'Montserrat-SemiBold',
-  montserratExtraBold: 'Montserrat-ExtraBold',
+  regular: 'Inter-Regular',
+  bold: 'Inter-Bold',
+  light: 'Inter-Light',
+  medium: 'Inter-Medium',
+  semiBold: 'Inter-SemiBold',
+  extraBold: 'Inter-ExtraBold',
 };
 
 export {

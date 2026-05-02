@@ -149,7 +149,7 @@ const createStyle = (theme: themeType) =>
     },
     popupText: {
       color: '#2D0C33', // Darker purple from image
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f12,
     },
     triangle: {

@@ -79,8 +79,8 @@ export default function OptionMenuComponent({
                           color: option.disabled
                             ? themeColor.grayS1
                             : option.isDelete
-                            ? themeColor.red
-                            : themeColor.text,
+                              ? themeColor.red
+                              : themeColor.text,
                         },
                       ]}
                     >
@@ -142,7 +142,7 @@ const createStyle = (themeColor: themeType) =>
     },
     optionText: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: '#000000',
     },
     divider: {

@@ -132,7 +132,7 @@ const createStyle = (theme: themeType) =>
     },
     dialCodeText: {
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: theme.text,
       marginRight: 4,
     },
@@ -160,20 +160,20 @@ const createStyle = (theme: themeType) =>
     textInput: {
       flex: 1,
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: theme.text,
       height: '100%',
     },
     errorText: {
       color: theme.red,
       fontSize: fontSize.f12,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       marginTop: 4,
       marginLeft: 4,
     },
     label: {
       color: theme.text,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f16,
       alignSelf: 'flex-start',
       marginLeft: 4,

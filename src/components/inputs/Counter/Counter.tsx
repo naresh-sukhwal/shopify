@@ -61,6 +61,6 @@ const createStyle = (theme: themeType) =>
     count: {
       fontSize: fontSize.f20,
       color: theme.black,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
     },
   });

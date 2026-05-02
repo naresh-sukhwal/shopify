@@ -67,7 +67,7 @@ const createStyle = (themeColor: themeType) =>
     title: {
       textAlign: 'center',
       fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.text,
       marginLeft: 10,
     },
