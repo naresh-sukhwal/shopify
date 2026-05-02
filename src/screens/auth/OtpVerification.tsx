@@ -7,8 +7,11 @@ import { wp } from '@/utils/responsive.utils';
 import { useTranslation } from 'react-i18next';
 import { CustomButton, AuthComponent } from '@/components';
 import { OtpInput } from 'react-native-otp-entry';
-import { navigateAndSimpleReset } from '@/utils/navigation.utils';
-import { setAsyncStorage } from '@/utils/helper.utils';
+import {
+  navigateAndSimpleReset,
+  resetToNestedScreen,
+} from '@/utils/navigation.utils';
+import { getAsyncStorage, setAsyncStorage } from '@/utils/helper.utils';
 import { ASYNC_KEYS } from '@/utils/contant.utils';
 
 export default function OtpVerification({ navigation, route }: any) {
@@ -20,8 +23,13 @@ export default function OtpVerification({ navigation, route }: any) {
 
   const handleVerify = async () => {
     if (otp.length === 6) {
+      const isKycCompleted = await getAsyncStorage(ASYNC_KEYS.IS_KYC_COMPLETED);
       await setAsyncStorage(ASYNC_KEYS.ACCESS_TOKEN, 'dummy_token');
-      navigateAndSimpleReset('MainStack');
+      if (isKycCompleted) {
+        navigateAndSimpleReset('MainStack');
+      } else {
+        resetToNestedScreen('MainStack', 'KycDetails');
+      }
     }
   };
 

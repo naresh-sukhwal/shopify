@@ -84,8 +84,8 @@ export default function MainStack() {
 
   return (
     <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
-      <MainNavigator.Screen name="KycDetails" component={KycDetails} />
       <MainNavigator.Screen name="TabStack" component={TabStack} />
+      <MainNavigator.Screen name="KycDetails" component={KycDetails} />
     </MainNavigator.Navigator>
   );
 }

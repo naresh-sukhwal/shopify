@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { TRootStack } from '@/interface/navigation.type';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { navigate, navigationRef } from '@/utils/navigation.utils';
+import {
+  navigate,
+  navigateAndSimpleReset,
+  navigationRef,
+  resetToNestedScreen,
+} from '@/utils/navigation.utils';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import {
@@ -52,40 +57,61 @@ export default function Application() {
 
   const onNavigationReady = async () => {
     try {
-      const isLandingCompleted = await getAsyncStorage(ASYNC_KEYS.IS_LANDING_COMPLETED);
-      const isLanguageSelected = await getAsyncStorage(ASYNC_KEYS.IS_LANGAUGE_SELECTED);
+      const isLandingCompleted = await getAsyncStorage(
+        ASYNC_KEYS.IS_LANDING_COMPLETED,
+      );
+      const isLanguageSelected = await getAsyncStorage(
+        ASYNC_KEYS.IS_LANGAUGE_SELECTED,
+      );
       const token = await getAsyncStorage(ASYNC_KEYS.ACCESS_TOKEN);
-      console.log({ 'onNavigationReady': { isLandingCompleted, isLanguageSelected, token } })
+      const isKycCompleted = await getAsyncStorage(ASYNC_KEYS.IS_KYC_COMPLETED);
+      console.log({
+        onNavigationReady: {
+          isLandingCompleted,
+          isLanguageSelected,
+          token,
+          isKycCompleted,
+        },
+      });
       if (!isLandingCompleted) {
-        navigate('LandingScreen')
+        navigate('LandingScreen');
       } else if (!isLanguageSelected) {
-        navigate('LanguageScreen')
+        navigate('LanguageScreen');
       } else if (!token) {
-        navigate('AuthStack')
+        navigateAndSimpleReset('AuthStack');
       } else {
-        navigate('MainStack')
+        if (isKycCompleted) {
+          navigateAndSimpleReset('MainStack');
+        } else {
+          resetToNestedScreen('MainStack', 'KycDetails');
+        }
       }
     } catch (error) {
-      console.log('error')
+      console.log('error');
     }
   };
-
 
   return (
     <>
       <NavigationContainer ref={navigationRef} onReady={onNavigationReady}>
         <RootNavigator.Navigator screenOptions={{ headerShown: false }}>
-          <RootNavigator.Screen component={LandingScreen} name="LandingScreen" />
-          <RootNavigator.Screen component={LanguageScreen} name="LanguageScreen" />
+          <RootNavigator.Screen
+            component={LandingScreen}
+            name="LandingScreen"
+          />
+          <RootNavigator.Screen
+            component={LanguageScreen}
+            name="LanguageScreen"
+          />
           <RootNavigator.Screen component={AuthStack} name="AuthStack" />
           <RootNavigator.Screen component={MainStack} name="MainStack" />
         </RootNavigator.Navigator>
       </NavigationContainer>
 
       <AuthSheet />
-      <InternetModal visible={!isConnected} onClose={() => { }} />
-      <AppUpdateModal visible={showUpdateModal} onClose={() => { }} />
-      <UnAutheriseModal visible={isUnAutharized} onClose={() => { }} />
+      <InternetModal visible={!isConnected} onClose={() => {}} />
+      <AppUpdateModal visible={showUpdateModal} onClose={() => {}} />
+      <UnAutheriseModal visible={isUnAutharized} onClose={() => {}} />
     </>
   );
 }

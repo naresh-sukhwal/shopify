@@ -22,6 +22,8 @@ import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import PersonalDetails from './components/PersonalDetails';
 import DocumentVerification from './components/DocumentVerification';
+import { ASYNC_KEYS } from '@/utils/contant.utils';
+import { setAsyncStorage } from '@/utils/helper.utils';
 
 export default function KycDetails({ navigation }: any) {
   const styles = useThemedStyles(createStyle);
@@ -63,9 +65,10 @@ export default function KycDetails({ navigation }: any) {
     setTouched({});
   };
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     console.log('Final Submit:', values);
-    // navigation.navigate('SuccessScreen');
+    await setAsyncStorage(ASYNC_KEYS.IS_KYC_COMPLETED, 'true');
+    navigation.replace('MainStack');
   };
 
   return (

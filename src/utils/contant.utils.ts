@@ -8,6 +8,7 @@ export const ASYNC_KEYS = Object.freeze({
   FCM_TOKEN: 'FCM_TOKEN',
   IS_LANDING_COMPLETED: 'IS_LANDING_COMPLETED',
   IS_LANGAUGE_SELECTED: 'IS_LANGAUGE_SELECTED',
+  IS_KYC_COMPLETED: 'IS_KYC_COMPLETED',
 });
 
 export const COMMON_KEYS = Object.freeze({
@@ -108,5 +109,3 @@ export const languageList = [
   { name: 'Chinese', code: 'zh', flag: IMAGES.logoWithoutName },
   { name: 'Russian', code: 'ru', flag: IMAGES.logoWithoutName },
 ];
-
-

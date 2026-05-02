@@ -24,6 +24,7 @@ export const ContextProvider = ({ children }: { children: ReactNode }) => {
 
   async function prepareLanguage() {
     const selectedLanguage = await getAsyncStorage(ASYNC_KEYS.LANGUAGE);
+    console.log('currentLanguage---->', currentLanguage);
     if (selectedLanguage && selectedLanguage != currentLanguage) {
       i18next.changeLanguage(selectedLanguage);
       setCurrentLanguage(selectedLanguage);

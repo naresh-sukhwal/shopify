@@ -19,8 +19,9 @@ import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { setAsyncStorage } from '@/utils/helper.utils';
 
-
-export default function LandingScreen({ navigation }: TLandingScreenStackProps) {
+export default function LandingScreen({
+  navigation,
+}: TLandingScreenStackProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const styles = useThemedStyles(createStyle);
@@ -33,8 +34,8 @@ export default function LandingScreen({ navigation }: TLandingScreenStackProps) 
         animated: true,
       });
     } else {
-      await setAsyncStorage(ASYNC_KEYS.IS_LANDING_COMPLETED, "true")
-      navigation.navigate('LanguageScreen');
+      await setAsyncStorage(ASYNC_KEYS.IS_LANDING_COMPLETED, 'true');
+      navigation.replace('LanguageScreen');
     }
   };
 
@@ -68,7 +69,9 @@ export default function LandingScreen({ navigation }: TLandingScreenStackProps) 
                 </Text>
               ) : null}
               {item.description ? (
-                <Text style={[styles.description, { color: themeColor.textS2 }]}>
+                <Text
+                  style={[styles.description, { color: themeColor.textS2 }]}
+                >
                   {item.description}
                 </Text>
               ) : null}
@@ -117,77 +120,77 @@ export default function LandingScreen({ navigation }: TLandingScreenStackProps) 
   );
 }
 
-const createStyle = (themeColor: themeType) => StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  slide: {
-    width: width,
-    paddingHorizontal: wp('8%'),
-    justifyContent: 'space-between',
-    paddingVertical: hp('5%'),
-  },
-  imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: hp('10%')
-  },
-  logoCircle: {
-    width: wp('40%'),
-    height: wp('40%'),
-    borderRadius: wp('20%'),
-    backgroundColor: themeColor.secondary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: hp('20%')
-  },
-  logo: {
-    width: '50%',
-    height: '50%',
-  },
-  logoText: {
-    color: 'white',
-    fontFamily: fontFamily.medium,
-    fontSize: fontSize.f16,
-    marginTop: 5,
-  },
-  illustration: {
-    width: wp('80%'),
-    height: wp('80%'),
-  },
-  contentContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: hp('5%'),
-  },
-  title: {
-    fontFamily: fontFamily.extraBold,
-    fontSize: fontSize.f32,
-    textAlign: 'center',
-    marginBottom: hp('2%'),
-    lineHeight: fontSize.f34,
-  },
-  description: {
-    fontFamily: fontFamily.medium,
-    fontSize: fontSize.f16,
-    textAlign: 'center',
-    paddingHorizontal: wp('2%'),
-    lineHeight: fontSize.f24,
-  },
-  buttonContainer: {
-    width: '100%',
-    paddingBottom: hp('2%'),
-  },
-  button: {
-    width: '100%',
-    height: 60,
-    borderRadius: 20,
-    marginTop: 0,
-  },
-  buttonText: {
-    fontFamily: fontFamily.semiBold,
-    fontSize: fontSize.f18,
-    textTransform: 'none',
-  },
-});
-
+const createStyle = (themeColor: themeType) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    slide: {
+      width: width,
+      paddingHorizontal: wp('8%'),
+      justifyContent: 'space-between',
+      paddingVertical: hp('5%'),
+    },
+    imageContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: hp('10%'),
+    },
+    logoCircle: {
+      width: wp('40%'),
+      height: wp('40%'),
+      borderRadius: wp('20%'),
+      backgroundColor: themeColor.secondary,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: hp('20%'),
+    },
+    logo: {
+      width: '50%',
+      height: '50%',
+    },
+    logoText: {
+      color: 'white',
+      fontFamily: fontFamily.medium,
+      fontSize: fontSize.f16,
+      marginTop: 5,
+    },
+    illustration: {
+      width: wp('80%'),
+      height: wp('80%'),
+    },
+    contentContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: hp('5%'),
+    },
+    title: {
+      fontFamily: fontFamily.extraBold,
+      fontSize: fontSize.f32,
+      textAlign: 'center',
+      marginBottom: hp('2%'),
+      lineHeight: fontSize.f34,
+    },
+    description: {
+      fontFamily: fontFamily.medium,
+      fontSize: fontSize.f16,
+      textAlign: 'center',
+      paddingHorizontal: wp('2%'),
+      lineHeight: fontSize.f24,
+    },
+    buttonContainer: {
+      width: '100%',
+      paddingBottom: hp('2%'),
+    },
+    button: {
+      width: '100%',
+      height: 60,
+      borderRadius: 20,
+      marginTop: 0,
+    },
+    buttonText: {
+      fontFamily: fontFamily.semiBold,
+      fontSize: fontSize.f18,
+      textTransform: 'none',
+    },
+  });
