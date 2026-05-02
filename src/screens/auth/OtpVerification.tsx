@@ -103,8 +103,8 @@ const createStyle = () =>
       borderColor: 'rgba(0,0,0,0.1)',
     },
     otpText: {
-      fontFamily: fontFamily.bold,
-      fontSize: fontSize.f24,
+      fontFamily: fontFamily.medium,
+      fontSize: fontSize.f18,
     },
     linksRow: {
       flexDirection: 'row',

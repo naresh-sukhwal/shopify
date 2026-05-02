@@ -12,9 +12,15 @@ import GradiantBackground from '@/components/background/GradiantBackground';
 import { themeType } from '@/interface';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
-import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
+import {
+  fontFamily,
+  fontSize,
+  Ionicons,
+  MaterialDesignIcons,
+} from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
 import { useTranslation } from 'react-i18next';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface AuthComponentProps {
   children: React.ReactNode;
@@ -66,14 +72,14 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
                   {cardLabel}
                 </Text>
                 {badgeVisible && (
-                  <View
-                    style={[
-                      styles.badge,
-                      { backgroundColor: themeColor.yellowS1 },
-                    ]}
+                  <LinearGradient
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    colors={['#FFE49A', '#FFF9E9']}
+                    style={[styles.badge]}
                   >
-                    <Ionicons
-                      name="checkmark-circle-outline"
+                    <MaterialDesignIcons
+                      name="check-decagram-outline"
                       size={fontSize.f16}
                       color={themeColor.secondary}
                     />
@@ -85,7 +91,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
                     >
                       {t('auth.trusted_vault')}
                     </Text>
-                  </View>
+                  </LinearGradient>
                 )}
               </View>
               <Text style={[styles.cardTitle, { color: themeColor.secondary }]}>
@@ -169,6 +175,7 @@ const createStyle = (themeColor: themeType) =>
     cardTitle: {
       fontFamily: fontFamily.bold,
       fontSize: fontSize.f16,
+      marginTop: 4,
     },
     badge: {
       flexDirection: 'row',
