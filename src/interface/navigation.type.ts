@@ -23,10 +23,7 @@ export type TRootStack = {
 
 export type TAuthStack = {
   LandingScreen: undefined;
-  Login: {
-    referralCode?: string;
-    role: ERoles;
-  };
+  Login: undefined;
   Signup: {
     role: ERoles;
   };

@@ -66,13 +66,13 @@ export default function AppUpdateModal({ visible, onClose }: props) {
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     title: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.descriptionText,
       fontSize: fontSize.f24,
       marginTop: 20,
     },
     subtitle: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: themeColor.lightTextBlack,
       fontSize: fontSize.f16,
       textAlign: 'center',

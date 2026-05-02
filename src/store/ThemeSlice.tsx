@@ -1,4 +1,4 @@
-import { themeType } from '@/interface/theme.type';
+import { themeType } from '@/interface';
 import { DarkThemeColors, LightThemeColors } from '@/utils/theme.utils';
 import { createSlice } from '@reduxjs/toolkit';
 import { Appearance } from 'react-native';

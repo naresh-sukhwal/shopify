@@ -42,7 +42,7 @@ export default function UnAutheriseModal({ visible, onClose }: props) {
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     title: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.red,
       fontSize: fontSize.f24,
     },

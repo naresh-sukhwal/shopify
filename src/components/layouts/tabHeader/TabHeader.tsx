@@ -95,7 +95,7 @@ const createStyle = (themeColor: themeType) =>
     },
     tabText: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
     },
     // Pill Styles
     pillContainer: {
@@ -115,6 +115,6 @@ const createStyle = (themeColor: themeType) =>
     },
     pillText: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
     },
   });

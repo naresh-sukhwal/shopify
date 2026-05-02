@@ -95,7 +95,7 @@ const createStyle = (themeColor: themeType) =>
       borderRadius: 8,
       padding: 10,
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       color: themeColor.text,
       width: '90%',
       height: 50,

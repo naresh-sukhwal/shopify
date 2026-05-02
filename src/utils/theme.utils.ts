@@ -1,21 +1,22 @@
 // src/utils/theme.utils.ts
-import { themeType } from '@/interface/theme.type';
 
 // === LIGHT THEME ===
-export const LightThemeColors: themeType = {
+export const LightThemeColors = {
   // Base
-  backgroundColor: '#FFFFFF',
+  backgroundColor: '#F9F7F4',
   backgroundColorS1: '#FFFFFF',
   backgroundColorS2: '#F8F9FF',
 
   // Primary Family
-  primary: '#B02E82',
-  primaryS1: '#E6E9FF',
+  primary: '#E1BD3A',
+  primaryS1: '#FFEFAC75',
   primaryS2: '#F2F1FD',
   primaryS3: '#F9F8FF',
 
   // Secondary / Tertiary
-  secondary: '#A162F6',
+  secondary: '#0F172A',
+  secondaryS1: '#121F3A',
+  secondaryS2: '#0F172A',
   tertiary: '#9DB2CE',
 
   // Texts
@@ -95,7 +96,7 @@ export const LightThemeColors: themeType = {
 //   lightOrange: '#FFA432',
 // };
 
-export const DarkThemeColors: themeType = {
+export const DarkThemeColors = {
   // === Base ===
   backgroundColor: '#0D0D0D', // Main app background
   backgroundColorS1: '#161616', // Secondary surface
@@ -109,6 +110,8 @@ export const DarkThemeColors: themeType = {
 
   // === Secondary / Tertiary ===
   secondary: '#1E1E1E', // Component secondary surfaces
+  secondaryS1: '#121F3A',
+  secondaryS2: '#0F172A',
   tertiary: '#7C8CA5', // Softer version of your light theme tertiary
 
   // === Texts ===

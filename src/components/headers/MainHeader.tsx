@@ -29,7 +29,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
   const styles = useMemo(() => createStyle(themeColor), [themeColor]);
 
   const sidebarOptions: MenuOptionItem[] = [
-    { label: 'Profile', showDivider: true, action: () => {} },
+    { label: 'Profile', showDivider: true, action: () => { } },
     {
       label: 'Partners',
       renderRight: () => (
@@ -42,7 +42,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
     },
     { label: 'Social', action: () => navigation.navigate('SocialHome') },
     { label: 'My Bookings', action: () => navigation.navigate('MyBooking') },
-    { label: 'Legal', showDivider: true, action: () => {} },
+    { label: 'Legal', showDivider: true, action: () => { } },
     {
       label: 'Membership',
       renderRight: () => (
@@ -57,7 +57,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
       label: 'My Library',
       action: () => navigation.navigate('MyLibraryScreen'),
     },
-    { label: 'Ads Center', action: () => {} },
+    { label: 'Ads Center', action: () => { } },
     {
       label: 'Wallet',
       showDivider: true,
@@ -71,7 +71,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
         navigation.navigate('MyWallet');
       },
     },
-    { label: 'Settings', action: () => {} },
+    { label: 'Settings', action: () => { } },
     {
       label: 'Logout',
       action: () => {
@@ -134,7 +134,7 @@ const createStyle = (themeColor: themeType) =>
     logoText: {
       color: '#FFFFFF',
       fontSize: fs.f24,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       marginLeft: 15,
     },
     profileContainer: {
@@ -160,7 +160,7 @@ const createStyle = (themeColor: themeType) =>
     membershipCode: {
       fontSize: 8,
       color: '#B8860B',
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
     },
     walletDisplay: {
       flexDirection: 'row',
@@ -170,7 +170,7 @@ const createStyle = (themeColor: themeType) =>
       fontSize: fs.f16,
       color: '#4169E1',
       marginLeft: 5,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
     },
   });
 
