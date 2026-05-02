@@ -1,77 +1,53 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { width } from '@/utils/responsive.utils';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
-import { SeekerTabData } from '@/utils/contant.utils';
-import { SVG } from '@/assets';
+import { TabData } from '@/utils/contant.utils';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function CustomTabBar({ state, descriptors, navigation }: any) {
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const [showCameraPopup, setShowCameraPopup] = useState(false);
 
   return (
     <View style={styles.container}>
-      {showCameraPopup && (
-        <View style={styles.popupContainer}>
-          <View style={styles.popupContent}>
-            <Pressable
-              style={styles.popupItem}
-              onPress={() => {
-                setShowCameraPopup(false);
-              }}
-            >
-              <SVG.VideoIcon width={26} height={26} fill="#2D0C33" />
-              <Text style={styles.popupText}>Livestream</Text>
-            </Pressable>
-            <Pressable
-              style={styles.popupItem}
-              onPress={() => {
-                setShowCameraPopup(false);
-              }}
-            >
-              <SVG.MicIcon width={26} height={26} fill="#2D0C33" />
-              <Text style={styles.popupText}>Podcast</Text>
-            </Pressable>
-          </View>
-          <View style={styles.triangle} />
-        </View>
-      )}
       <View style={styles.tabWrapper}>
         {state?.routes?.map((route: any, index: number) => {
           const { options } = descriptors[route.key];
           const isFocused = state?.index == index;
           const onPress = () => {
-            if (index === 2) {
-              setShowCameraPopup(!showCameraPopup);
-              return;
-            }
-            setShowCameraPopup(false);
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-            });
-            if (!isFocused && !event.defaultPrevented) {
+            if (!isFocused) {
               navigation.navigate(route.name);
             }
           };
 
-          const Icon = SeekerTabData[index].Icon[0];
+          const Icon = TabData[index].Icon[0];
+          const Label = TabData[index].name;
 
           return (
-            <Pressable
-              key={index}
-              onPress={onPress}
-              style={[styles.tabItem, isFocused && styles.activeTabItem]}
-            >
-              <Icon
-                width={24}
-                height={24}
-                fill={isFocused ? themeColor.white : 'rgba(255,255,255,0.6)'}
-              />
+            <Pressable key={index} style={styles.tabColumn} onPress={onPress}>
+              <View style={[styles.tabItem, isFocused && styles.activeTabItem]}>
+                <Icon
+                  width={24}
+                  height={24}
+                  stroke={isFocused ? themeColor.white : themeColor.secondaryS2}
+                />
+              </View>
+              <Text
+                style={[
+                  styles.label,
+                  {
+                    color: isFocused
+                      ? themeColor.secondary
+                      : themeColor.secondaryS2,
+                    fontFamily: isFocused ? fontFamily.bold : fontFamily.medium,
+                  },
+                ]}
+              >
+                {Label}
+              </Text>
             </Pressable>
           );
         })}
@@ -92,10 +68,10 @@ const createStyle = (theme: themeType) =>
     },
     tabWrapper: {
       flexDirection: 'row',
-      backgroundColor: 'rgba(13, 13, 13, 0.6)', // Dark semi-transparent
+      backgroundColor: 'white', // Dark semi-transparent
       width: width * 0.9,
-      height: 61,
-      borderRadius: 40,
+      height: 84,
+      borderRadius: 25,
       alignItems: 'center',
       justifyContent: 'space-around',
       paddingHorizontal: 10,
@@ -111,7 +87,7 @@ const createStyle = (theme: themeType) =>
     tabItem: {
       width: 45,
       height: 45,
-      borderRadius: 27.5,
+      borderRadius: 15,
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: 'transparent',
@@ -119,48 +95,14 @@ const createStyle = (theme: themeType) =>
       borderColor: theme.white,
     },
     activeTabItem: {
-      backgroundColor: 'rgba(255, 255, 255, 0.2)', // Light circular background
+      backgroundColor: theme.secondary, // Light circular background
     },
-    popupContainer: {
-      position: 'absolute',
-      bottom: 65, // Moved closer to tab bar
-      alignItems: 'center',
-      zIndex: 100,
-    },
-    popupContent: {
-      backgroundColor: theme.white,
-      flexDirection: 'row',
-      borderRadius: 50, // More pill-shaped
-      paddingVertical: 10,
-      paddingHorizontal: 30,
-      gap: 20,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.15,
-      shadowRadius: 10,
-      elevation: 5,
-    },
-    popupItem: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 3,
-    },
-    popupText: {
+    label: {
       color: '#2D0C33', // Darker purple from image
       fontFamily: fontFamily.medium,
       fontSize: fontSize.f12,
     },
-    triangle: {
-      width: 0,
-      height: 0,
-      backgroundColor: 'transparent',
-      borderStyle: 'solid',
-      borderLeftWidth: 12,
-      borderRightWidth: 12,
-      borderTopWidth: 12,
-      borderLeftColor: 'transparent',
-      borderRightColor: 'transparent',
-      borderTopColor: theme.white,
-      marginTop: -1,
+    tabColumn: {
+      alignItems: 'center',
     },
   });

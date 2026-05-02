@@ -19,32 +19,32 @@ export const COMMON_KEYS = Object.freeze({
   CURRENCY: '$',
 });
 
-export const SeekerTabData = [
+export const TabData = [
   {
     id: 1,
     name: 'Home',
-    Icon: [SVG.PlayIcon, SVG.PlayIcon],
+    Icon: [SVG.HomeIcon, SVG.HomeIcon],
     width: 25,
     height: 25,
   },
   {
     id: 2,
-    name: 'Search',
-    Icon: [SVG.SearchIcon, SVG.SearchIcon],
+    name: 'Invest',
+    Icon: [SVG.InvestIcon, SVG.InvestIcon],
     width: 25,
     height: 25,
   },
   {
     id: 3,
-    name: 'Library',
-    Icon: [SVG.VideoIcon, SVG.VideoIcon],
+    name: 'Wallet',
+    Icon: [SVG.WalletIcon, SVG.WalletIcon],
     width: 25,
     height: 25,
   },
   {
     id: 4,
-    name: 'Store',
-    Icon: [SVG.HomeIcon, SVG.HomeIcon],
+    name: 'Reward',
+    Icon: [SVG.RewardIcon, SVG.RewardIcon],
     width: 25,
     height: 25,
   },

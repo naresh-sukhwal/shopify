@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { useThemedStyles } from '@/hooks/useThemedStyles';
 import * as types from '@/interface';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
 
-export default function HomeScreen() {
+export default function RewardScreen() {
   const styles = useThemedStyles(createStyles);
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>Reward Screen</Text>
     </View>
   );
 }

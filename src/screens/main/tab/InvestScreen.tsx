@@ -3,11 +3,11 @@ import React from 'react';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import * as types from '@/interface';
 
-export default function HomeScreen() {
+export default function InvestScreen() {
   const styles = useThemedStyles(createStyles);
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <Text>Invest Screen</Text>
     </View>
   );
 }

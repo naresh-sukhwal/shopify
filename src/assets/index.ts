@@ -1,9 +1,9 @@
 import {
   HomeIcon,
+  InvestIcon,
+  RewardIcon,
+  WalletIcon,
   ProfileIcon,
-  PlayIcon,
-  VideoIcon,
-  SearchIcon,
 } from './svg/TabBar';
 import AddIcon from './svg/AddIcon';
 import HelpButton from './svg/HelpButton';
@@ -23,10 +23,10 @@ export const IMAGES = {
 
 export const SVG = {
   HomeIcon,
+  WalletIcon,
+  InvestIcon,
+  RewardIcon,
   ProfileIcon,
-  PlayIcon,
-  VideoIcon,
-  SearchIcon,
   AddIcon,
   HelpButton,
   MicIcon,

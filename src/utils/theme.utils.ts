@@ -17,7 +17,7 @@ export const LightThemeColors = {
   // Secondary / Tertiary
   secondary: '#0F172A',
   secondaryS1: '#121F3A',
-  secondaryS2: '#0F172A',
+  secondaryS2: '#64748B',
   tertiary: '#9DB2CE',
 
   // Texts
@@ -97,7 +97,7 @@ export const LightThemeColors = {
 //   lightOrange: '#FFA432',
 // };
 
-export const DarkThemeColors = LightThemeColors
+export const DarkThemeColors = LightThemeColors;
 // {
 //   // === Base ===
 //   backgroundColor: '#0D0D0D', // Main app background

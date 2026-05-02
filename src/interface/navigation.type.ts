@@ -69,24 +69,24 @@ export type TMainStack = {
 
 export type TBottomTabStack = {
   HomeScreen: undefined;
-  SearchScreen: undefined;
-  StoreScreen: undefined;
-  LibraryScreen: undefined;
+  InvestScreen: undefined;
+  WalletScreen: undefined;
+  RewardScreen: undefined;
   ProfileScreen: undefined;
 };
 
 export type THomeScreenProps = StackScreenProps<TBottomTabStack, 'HomeScreen'>;
-export type TSearchScreenProps = StackScreenProps<
+export type TInvestScreenProps = StackScreenProps<
   TBottomTabStack,
-  'SearchScreen'
+  'InvestScreen'
 >;
-export type TStoreScreenProps = StackScreenProps<
+export type TWalletScreenProps = StackScreenProps<
   TBottomTabStack,
-  'StoreScreen'
+  'WalletScreen'
 >;
-export type TLibraryScreenProps = StackScreenProps<
+export type TRewardScreenProps = StackScreenProps<
   TBottomTabStack,
-  'LibraryScreen'
+  'RewardScreen'
 >;
 export type TProfileScreenProps = StackScreenProps<
   TBottomTabStack,
@@ -100,7 +100,10 @@ export type TProfileScreenProps = StackScreenProps<
 export type TRootStackProps = StackScreenProps<TRootStack, 'MainStack'>;
 
 export type TSplashStackProps = StackScreenProps<TRootStack, 'SplashScreen'>;
-export type TLanguageScreenProps = StackScreenProps<TRootStack, 'LanguageScreen'>;
+export type TLanguageScreenProps = StackScreenProps<
+  TRootStack,
+  'LanguageScreen'
+>;
 
 /* ---------------------- Auth Stacks ------------------------------ */
 
