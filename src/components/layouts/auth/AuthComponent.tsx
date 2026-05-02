@@ -8,7 +8,6 @@ import {
   ScrollView,
   ViewStyle,
 } from 'react-native';
-import GradiantBackground from '@/components/background/GradiantBackground';
 import { themeType } from '@/interface';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
@@ -21,6 +20,7 @@ import {
 import { hp, wp } from '@/utils/responsive.utils';
 import { useTranslation } from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
+import GradiantBackground from '@/components/background/GradiantBackground';
 
 interface AuthComponentProps {
   children: React.ReactNode;

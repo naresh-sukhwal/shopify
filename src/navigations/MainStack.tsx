@@ -8,6 +8,8 @@ import { handleNavigation } from '@/utils/helper.utils';
 import DrawerStack from './DrawerStack';
 import { useState } from 'react';
 import { COMMON_KEYS } from '@/utils/contant.utils';
+import TabStack from './TabStack';
+import KycDetails from '@/screens/main/kyc/KycDetails';
 
 const MainNavigator = createNativeStackNavigator<TMainStack>();
 
@@ -81,23 +83,9 @@ export default function MainStack() {
   // }, []);
 
   return (
-    <>
-      <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
-        <MainNavigator.Screen name="DrawerStack" component={DrawerStack} />
-      </MainNavigator.Navigator>
-
-      {/* Test Modals */}
-      <RequestModal
-        visible={requestModalVisible}
-        onClose={() => setRequestModalVisible(false)}
-        onAccept={() => setRequestModalVisible(false)}
-        onDecline={() => setRequestModalVisible(false)}
-      />
-      <EndSessionModal
-        visible={endSessionModalVisible}
-        onClose={() => setEndSessionModalVisible(false)}
-        onEnd={() => setEndSessionModalVisible(false)}
-      />
-    </>
+    <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
+      <MainNavigator.Screen name="KycDetails" component={KycDetails} />
+      <MainNavigator.Screen name="TabStack" component={TabStack} />
+    </MainNavigator.Navigator>
   );
 }

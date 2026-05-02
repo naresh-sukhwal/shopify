@@ -48,3 +48,7 @@ export { default as UnAutheriseModal } from '@/components/modal/UnAutheriseModal
 export { default as InternetModal } from '@/components/modal/InternetModal';
 export { default as AppUpdateModal } from '@/components/modal/AppUpdateModal';
 export { default as OptionMenuComponent } from '@/components/modal/OptionMenuComponent';
+
+// ==================== @/components/background ====================
+export { default as AppBackground } from '@/components/background/AppBackground';
+export { default as GradiantBackground } from '@/components/background/GradiantBackground';
