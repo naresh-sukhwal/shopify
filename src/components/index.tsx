@@ -35,6 +35,7 @@ export { default as EmptyListComponent } from '@/components/layouts/emptyList/Em
 export { default as TabHeader } from '@/components/layouts/tabHeader/TabHeader';
 export { default as BottomTab } from '@/components/layouts/tabHeader/BottomTab';
 export { default as InfoComponent } from '@/components/layouts/common/InfoComponent';
+export { default as AuthComponent } from '@/components/layouts/auth/AuthComponent';
 
 // ==================== @/components/loaders ====================
 export { default as PageLoading } from '@/components/loaders/PageLoading';
