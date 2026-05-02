@@ -11,10 +11,11 @@ import { CMS_TYPE, ERoles, EStatusFeedbackType } from './general.type';
 
 export type TRootStack = {
   SplashScreen: undefined;
-
+  LandingScreen: undefined;
   // These must wrap child stacks in NavigatorScreenParams
   MainStack: NavigatorScreenParams<TMainStack>;
   AuthStack: NavigatorScreenParams<TAuthStack>;
+  LanguageScreen: undefined;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -22,7 +23,6 @@ export type TRootStack = {
 /* -------------------------------------------------------------------------- */
 
 export type TAuthStack = {
-  LandingScreen: undefined;
   Login: undefined;
   Signup: {
     role: ERoles;
@@ -99,11 +99,12 @@ export type TProfileScreenProps = StackScreenProps<
 export type TRootStackProps = StackScreenProps<TRootStack, 'MainStack'>;
 
 export type TSplashStackProps = StackScreenProps<TRootStack, 'SplashScreen'>;
+export type TLanguageScreenProps = StackScreenProps<TRootStack, 'LanguageScreen'>;
 
 /* ---------------------- Auth Stacks ------------------------------ */
 
 export type TLandingScreenStackProps = StackScreenProps<
-  TAuthStack,
+  TRootStack,
   'LandingScreen'
 >;
 

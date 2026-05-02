@@ -148,7 +148,7 @@ const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: themeColor.backgroundColorS2,
+      backgroundColor: themeColor.backgroundColor,
       paddingTop: hp('6%'),
       paddingHorizontal: wp('5%'),
     },

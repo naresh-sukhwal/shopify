@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TRootStack } from '@/interface/navigation.type';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { navigationRef } from '@/utils/navigation.utils';
+import { navigate, navigationRef } from '@/utils/navigation.utils';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 import {
@@ -15,6 +15,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import VersionCheck from 'react-native-version-check';
+import LanguageScreen from '@/screens/language/LanguageScreen';
+import LandingScreen from '@/screens/landing/LandingScreen';
+import { getAsyncStorage } from '@/utils/helper.utils';
+import { ASYNC_KEYS } from '@/utils/contant.utils';
 
 const RootNavigator = createNativeStackNavigator<TRootStack>();
 
@@ -46,19 +50,42 @@ export default function Application() {
     });
   };
 
+  const onNavigationReady = async () => {
+    try {
+      const isLandingCompleted = await getAsyncStorage(ASYNC_KEYS.IS_LANDING_COMPLETED);
+      const isLanguageSelected = await getAsyncStorage(ASYNC_KEYS.IS_LANGAUGE_SELECTED);
+      const token = await getAsyncStorage(ASYNC_KEYS.ACCESS_TOKEN);
+      console.log({ 'onNavigationReady': { isLandingCompleted, isLanguageSelected, token } })
+      if (!isLandingCompleted) {
+        navigate('LandingScreen')
+      } else if (!isLanguageSelected) {
+        navigate('LanguageScreen')
+      } else if (!token) {
+        navigate('AuthStack')
+      } else {
+        navigate('MainStack')
+      }
+    } catch (error) {
+      console.log('error')
+    }
+  };
+
+
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer ref={navigationRef} onReady={onNavigationReady}>
         <RootNavigator.Navigator screenOptions={{ headerShown: false }}>
+          <RootNavigator.Screen component={LandingScreen} name="LandingScreen" />
+          <RootNavigator.Screen component={LanguageScreen} name="LanguageScreen" />
           <RootNavigator.Screen component={AuthStack} name="AuthStack" />
           <RootNavigator.Screen component={MainStack} name="MainStack" />
         </RootNavigator.Navigator>
       </NavigationContainer>
 
       <AuthSheet />
-      <InternetModal visible={!isConnected} onClose={() => {}} />
-      <AppUpdateModal visible={showUpdateModal} onClose={() => {}} />
-      <UnAutheriseModal visible={isUnAutharized} onClose={() => {}} />
+      <InternetModal visible={!isConnected} onClose={() => { }} />
+      <AppUpdateModal visible={showUpdateModal} onClose={() => { }} />
+      <UnAutheriseModal visible={isUnAutharized} onClose={() => { }} />
     </>
   );
 }

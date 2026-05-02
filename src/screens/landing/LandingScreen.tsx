@@ -12,31 +12,29 @@ import { IMAGES } from '@/assets';
 import CustomButton from '@/components/buttons/CustomButton';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
 import { hp, width, wp } from '@/utils/responsive.utils';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { TAuthStack } from '@/interface/navigation.type';
-import { onboardingData } from '@/utils/contant.utils';
+import { TLandingScreenStackProps } from '@/interface/navigation.type';
+import { ASYNC_KEYS, onboardingData } from '@/utils/contant.utils';
 import { themeType } from '@/interface';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { setAsyncStorage } from '@/utils/helper.utils';
 
 
-export default function LandingScreen() {
-  const navigation = useNavigation<NativeStackNavigationProp<TAuthStack>>();
+export default function LandingScreen({ navigation }: TLandingScreenStackProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentIndex < onboardingData.length - 1) {
       flatListRef.current?.scrollToIndex({
         index: currentIndex + 1,
         animated: true,
       });
-      setCurrentIndex(currentIndex + 1);
     } else {
-      navigation.navigate('Login');
+      await setAsyncStorage(ASYNC_KEYS.IS_LANDING_COMPLETED, "true")
+      navigation.navigate('LanguageScreen');
     }
   };
 

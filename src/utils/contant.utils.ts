@@ -4,9 +4,10 @@ export const ASYNC_KEYS = Object.freeze({
   ACCESS_TOKEN: 'ACCESS_TOKEN',
   REFRESH_TOKEN: 'REFRESH_TOKEN',
   IS_LOGGEDIN: 'IS_LOGGEDIN',
-  FIRST_ON_APP: 'FRIST_ON_APP',
   LANGUAGE: 'LANGUAGE',
   FCM_TOKEN: 'FCM_TOKEN',
+  IS_LANDING_COMPLETED: 'IS_LANDING_COMPLETED',
+  IS_LANGAUGE_SELECTED: 'IS_LANGAUGE_SELECTED',
 });
 
 export const COMMON_KEYS = Object.freeze({
@@ -92,3 +93,20 @@ export const onboardingData = [
     image: IMAGES.landImg1,
   },
 ];
+
+export const languageList = [
+  { name: 'Arabic', code: 'ar', flag: IMAGES.logoWithoutName },
+  { name: 'Spanish', code: 'es', flag: IMAGES.logoWithoutName },
+  { name: 'French', code: 'fr', flag: IMAGES.logoWithoutName },
+  { name: 'Hindi', code: 'hi', flag: IMAGES.logoWithoutName },
+  { name: 'Korean', code: 'ko', flag: IMAGES.logoWithoutName },
+  { name: 'Vietnamese', code: 'vi', flag: IMAGES.logoWithoutName },
+  { name: 'English', code: 'en', flag: IMAGES.logoWithoutName },
+  { name: 'German', code: 'de', flag: IMAGES.logoWithoutName },
+  { name: 'Italian', code: 'it', flag: IMAGES.logoWithoutName },
+  { name: 'Japanese', code: 'ja', flag: IMAGES.logoWithoutName },
+  { name: 'Chinese', code: 'zh', flag: IMAGES.logoWithoutName },
+  { name: 'Russian', code: 'ru', flag: IMAGES.logoWithoutName },
+];
+
+
