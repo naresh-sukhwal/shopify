@@ -38,6 +38,8 @@ export { default as InfoComponent } from '@/components/layouts/common/InfoCompon
 export { default as AuthComponent } from '@/components/layouts/auth/AuthComponent';
 export { default as IconBackground } from '@/components/layouts/common/IconBackground';
 export { default as IconGradientBorder } from '@/components/layouts/common/IconGradientBorder';
+export { default as AutoMandateSettings } from '@/components/layouts/wallet/AutoMandateSettings';
+
 
 // ==================== @/components/loaders ====================
 export { default as PageLoading } from '@/components/loaders/PageLoading';

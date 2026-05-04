@@ -213,10 +213,12 @@
     "per_day": "/ day",
     "next_today_at": "Next: Today at {{val}}",
     "setup_auto_invest": "Set up automatic daily investments. Amount deducted each day at your chosen time from your linked bank account.",
-    "daily_amount": "DAILY AMOUNT",
+    "amount": "AMOUNT",
     "deduction_duration": "Deduction duration",
+    "deduction_day": "Deduction day",
     "deduction_time": "Deduction Time",
     "deduction_date": "Deduction Date",
+
     "update_mandate_settings": "Update Mandate Settings",
     "recent_transactions": "Recent transactions",
     "view_all": "View all",

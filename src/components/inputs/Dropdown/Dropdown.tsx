@@ -60,7 +60,7 @@ export default function DropDown({
 
   return (
     <View style={[containerStyle]}>
-      {label !== '' && (
+      {label && (
         <View style={styles.labelContainer}>
           <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
           {isRequired && <Text style={styles.requiredStyle}>*</Text>}

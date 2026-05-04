@@ -110,6 +110,38 @@ export const languageList = [
   { name: 'Russian', code: 'ru', flag: IMAGES.logoWithoutName },
 ];
 
+export const DURATION_OPTIONS = ['Daily', 'Weekly', 'Monthly'];
+
+export const DAY_OPTIONS = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];
+
+// Pre-calculated time in 30 minutes interval
+export const TIME_OPTIONS = (() => {
+  const options = [];
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 30) {
+      const h = hour === 0 || hour === 12 ? 12 : hour % 12;
+      const ampm = hour < 12 ? 'AM' : 'PM';
+      const m = minute === 0 ? '00' : '30';
+      options.push(`${h}:${m} ${ampm}`);
+    }
+  }
+  return options;
+})();
+
+// Pre-calculated date from 1 to 30
+export const DATE_OPTIONS = Array.from({ length: 30 }, (_, i) =>
+  (i + 1).toString(),
+);
+
+
 export const quickActionsData = [
   {
     id: 1,

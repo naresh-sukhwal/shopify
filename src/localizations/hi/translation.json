@@ -175,10 +175,12 @@
     "per_day": "/ दिन",
     "next_today_at": "अगला: आज {{val}} बजे",
     "setup_auto_invest": "स्वचालित दैनिक निवेश सेट करें। आपके लिंक किए गए बैंक खाते से हर दिन आपके चुने हुए समय पर राशि काटी जाएगी।",
-    "daily_amount": "दैनिक राशि",
+    "amount": "राशि",
     "deduction_duration": "कटौती की अवधि",
+    "deduction_day": "कटौती का दिन",
     "deduction_time": "कटौती का समय",
     "deduction_date": "कटौती की तारीख",
+
     "update_mandate_settings": "मैंडेट सेटिंग्स अपडेट करें",
     "recent_transactions": "हालिया लेनदेन",
     "view_all": "सभी देखें",

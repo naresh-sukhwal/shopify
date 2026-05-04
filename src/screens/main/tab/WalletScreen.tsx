@@ -11,7 +11,13 @@ import { useTranslation } from 'react-i18next';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import * as types from '@/interface';
-import { IconGradientBorder, InfoComponent, CustomToogle } from '@/components';
+import {
+  IconGradientBorder,
+  InfoComponent,
+  CustomToogle,
+  AutoMandateSettings,
+} from '@/components';
+
 
 import StackHeader from '@/components/headers/StackHeader';
 import {
@@ -30,7 +36,7 @@ const WalletScreen: React.FC<types.TWalletScreenProps> = ({ navigation }) => {
   const themeColor = useThemeColor();
 
   const [isMandateActive, setIsMandateActive] = useState(true);
-  const [mandateAmount, setMandateAmount] = useState('500');
+
 
   const transactions = [
     {
@@ -191,96 +197,13 @@ const WalletScreen: React.FC<types.TWalletScreenProps> = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Settings Section */}
-        <View style={styles.settingsCard}>
-          <Text style={styles.settingsDesc}>
-            {t('wallet.setup_auto_invest')}
-          </Text>
+        <AutoMandateSettings
+          isVisible={isMandateActive}
+          onUpdate={data => {
+            console.log('Update Mandate:', data);
+          }}
+        />
 
-          <Text style={styles.inputLabel}>{t('wallet.daily_amount')}</Text>
-          <View style={styles.amountInputBox}>
-            <Text style={styles.amountInputSymbol}>₹</Text>
-            <TextInput
-              style={styles.amountInput}
-              value={mandateAmount}
-              onChangeText={setMandateAmount}
-              keyboardType="numeric"
-            />
-          </View>
-          <View style={styles.limitsRow}>
-            <Text style={styles.limitText}>MIN ₹100</Text>
-            <Text style={styles.limitText}>MAX ₹50,000</Text>
-          </View>
-
-          <TouchableOpacity style={styles.dropdownItem}>
-            <View style={styles.dropdownLabelRow}>
-              <Ionicons
-                name="time-outline"
-                size={20}
-                color={themeColor.secondaryS2}
-              />
-              <Text style={styles.dropdownLabel}>
-                {t('wallet.deduction_duration')}
-              </Text>
-            </View>
-            <View style={styles.dropdownValueRow}>
-              <Text style={styles.dropdownValue}>Monthly</Text>
-              <Ionicons
-                name="chevron-down"
-                size={18}
-                color={themeColor.secondaryS2}
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.dropdownItem}>
-            <View style={styles.dropdownLabelRow}>
-              <Ionicons
-                name="time-outline"
-                size={20}
-                color={themeColor.secondaryS2}
-              />
-              <Text style={styles.dropdownLabel}>
-                {t('wallet.deduction_time')}
-              </Text>
-            </View>
-            <View style={styles.dropdownValueRow}>
-              <Text style={styles.dropdownValue}>9:00 AM</Text>
-              <Ionicons
-                name="chevron-down"
-                size={18}
-                color={themeColor.secondaryS2}
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.dropdownItem}>
-            <View style={styles.dropdownLabelRow}>
-              <Ionicons
-                name="time-outline"
-                size={20}
-                color={themeColor.secondaryS2}
-              />
-              <Text style={styles.dropdownLabel}>
-                {t('wallet.deduction_date')}
-              </Text>
-            </View>
-            <View style={styles.dropdownValueRow}>
-              <Text style={styles.dropdownValue}>9|6|24</Text>
-              <Ionicons
-                name="chevron-down"
-                size={18}
-                color={themeColor.secondaryS2}
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.updateBtn}>
-            <Text style={styles.updateBtnText}>
-              {t('wallet.update_mandate_settings')}
-            </Text>
-          </TouchableOpacity>
-        </View>
 
         {/* Transactions Section */}
         <View style={styles.transactionsHeaderRow}>
