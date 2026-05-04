@@ -1,4 +1,34 @@
 {
+  "home": {
+    "total_gold_value": "कुल स्वर्ण मूल्य",
+    "market_open": "बाजार खुला है",
+    "live_gold_price": "लाइव सोने की कीमत",
+    "updated": "अपडेट किया गया",
+    "just_now": "अभी",
+    "wallet_balance": "वॉलेट बैलेंस",
+
+    "locked": "लॉक किया गया",
+    "available": "उपलब्ध",
+    "weekly_interest": "साप्ताहिक ब्याज",
+    "auto_credited_monday": "हर सोमवार को ऑटो-क्रेडिट",
+    "next_credit_in": "{{days}} दिनों में अगला क्रेडिट",
+    "quick_actions": "त्वरित कार्रवाई",
+    "view_all": "सभी देखें",
+    "add_money_subtitle": "यूपीआई / बैंक",
+    "withdraw_subtitle": "₹1000 न्यूनतम",
+    "invest_subtitle": "सोना खरीदें",
+    "gold_value_trend": "स्वर्ण मूल्य रुझान",
+    "last_7_days": "पिछले 7 दिन (₹)",
+    "gold_held": "सोना रखा हुआ",
+    "avg_buy_price": "औसत खरीद मूल्य",
+    "recent_activity": "हालिया गतिविधि",
+    "bought_gold": "सोना खरीदा",
+    "interest_credited": "ब्याज जमा किया गया",
+    "weekly_earnings": "साप्ताहिक कमाई",
+    "added_money": "पैसे जोड़े",
+    "secure_withdrawals": "सुरक्षित निकासी",
+    "secure_withdrawals_desc": "न्यूनतम निकासी ₹ 1,000 • प्रतिदिन एक निकासी • ₹ 100 वॉलेट में लॉक रहता है"
+  },
   "auth": {
     "invest_title": "विश्वास के साथ\nसोने में निवेश करें",
     "invest_subtitle": "बीमाकृत वॉल्ट्स द्वारा समर्थित डिजिटल सोना\nखरीदें, स्टोर करें और बेचें।",
@@ -19,13 +49,10 @@
   },
   "tabs": {
     "home": "Home",
-    "jobs": "Jobs",
-    "application": "Application",
-    "message": "Message",
-    "profile": "Profile",
-    "dashBoard": "Dashboard",
-    "applied": "Applied",
-    "saved": "Saved"
+    "invest": "Invest",
+    "wallet": "Wallet",
+    "reward": "Reward",
+    "profile": "Profile"
   },
   "kyc": {
     "verification_title": "केवाईसी सत्यापन",
@@ -99,6 +126,7 @@
     "processing_time": "प्रसंस्करण समय: 1-2 कार्य दिवस",
     "locked_wallet": "₹ 100 वॉलेट में लॉक रहता है",
     "kyc_verified": "केवाईसी सत्यापित",
-    "bank_linked": "बैंक लिंक है"
+    "bank_linked": "बैंक लिंक है",
+    "withdraw": "निकालें"
   }
 }

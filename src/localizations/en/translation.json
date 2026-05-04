@@ -19,13 +19,10 @@
   },
   "tabs": {
     "home": "Home",
-    "jobs": "Jobs",
-    "application": "Application",
-    "message": "Message",
-    "profile": "Profile",
-    "dashBoard": "Dashboard",
-    "applied": "Applied",
-    "saved": "Saved"
+    "invest": "Invest",
+    "wallet": "Wallet",
+    "reward": "Reward",
+    "profile": "Profile"
   },
   "buttons": {
     "createAccount": "Create Account",
@@ -105,7 +102,37 @@
     "passwordResetSuccess": "Password reset successfully",
     "otpSent": "OTP sent to {{key}} successfully"
   },
-  "home": {},
+  "home": {
+    "total_gold_value": "Total gold value",
+    "market_open": "Market open",
+    "live_gold_price": "Live gold price",
+    "updated": "Updated",
+    "just_now": "just now",
+    "wallet_balance": "Wallet balance",
+
+    "locked": "Locked",
+    "available": "Available",
+    "weekly_interest": "Weekly interest",
+    "auto_credited_monday": "Auto-credited every Monday",
+    "next_credit_in": "Next credit in {{days}} days",
+    "quick_actions": "Quick actions",
+    "view_all": "View all",
+    "add_money_subtitle": "UPI / Bank",
+    "withdraw_subtitle": "₹1000 min",
+    "invest_subtitle": "Buy gold",
+    "gold_value_trend": "Gold value trend",
+    "last_7_days": "Last 7 days (₹)",
+    "gold_held": "Gold held",
+    "avg_buy_price": "Avg buy price",
+    "recent_activity": "Recent activity",
+    "bought_gold": "Bought gold",
+    "interest_credited": "Interest credited",
+    "weekly_earnings": "Weekly earnings",
+    "added_money": "Added money",
+    "secure_withdrawals": "Secure withdrawals",
+    "secure_withdrawals_desc": "Minimum withdrawal ₹ 1,000 • One withdrawal per day • ₹ 100 stays locked in wallet"
+  },
+
   "common": {
     "ourPlans": "Our plans",
     "chooseOption": "Choose Option",
@@ -137,6 +164,7 @@
     "processing_time": "Processing time: 1–2 business days",
     "locked_wallet": "₹ 100 stays locked in wallet",
     "kyc_verified": "KYC verified",
-    "bank_linked": "Bank linked"
+    "bank_linked": "Bank linked",
+    "withdraw": "Withdraw"
   }
 }

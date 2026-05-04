@@ -5,6 +5,7 @@ import {
   WalletIcon,
   ProfileIcon,
 } from './svg/TabBar';
+import MagicIcon from './svg/Magic.svg';
 
 export const IMAGES = {
   logoWithoutName: require('@/assets/images/logo.png'),
@@ -27,4 +28,5 @@ export const SVG = {
   InvestIcon,
   RewardIcon,
   ProfileIcon,
+  MagicIcon,
 };

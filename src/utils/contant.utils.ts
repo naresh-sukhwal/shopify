@@ -109,3 +109,67 @@ export const languageList = [
   { name: 'Chinese', code: 'zh', flag: IMAGES.logoWithoutName },
   { name: 'Russian', code: 'ru', flag: IMAGES.logoWithoutName },
 ];
+
+export const quickActionsData = [
+  {
+    id: 1,
+    title: 'wallet.add_money',
+    subtitle: 'home.add_money_subtitle',
+    icon: 'add',
+    iconType: 'Ionicons',
+    route: 'AddMoneyInitial',
+  },
+  {
+    id: 2,
+    title: 'wallet.withdraw',
+    subtitle: 'home.withdraw_subtitle',
+    icon: 'arrow-up-right',
+    iconType: 'Feather',
+    route: 'Withdraw',
+  },
+  {
+    id: 3,
+    title: 'tabs.invest',
+    subtitle: 'home.invest_subtitle',
+    icon: 'shopping-bag',
+    iconType: 'Feather',
+    route: 'Invest',
+    isSpecial: true,
+  },
+];
+
+export const recentActivityData = [
+  {
+    id: 1,
+    type: 'BOUGHT',
+    title: 'home.bought_gold',
+    subtitle: '0.320 g • Live price',
+    amount: '₹ 1,984',
+    time: 'Today • 10:42 AM',
+    icon: 'cart-outline',
+    iconBg: '#FEF3C7',
+    iconColor: '#D97706',
+  },
+  {
+    id: 2,
+    type: 'INTEREST',
+    title: 'home.interest_credited',
+    subtitle: 'home.weekly_earnings',
+    amount: '+ ₹ 46.60',
+    time: 'Mon • 9:00 AM',
+    icon: 'cash-outline',
+    iconBg: '#D1FAE5',
+    iconColor: '#059669',
+  },
+  {
+    id: 3,
+    type: 'ADDED',
+    title: 'home.added_money',
+    subtitle: 'UPI • HDFC Bank',
+    amount: '₹ 5,000',
+    time: 'Sat • 6:18 PM',
+    icon: 'arrow-down-outline',
+    iconBg: '#F1F5F9',
+    iconColor: '#475569',
+  },
+];
