@@ -18,6 +18,7 @@ import { themeType } from '@/interface';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { setAsyncStorage } from '@/utils/helper.utils';
+import FastImage from 'react-native-fast-image';
 
 export default function LandingScreen({
   navigation,
@@ -46,18 +47,17 @@ export default function LandingScreen({
           <View style={styles.imageContainer}>
             {item.type === 'logo' ? (
               <View style={styles.logoCircle}>
-                <Image
+                <FastImage
                   source={item.image}
                   style={styles.logo}
-                  resizeMode="contain"
+                  resizeMode={FastImage.resizeMode.contain}
                 />
-                <Text style={styles.logoText}>Logo</Text>
               </View>
             ) : (
-              <Image
+              <FastImage
                 source={item.image}
                 style={styles.illustration}
-                resizeMode="contain"
+                resizeMode={FastImage.resizeMode.contain}
               />
             )}
           </View>

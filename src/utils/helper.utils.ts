@@ -2,8 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ASYNC_KEYS } from './contant.utils';
 import moment from 'moment';
 import { Alert, I18nManager, Linking, Share, ToastAndroid } from 'react-native';
-import { store } from '@/store';
-import { resetUser } from '@/store/AuthSlice';
 import { EShare, OrderStatus } from '@/interface/general.type';
 import { themeType } from '@/interface/theme.type';
 import { navigateAndSimpleReset } from './navigation.utils';
@@ -11,6 +9,7 @@ import messaging from '@react-native-firebase/messaging';
 import { stopNotificationSound } from './notification.utils';
 import { clearTokens, client } from '@/service/rest';
 import { ENotificationType } from '@/interface/notification.type';
+import { useAuthStore } from '@/store/authStore';
 
 export const setAsyncStorage = async (key: string, value: any) => {
   if (!key) {
@@ -66,7 +65,7 @@ export const onLogout = async () => {
   // messaging().subscribeToTopic(topic);
   await messaging().deleteToken();
   await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
-  store.dispatch(resetUser());
+  useAuthStore.getState().resetUser();
   clearTokens();
   delete client.defaults.headers.common['Authorization'];
   AsyncStorage.removeItem(ASYNC_KEYS.ACCESS_TOKEN);

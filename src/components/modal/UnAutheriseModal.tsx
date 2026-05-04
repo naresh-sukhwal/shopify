@@ -2,13 +2,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { CustomButton, CustomModal } from '..';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
-import { useDispatch } from 'react-redux';
 import { themeType } from '@/interface/theme.type';
 import { navigateAndSimpleReset } from '@/utils/navigation.utils';
 import { onLogout } from '@/utils/helper.utils';
-import { setIsUnAutharized } from '@/store/GeneralSlice';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
+import { useGeneralStore } from '@/store/generalStore';
 
 type props = {
   visible: boolean;
@@ -16,9 +15,9 @@ type props = {
 };
 
 export default function UnAutheriseModal({ visible, onClose }: props) {
+  const { setIsUnAutharized } = useGeneralStore();
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const dispatch = useDispatch();
   return (
     <CustomModal visibleModel={visible} closeModal={onClose}>
       <View style={{ alignItems: 'center', width: '100%' }}>
@@ -28,7 +27,7 @@ export default function UnAutheriseModal({ visible, onClose }: props) {
           title="Login"
           onPress={() => {
             onLogout();
-            dispatch(setIsUnAutharized(false));
+            setIsUnAutharized(false);
             setTimeout(() => {
               navigateAndSimpleReset('AuthStack');
             }, 500);

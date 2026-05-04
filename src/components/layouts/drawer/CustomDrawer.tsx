@@ -7,8 +7,6 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { useNavigationState } from '@react-navigation/native';
@@ -28,7 +26,6 @@ const userProfile = {
 const CustomDrawerContent = ({ navigation }: any) => {
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const { role } = useSelector((state: RootState) => state.AuthManager);
 
   const state = useNavigationState((state: any) => state);
   const currentRoute = state?.routes?.[state.index]?.name;
@@ -129,8 +126,7 @@ const CustomDrawerContent = ({ navigation }: any) => {
       <ScrollView showsVerticalScrollIndicator={false} style={styles.menuList}>
         {drawerItems.map((item, index) => {
           const isActive = isRouteActive(item.screen);
-          const isRoleActive = item?.roles?.includes(role as any) ?? false;
-          return isRoleActive ? (
+          return (
             <TouchableOpacity
               key={index}
               style={[styles.menuItem, isActive && styles.activeMenuItem]}
@@ -139,7 +135,7 @@ const CustomDrawerContent = ({ navigation }: any) => {
               <View style={styles.iconBox}>{renderIcon(item, isActive)}</View>
               <Text style={styles.menuLabel}>{item.label}</Text>
             </TouchableOpacity>
-          ) : null;
+          );
         })}
       </ScrollView>
     </View>

@@ -1,7 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
 import { useThemedStyles } from '@/hooks/useThemedStyles';

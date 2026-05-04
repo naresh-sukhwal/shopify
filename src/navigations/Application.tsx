@@ -16,8 +16,6 @@ import {
   InternetModal,
   UnAutheriseModal,
 } from '@/components';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import VersionCheck from 'react-native-version-check';
 import LanguageScreen from '@/screens/language/LanguageScreen';
@@ -28,9 +26,7 @@ import { ASYNC_KEYS } from '@/utils/contant.utils';
 const RootNavigator = createNativeStackNavigator<TRootStack>();
 
 export default function Application() {
-  const { isUnAutharized } = useSelector(
-    (state: RootState) => state.GeneralManager,
-  );
+  const [isUnAutharized, setIsUnAutharized] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
 

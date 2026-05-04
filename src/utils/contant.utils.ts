@@ -82,7 +82,7 @@ export const onboardingData = [
     description:
       'Buy gold anytime, track its value, and earn profit as prices rise.',
     buttonText: 'Next',
-    image: IMAGES.landImg1,
+    image: IMAGES.landImg2,
   },
   {
     id: '4',
@@ -91,7 +91,7 @@ export const onboardingData = [
     description:
       'Invest in digital gold and benefit as prices increase over time.',
     buttonText: 'Next',
-    image: IMAGES.landImg1,
+    image: IMAGES.landImg3,
   },
 ];
 

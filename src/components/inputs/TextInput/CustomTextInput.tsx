@@ -9,9 +9,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React, { useState } from 'react';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { themeType } from '@/interface/theme.type';

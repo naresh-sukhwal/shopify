@@ -1,5 +1,4 @@
 import { themeType } from '@/interface/theme.type';
-import { RootState } from '@/store';
 import {
   fontSize as fs,
   fontFamily,
@@ -8,7 +7,6 @@ import {
 } from '@/utils/fontIcon.utils';
 import React, { useMemo } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
 import { IMAGES } from '@/assets';
 import { OptionMenuComponent } from '@/components';
 import { MenuOptionItem } from '@/components/modal/OptionMenuComponent';
@@ -25,62 +23,6 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
   const navigation: any = useNavigation();
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const { walletData } = useSelector(
-    (state: RootState) => state.GeneralManager,
-  );
-  const { user } = useSelector((state: RootState) => state.AuthManager);
-
-  const sidebarOptions: MenuOptionItem[] = [
-    { label: 'Profile', showDivider: true, action: () => {} },
-    {
-      label: 'Partners',
-      renderRight: () => (
-        <View style={styles.membershipBadge}>
-          <Text style={styles.membershipCode}>CORE</Text>
-          <MaterialIcons name="handshake" size={14} color="#B8860B" />
-        </View>
-      ),
-      action: () => navigation.navigate('PartnerFormScreen'),
-    },
-    { label: 'Social', action: () => navigation.navigate('SocialHome') },
-    { label: 'My Bookings', action: () => navigation.navigate('MyBooking') },
-    { label: 'Legal', showDivider: true, action: () => {} },
-    {
-      label: 'Membership',
-      renderRight: () => (
-        <View style={styles.membershipBadge}>
-          <Text style={styles.membershipCode}>CORE</Text>
-          <MaterialIcons name="diamond" size={14} color="#B8860B" />
-        </View>
-      ),
-      action: () => navigation.navigate('VIPMembershipScreen'),
-    },
-    {
-      label: 'My Library',
-      action: () => navigation.navigate('MyLibraryScreen'),
-    },
-    { label: 'Ads Center', action: () => {} },
-    {
-      label: 'Wallet',
-      showDivider: true,
-      renderRight: () => (
-        <View style={styles.walletDisplay}>
-          <Ionicons name="cash" size={16} color="#DAA520" />
-          <Text style={styles.walletBalance}>{walletData?.walletBalance}</Text>
-        </View>
-      ),
-      action: () => {
-        navigation.navigate('MyWallet');
-      },
-    },
-    { label: 'Settings', action: () => {} },
-    {
-      label: 'Logout',
-      action: () => {
-        onLogout();
-      },
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -93,7 +35,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
             </View>
           }
           triggerWidth={150}
-          options={sidebarOptions}
+          options={[]}
           menuStyle={{ width: 250, marginTop: 10 }}
         />
       </View>
@@ -104,9 +46,7 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
         activeOpacity={0.8}
       >
         <Image
-          source={
-            user?.profilePhoto ? { uri: user.profilePhoto } : IMAGES.person
-          }
+          source={IMAGES.person}
           style={styles.profileImage}
           tintColor={themeColor.secondary}
         />

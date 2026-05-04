@@ -15,7 +15,7 @@ import {
 import { themeType } from '@/interface/theme.type';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
-import { store } from '@/store';
+import { useThemeStore } from '@/store/themeStore';
 
 type props = {
   label?: string;
@@ -32,8 +32,8 @@ export default function Checkbox({
   value = false,
   onChange,
   label = '',
-  activeColor = store.getState().ThemeManager.themeColor.primary,
-  inactiveColor = store.getState().ThemeManager.themeColor.gray,
+  activeColor = useThemeStore.getState().themeColor.primary,
+  inactiveColor = useThemeStore.getState().themeColor.gray,
   containerStyle,
   checkboxStyle,
   labelStyle,
