@@ -61,6 +61,8 @@ export type TMainStack = {
   TabStack: NavigatorScreenParams<TBottomTabStack>;
   DrawerStack: NavigatorScreenParams<TDrawerStack>;
   KycDetails: undefined;
+  AddMoneyInitial: undefined;
+  AddMoney: undefined;
 };
 
 /* -------------------------------------------------------------------------- */

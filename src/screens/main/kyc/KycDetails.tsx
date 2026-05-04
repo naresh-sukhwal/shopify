@@ -68,7 +68,7 @@ export default function KycDetails({ navigation }: any) {
   const handleSubmit = async (values: any) => {
     console.log('Final Submit:', values);
     await setAsyncStorage(ASYNC_KEYS.IS_KYC_COMPLETED, 'true');
-    navigation.replace('MainStack');
+    navigation.replace('AddMoneyInitial');
   };
 
   return (

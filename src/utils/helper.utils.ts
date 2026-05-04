@@ -228,3 +228,16 @@ export const setupTokenRefreshListener = () => {
     }
   });
 };
+
+export const getSalutation = () => {
+  const hour = moment().hour();
+  if (hour >= 5 && hour < 12) {
+    return 'common.good_morning';
+  } else if (hour >= 12 && hour < 17) {
+    return 'common.good_afternoon';
+  } else if (hour >= 17 && hour < 21) {
+    return 'common.good_evening';
+  } else {
+    return 'common.good_night';
+  }
+};

@@ -18,6 +18,7 @@ export const IMAGES = {
   landingScreenBg: require('@/assets/images/landingBack.png'),
   globeVideo: require('@/assets/video/globeVideo.mp4'),
   person: require('@/assets/images/person.png'),
+  cardBack: require('@/assets/images/cardBack.png'),
 };
 
 export const SVG = {

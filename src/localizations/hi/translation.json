@@ -75,5 +75,30 @@
     "ifscRequired": "आईएफएससी कोड आवश्यक है",
     "invalidIfsc": "अमान्य आईएफएससी कोड",
     "idProofRequired": "पहचान प्रमाण दस्तावेज़ आवश्यक है"
+  },
+  "common": {
+    "good_morning": "शुभ प्रभात",
+    "good_afternoon": "नमस्ते",
+    "good_evening": "शुभ संध्या",
+    "good_night": "शुभ रात्रि"
+  },
+  "wallet": {
+
+    "add_money": "पैसे जोड़ें",
+    "wallet_label": "वॉलेट",
+    "skip": "छोड़ें",
+    "enter_amount": "राशि दर्ज करें",
+    "amount_to_add": "जोड़ने के लिए राशि",
+    "clear": "साफ़ करें",
+    "min_amount_info": "न्यूनतम ₹ 100 • यूपीआई भुगतान के लिए वॉलेट तुरंत अपडेट होता है।",
+    "save_money_daily": "रोजाना अपने पैसे बचाएं",
+    "save_money_desc": "आपके निकासी दैनिक सीमाओं और रिजर्व नियमों का पालन करते हैं ताकि फंड सुरक्षित रहे।",
+    "setup_daily_savings": "दैनिक बचत सेटअप करें",
+    "withdrawal_rules": "निकासी के नियम",
+    "min_withdrawal": "न्यूनतम निकासी ₹ 1,000",
+    "processing_time": "प्रसंस्करण समय: 1-2 कार्य दिवस",
+    "locked_wallet": "₹ 100 वॉलेट में लॉक रहता है",
+    "kyc_verified": "केवाईसी सत्यापित",
+    "bank_linked": "बैंक लिंक है"
   }
 }

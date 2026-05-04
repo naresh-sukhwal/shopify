@@ -114,6 +114,29 @@
     "or": "Or",
     "selectFilesDragDrop": "Select files or drag & drop\nfrom device",
     "selectFile": "Select file",
-    "max50MB": "max. 50MB"
+    "max50MB": "max. 50MB",
+    "good_morning": "Good morning",
+    "good_afternoon": "Good afternoon",
+    "good_evening": "Good evening",
+    "good_night": "Good night"
+  },
+
+  "wallet": {
+    "add_money": "Add Money",
+    "wallet_label": "Wallet",
+    "skip": "Skip",
+    "enter_amount": "Enter amount",
+    "amount_to_add": "Amount to add",
+    "clear": "Clear",
+    "min_amount_info": "Minimum ₹ 100 • Wallet updates instantly for UPI payments.",
+    "save_money_daily": "Save your money daily",
+    "save_money_desc": "Your withdrawals follow daily limits and reserve rules to keep funds protected.",
+    "setup_daily_savings": "Setup Daily Savings",
+    "withdrawal_rules": "Withdrawal rules",
+    "min_withdrawal": "Minimum withdrawal ₹ 1,000",
+    "processing_time": "Processing time: 1–2 business days",
+    "locked_wallet": "₹ 100 stays locked in wallet",
+    "kyc_verified": "KYC verified",
+    "bank_linked": "Bank linked"
   }
 }

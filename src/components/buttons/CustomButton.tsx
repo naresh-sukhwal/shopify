@@ -59,7 +59,7 @@ export default function CustomButton({
         colors={[
           themeColor.secondary,
           themeColor.secondaryS1,
-          themeColor.secondaryS2,
+          themeColor.secondary,
         ]}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
@@ -107,7 +107,6 @@ const createStyle = (theme: themeType) =>
       color: theme.white,
       fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f16,
-      textTransform: 'uppercase',
       letterSpacing: 1,
     },
   });
