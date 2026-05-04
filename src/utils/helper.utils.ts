@@ -63,8 +63,8 @@ export const onLogout = async () => {
   // const topic = `user_${store.getState().AuthManager?.user?._id}`;
   // console.log('topic unscbscribe successfully: ', topic);
   // messaging().subscribeToTopic(topic);
-  await messaging().deleteToken();
-  await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
+  // await messaging().deleteToken();
+  // await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
   useAuthStore.getState().resetUser();
   clearTokens();
   delete client.defaults.headers.common['Authorization'];

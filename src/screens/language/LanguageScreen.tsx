@@ -138,13 +138,18 @@ export default function LanguageScreen({ navigation }: TLanguageScreenProps) {
               title="Continue"
               onPress={async () => {
                 await setAsyncStorage(ASYNC_KEYS.IS_LANGAUGE_SELECTED, 'true');
-                navigateAndSimpleReset('AuthStack');
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                } else {
+                  navigateAndSimpleReset('AuthStack');
+                }
               }}
               style={[styles.button, { backgroundColor: themeColor.secondary }]}
               textStyle={styles.buttonText}
               isGradiantRequired={false}
             />
           </View>
+
         ) : null}
       </View>
     </GradiantBackground>
