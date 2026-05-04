@@ -1,15 +1,15 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import * as types from '@/interface';
-import { fontFamily, fontSize, Ionicons, MaterialIcons } from '@/utils/fontIcon.utils';
+import {
+  fontFamily,
+  fontSize,
+  Ionicons,
+  MaterialIcons,
+} from '@/utils/fontIcon.utils';
 import LinearGradient from 'react-native-linear-gradient';
 
 export type PaymentMethod = 'UPI' | 'BANK';
@@ -27,17 +27,30 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
   const styles = useThemedStyles(createStyles);
   const themeColor = useThemeColor();
 
-  const renderCard = (id: PaymentMethod, iconName: string, titleKey: string, descKey: string) => {
+  const renderCard = (
+    id: PaymentMethod,
+    iconName: string,
+    titleKey: string,
+    descKey: string,
+  ) => {
     const isSelected = selectedMethod === id;
 
     const Content = (
       <>
         <View style={styles.cardTop}>
           <View style={styles.iconBox}>
-            <MaterialIcons name={iconName as any} size={24} color={themeColor.secondary} />
+            <MaterialIcons
+              name={iconName as any}
+              size={24}
+              color={themeColor.secondary}
+            />
           </View>
           {isSelected ? (
-            <Ionicons name="checkmark-circle" size={20} color={themeColor.secondary} />
+            <Ionicons
+              name="checkmark-circle"
+              size={20}
+              color={themeColor.secondary}
+            />
           ) : (
             <View style={styles.radioUnselected} />
           )}
@@ -51,9 +64,12 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
 
     if (isSelected) {
       return (
-        <Pressable style={styles.paymentCardWrapper} onPress={() => onSelect(id)}>
+        <Pressable
+          style={styles.paymentCardWrapper}
+          onPress={() => onSelect(id)}
+        >
           <LinearGradient
-            colors={theme.goldGradient as any}
+            colors={themeColor.goldGradient as any}
             style={styles.paymentCard}
           >
             {Content}
@@ -62,15 +78,9 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
       );
     }
 
-
     return (
-      <Pressable
-        style={styles.paymentCardWrapper}
-        onPress={() => onSelect(id)}
-      >
-        <View style={styles.paymentCardUnselected}>
-          {Content}
-        </View>
+      <Pressable style={styles.paymentCardWrapper} onPress={() => onSelect(id)}>
+        <View style={styles.paymentCardUnselected}>{Content}</View>
       </Pressable>
     );
   };
@@ -78,7 +88,12 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
   return (
     <View style={styles.paymentRow}>
       {renderCard('UPI', 'qr-code-scanner', 'wallet.upi', 'wallet.upi_desc')}
-      {renderCard('BANK', 'account-balance', 'wallet.bank_transfer', 'wallet.bank_transfer_desc')}
+      {renderCard(
+        'BANK',
+        'account-balance',
+        'wallet.bank_transfer',
+        'wallet.bank_transfer_desc',
+      )}
     </View>
   );
 };

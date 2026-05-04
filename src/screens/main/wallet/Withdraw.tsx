@@ -23,7 +23,8 @@ import { hp, wp } from '@/utils/responsive.utils';
 import CardImageComponent from '@/components/layouts/common/CardImageComponent';
 import BankCard from '@/components/layouts/wallet/BankCard';
 
-const Withdraw: React.FC = () => {
+const Withdraw: React.FC<types.TWithdrawProps> = ({ navigation }) => {
+
   const { t } = useTranslation();
   const styles = useThemedStyles(createStyles);
   const themeColor = useThemeColor();
@@ -92,11 +93,13 @@ const Withdraw: React.FC = () => {
                 <Text style={styles.breakdownTitle}>
                   {t('wallet.balance_breakdown')}
                 </Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('WalletScreen')}>
                   <Text style={styles.walletDetailsLink}>
                     {t('wallet.wallet_details')}
                   </Text>
                 </TouchableOpacity>
+
+
               </View>
               <View style={styles.breakdownCards}>
                 <View style={styles.miniCard}>

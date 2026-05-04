@@ -12,7 +12,7 @@ import {
 import CardImageComponent from '../common/CardImageComponent';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { SVG } from '@/assets';
-import LinearGradient from 'react-native-linear-gradient';
+import IconGradientBorder from '../common/IconGradientBorder';
 
 const HomeGoldCard: React.FC = () => {
   const { t } = useTranslation();
@@ -30,14 +30,9 @@ const HomeGoldCard: React.FC = () => {
             <Text style={styles.weight}>7.842 g</Text>
           </View>
         </View>
-        <LinearGradient
-          colors={['#F4D03F', '#D4AF37']}
-          style={styles.iconGradientBorder}
-        >
-          <View style={styles.iconInner}>
-            <SVG.InvestIcon width={24} height={24} />
-          </View>
-        </LinearGradient>
+        <IconGradientBorder>
+          <SVG.InvestIcon width={24} height={24} />
+        </IconGradientBorder>
       </View>
 
       <View style={styles.badgeRow}>

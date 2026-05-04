@@ -124,6 +124,13 @@ export type TOtpVerificationStackProps = StackScreenProps<
   'OtpVerification'
 >;
 
+export type TWithdrawProps = StackScreenProps<TMainStack, 'Withdraw'>;
+export type TAddMoneyProps = StackScreenProps<TMainStack, 'AddMoney'>;
+export type TAddMoneyInitialProps = StackScreenProps<
+  TMainStack,
+  'AddMoneyInitial'
+>;
+
 /* -------------------------------------------------------------------------- */
 /*                             Composite Props Example                         */
 /* -------------------------------------------------------------------------- */
@@ -135,3 +142,4 @@ export type SigninProps = CompositeScreenProps<
     StackScreenProps<TMainStack>
   >
 >;
+

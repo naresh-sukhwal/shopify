@@ -37,6 +37,7 @@ export { default as BottomTab } from '@/components/layouts/tabHeader/BottomTab';
 export { default as InfoComponent } from '@/components/layouts/common/InfoComponent';
 export { default as AuthComponent } from '@/components/layouts/auth/AuthComponent';
 export { default as IconBackground } from '@/components/layouts/common/IconBackground';
+export { default as IconGradientBorder } from '@/components/layouts/common/IconGradientBorder';
 
 // ==================== @/components/loaders ====================
 export { default as PageLoading } from '@/components/loaders/PageLoading';

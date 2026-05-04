@@ -60,7 +60,7 @@ const createStyle = (theme: themeType) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      bottom: 30,
+      bottom: 10,
       width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
