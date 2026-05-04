@@ -39,6 +39,9 @@ export { default as AuthComponent } from '@/components/layouts/auth/AuthComponen
 export { default as IconBackground } from '@/components/layouts/common/IconBackground';
 export { default as IconGradientBorder } from '@/components/layouts/common/IconGradientBorder';
 export { default as AutoMandateSettings } from '@/components/layouts/wallet/AutoMandateSettings';
+export { default as QuantitySelector } from '@/components/layouts/invest/QuantitySelector';
+export { default as CostSummary } from '@/components/layouts/invest/CostSummary';
+
 
 
 // ==================== @/components/loaders ====================
