@@ -49,7 +49,12 @@ export const LightThemeColors = {
   yellow: '#FAB71D',
   yellowS1: '#FFEFAC75',
   lightOrange: '#FFA432',
+  gold: '#F59E0B',
+  goldLight: '#FDE68A',
+  goldLighter: '#FEF9E7',
+  goldGradient: ['#FDE68A', '#FEF9E7'],
 };
+
 
 // === DARK THEME ===
 // export const DarkThemeColors: themeType = {

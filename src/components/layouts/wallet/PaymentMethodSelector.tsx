@@ -53,7 +53,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
       return (
         <Pressable style={styles.paymentCardWrapper} onPress={() => onSelect(id)}>
           <LinearGradient
-            colors={['#FDE68A', '#FEF9E7']}
+            colors={theme.goldGradient as any}
             style={styles.paymentCard}
           >
             {Content}
@@ -61,6 +61,7 @@ const PaymentMethodSelector: React.FC<PaymentMethodSelectorProps> = ({
         </Pressable>
       );
     }
+
 
     return (
       <Pressable

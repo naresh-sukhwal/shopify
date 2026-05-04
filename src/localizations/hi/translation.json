@@ -143,6 +143,25 @@
     "fees_desc": "हम वॉलेट टॉप-अप शुल्क नहीं लेते हैं। आपका बैंक/यूपीआई ऐप शुल्क लगा सकता है।",
     "secure_payments": "सुरक्षित भुगतान",
     "secure_payments_desc": "भुगतान विनियमित भागीदारों के माध्यम से संसाधित किए जाते हैं। अपना यूपीआई पिन कभी साझा न करें।",
-    "you_will_add": "आप जोड़ेंगे"
+    "you_will_add": "आप जोड़ेंगे",
+    "withdraw_label": "निकालें",
+    "to_linked_bank": "अपने लिंक किए गए बैंक खाते में",
+    "available_to_withdraw": "निकालने के लिए उपलब्ध",
+    "min_val": "न्यूनतम {{val}}",
+    "balance_breakdown": "बैलेंस विवरण",
+    "wallet_details": "वॉलेट विवरण",
+    "total": "कुल",
+    "locked": "लॉक",
+    "available": "उपलब्ध",
+    "withdrawal_amount": "निकासी राशि",
+    "max": "अधिकतम",
+    "one_withdrawal_per_day": "प्रति दिन एक निकासी",
+    "bank_account": "बैंक खाता",
+    "add_bank": "बैंक जोड़ें",
+    "primary": "प्राथमिक",
+    "ifsc": "IFSC",
+    "bank_transfer_type": "बैंक ट्रांसफर का प्रकार",
+    "confirm_bank_details": "जारी रखकर, आप पुष्टि करते हैं कि बैंक विवरण सही हैं।",
+    "withdraw_btn": "निकालें {{val}}"
   }
 }

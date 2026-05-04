@@ -181,6 +181,25 @@
     "fees_desc": "We don't charge wallet top-up fees. Your bank/UPI app may apply charges.",
     "secure_payments": "Secure payments",
     "secure_payments_desc": "Payments are processed via regulated partners. Never share your UPI PIN.",
-    "you_will_add": "You'll add"
+    "you_will_add": "You'll add",
+    "withdraw_label": "Withdraw",
+    "to_linked_bank": "To your linked bank account",
+    "available_to_withdraw": "Available to withdraw",
+    "min_val": "min {{val}}",
+    "balance_breakdown": "Balance breakdown",
+    "wallet_details": "Wallet details",
+    "total": "Total",
+    "locked": "Locked",
+    "available": "Available",
+    "withdrawal_amount": "Withdrawal amount",
+    "max": "Max",
+    "one_withdrawal_per_day": "One withdrawal per day",
+    "bank_account": "Bank account",
+    "add_bank": "Add Bank",
+    "primary": "Primary",
+    "ifsc": "IFSC",
+    "bank_transfer_type": "Bank transfer type",
+    "confirm_bank_details": "By continuing, you confirm the bank details are correct.",
+    "withdraw_btn": "Withdraw {{val}}"
   }
 }
