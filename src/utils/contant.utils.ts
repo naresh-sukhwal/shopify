@@ -118,6 +118,8 @@ export const quickActionsData = [
     icon: 'add',
     iconType: 'Ionicons',
     route: 'AddMoneyInitial',
+    iconBg: 'secondary', // Black
+    iconColor: 'white',
   },
   {
     id: 2,
@@ -126,6 +128,8 @@ export const quickActionsData = [
     icon: 'arrow-up-right',
     iconType: 'Feather',
     route: 'Withdraw',
+    iconBg: 'white',
+    iconColor: 'secondary', // Black
   },
   {
     id: 3,
@@ -135,6 +139,8 @@ export const quickActionsData = [
     iconType: 'Feather',
     route: 'Invest',
     isSpecial: true,
+    iconBg: 'white',
+    iconColor: 'secondary',
   },
 ];
 

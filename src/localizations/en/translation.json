@@ -165,6 +165,22 @@
     "locked_wallet": "₹ 100 stays locked in wallet",
     "kyc_verified": "KYC verified",
     "bank_linked": "Bank linked",
-    "withdraw": "Withdraw"
+    "withdraw": "Withdraw",
+    "payment_method": "Payment method",
+    "limits": "Limits",
+    "upi": "UPI",
+    "upi_desc": "Instant • 24×7",
+    "bank_transfer": "Bank transfer",
+    "bank_transfer_desc": "NEFT/IMPS/RTGS",
+    "tip": "Tip",
+    "tip_desc": "UPI is recommended for instant wallet updates. Bank transfer may take longer during peak hours.",
+    "fees_label": "Fees",
+    "processing_details": "Processing details",
+    "typical_processing_time": "Typical processing time",
+    "processing_time_desc": "UPI: instant • Bank transfer: up to 2 hours",
+    "fees_desc": "We don't charge wallet top-up fees. Your bank/UPI app may apply charges.",
+    "secure_payments": "Secure payments",
+    "secure_payments_desc": "Payments are processed via regulated partners. Never share your UPI PIN.",
+    "you_will_add": "You'll add"
   }
 }

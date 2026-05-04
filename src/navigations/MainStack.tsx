@@ -12,6 +12,7 @@ import TabStack from './TabStack';
 import KycDetails from '@/screens/main/kyc/KycDetails';
 import AddMoneyInitial from '@/screens/main/wallet/AddMoneyInitial';
 import AddMoney from '@/screens/main/wallet/AddMoney';
+import Withdraw from '@/screens/main/wallet/Withdraw';
 
 const MainNavigator = createNativeStackNavigator<TMainStack>();
 
@@ -93,6 +94,7 @@ export default function MainStack() {
         component={AddMoneyInitial}
       />
       <MainNavigator.Screen name="AddMoney" component={AddMoney} />
+      <MainNavigator.Screen name="Withdraw" component={Withdraw} />
     </MainNavigator.Navigator>
   );
 }

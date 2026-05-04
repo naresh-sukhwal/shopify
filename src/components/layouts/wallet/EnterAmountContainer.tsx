@@ -106,11 +106,16 @@ const createStyles = (themeColor: types.themeType) =>
     inputWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: themeColor.grayS3,
+      backgroundColor: themeColor.white,
       borderRadius: 20,
       paddingHorizontal: 16,
-      paddingVertical: 12,
+      paddingVertical: 14,
       marginBottom: 20,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 2,
     },
     inputContent: {
       flex: 1,
@@ -118,10 +123,10 @@ const createStyles = (themeColor: types.themeType) =>
       alignItems: 'center',
     },
     currencySymbol: {
-      fontSize: fontSize.f24,
+      fontSize: fontSize.f20,
       fontFamily: fontFamily.bold,
       color: themeColor.secondary,
-      marginRight: 8,
+      marginRight: 10,
     },
     input: {
       flex: 1,
@@ -132,35 +137,40 @@ const createStyles = (themeColor: types.themeType) =>
     },
     clearButton: {
       backgroundColor: themeColor.secondary,
-      paddingHorizontal: 16,
-      paddingVertical: 8,
-      borderRadius: 16,
+      paddingHorizontal: 18,
+      paddingVertical: 10,
+      borderRadius: 20,
     },
     clearText: {
       color: themeColor.white,
-      fontSize: fontSize.f14,
+      fontSize: fontSize.f13,
       fontFamily: fontFamily.bold,
     },
     quickAmountsRow: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      gap: 8,
+      gap: 10,
       marginBottom: 20,
     },
     quickAmountButton: {
       backgroundColor: themeColor.white,
       borderWidth: 1,
-      borderColor: themeColor.borderColor,
-      borderRadius: 12,
-      paddingHorizontal: 12,
-      paddingVertical: 10,
+      borderColor: themeColor.grayS3,
+      borderRadius: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 12,
       flex: 1,
       minWidth: '22%',
       alignItems: 'center',
       justifyContent: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.02,
+      shadowRadius: 5,
+      elevation: 1,
     },
     quickAmountText: {
-      fontSize: fontSize.f12,
+      fontSize: fontSize.f13,
       fontFamily: fontFamily.bold,
       color: themeColor.secondary,
     },
@@ -168,12 +178,13 @@ const createStyles = (themeColor: types.themeType) =>
       fontSize: fontSize.f12,
       fontFamily: fontFamily.medium,
       color: themeColor.secondaryS2,
-      lineHeight: 18,
+      lineHeight: 20,
     },
     placeholder: {
-      color: themeColor.grayS1,
+      color: themeColor.grayS2,
     },
   });
+
 
 
 

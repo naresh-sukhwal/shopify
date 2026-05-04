@@ -63,6 +63,7 @@ export type TMainStack = {
   KycDetails: undefined;
   AddMoneyInitial: undefined;
   AddMoney: undefined;
+  Withdraw: undefined;
 };
 
 /* -------------------------------------------------------------------------- */

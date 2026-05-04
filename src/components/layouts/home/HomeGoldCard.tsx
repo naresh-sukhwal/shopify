@@ -1,15 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { themeType } from '@/interface/theme.type';
-import { fontFamily, fontSize, Ionicons, MaterialIcons } from '@/utils/fontIcon.utils';
-import { wp, hp } from '@/utils/responsive.utils';
+import {
+  fontFamily,
+  fontSize,
+  Ionicons,
+  MaterialIcons,
+} from '@/utils/fontIcon.utils';
 import CardImageComponent from '../common/CardImageComponent';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { SVG } from '@/assets';
+import LinearGradient from 'react-native-linear-gradient';
 
 const HomeGoldCard: React.FC = () => {
   const { t } = useTranslation();
   const styles = useThemedStyles(createStyles);
+  const themeColor = useThemeColor();
 
   return (
     <CardImageComponent style={styles.cardContainer}>
@@ -22,14 +30,24 @@ const HomeGoldCard: React.FC = () => {
             <Text style={styles.weight}>7.842 g</Text>
           </View>
         </View>
-        <View style={styles.iconCircle}>
-          <Ionicons name="link" size={24} color="#000" />
-        </View>
+        <LinearGradient
+          colors={['#F4D03F', '#D4AF37']}
+          style={styles.iconGradientBorder}
+        >
+          <View style={styles.iconInner}>
+            <SVG.InvestIcon width={24} height={24} />
+          </View>
+        </LinearGradient>
       </View>
 
       <View style={styles.badgeRow}>
         <View style={styles.statusBadge}>
-          <Ionicons name="trending-up" size={16} color="#10B981" />
+          <Ionicons
+            name="trending-up"
+            size={16}
+            color={themeColor.greenS2}
+            style={styles.arrowback}
+          />
           <Text style={styles.statusText}>+1.24% today</Text>
         </View>
         <View style={styles.dot} />
@@ -47,11 +65,14 @@ const HomeGoldCard: React.FC = () => {
           </Text>
         </View>
         <View style={styles.updateInfo}>
-          <Text style={styles.updateLabel}>{t('home.updated', { defaultValue: 'Updated' })}</Text>
-          <Text style={styles.updateTime}>{t('home.just_now', { defaultValue: 'just now' })}</Text>
+          <Text style={styles.updateLabel}>
+            {t('home.updated', { defaultValue: 'Updated' })}
+          </Text>
+          <Text style={styles.updateTime}>
+            {t('home.just_now', { defaultValue: 'just now' })}
+          </Text>
         </View>
       </View>
-
     </CardImageComponent>
   );
 };
@@ -63,8 +84,9 @@ const createStyles = (theme: themeType) =>
       marginTop: 20,
       minHeight: 220,
       justifyContent: 'space-between',
-      backgroundColor: '#FEF9E7', // Light yellow base
+      backgroundColor: '#F4EAC4', // Warm gold base
     },
+
     topSection: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -100,15 +122,21 @@ const createStyles = (theme: themeType) =>
       fontFamily: fontFamily.semiBold,
       color: theme.secondaryS2,
     },
-    iconCircle: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      backgroundColor: '#EAB308', // Solid yellow
+    iconGradientBorder: {
+      width: 56,
+      height: 56,
+      borderRadius: 18,
+      padding: 6,
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 3,
-      borderColor: 'rgba(255, 255, 255, 0.5)',
+    },
+    iconInner: {
+      flex: 1,
+      width: '100%',
+      backgroundColor: '#F4EAC4',
+      borderRadius: 14,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     badgeRow: {
       flexDirection: 'row',
@@ -133,7 +161,7 @@ const createStyles = (theme: themeType) =>
     statusText: {
       fontSize: fontSize.f13,
       fontFamily: fontFamily.bold,
-      color: '#10B981',
+      color: theme.greenS2,
       marginLeft: 4,
     },
     dot: {
@@ -203,8 +231,11 @@ const createStyles = (theme: themeType) =>
       fontFamily: fontFamily.bold,
       color: theme.secondary,
     },
+    arrowback: {
+      backgroundColor: theme.greenS1,
+      padding: 5,
+      borderRadius: 20,
+    },
   });
-
-
 
 export default HomeGoldCard;

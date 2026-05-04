@@ -11,10 +11,12 @@ import {
   Feather,
 } from '@/utils/fontIcon.utils';
 import { SVG } from '@/assets';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const HomeStatsRow: React.FC = () => {
   const { t } = useTranslation();
   const styles = useThemedStyles(createStyles);
+  const themeColor = useThemeColor();
 
   return (
     <View style={styles.container}>
@@ -44,7 +46,9 @@ const HomeStatsRow: React.FC = () => {
       <View style={styles.card}>
         <View style={styles.header}>
           <Text style={styles.label}>{t('home.weekly_interest')}</Text>
-          <View style={[styles.iconCircle, { backgroundColor: '#D1FAE5' }]}>
+          <View
+            style={[styles.iconCircle, { backgroundColor: themeColor.greenS1 }]}
+          >
             <SVG.MagicIcon />
           </View>
         </View>
@@ -136,7 +140,7 @@ const createStyles = (theme: themeType) =>
       marginBottom: 12,
     },
     interestBadge: {
-      backgroundColor: '#ECFDF5',
+      backgroundColor: theme.greenS1,
       paddingHorizontal: 10,
       paddingVertical: 8,
       borderRadius: 12,
@@ -145,7 +149,7 @@ const createStyles = (theme: themeType) =>
     badgeText: {
       fontSize: fontSize.f12,
       fontFamily: fontFamily.bold,
-      color: '#059669',
+      color: theme.greenS2,
     },
   });
 

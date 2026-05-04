@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import * as types from '@/interface';
 import StackHeader from '@/components/headers/StackHeader';
-import EnterAmountContainer from '@/components/wallet/EnterAmountContainer';
+import EnterAmountContainer from '@/components/layouts/wallet/EnterAmountContainer';
 import InfoComponent from '@/components/layouts/common/InfoComponent';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
@@ -129,5 +129,4 @@ const createStyles = (themeColor: types.themeType) =>
       fontFamily: fontFamily.bold,
       marginRight: 10,
     },
-
   });

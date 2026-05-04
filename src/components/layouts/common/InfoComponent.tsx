@@ -37,6 +37,7 @@ interface InfoComponentProps {
   style?: ViewStyle;
   textStyle?: TextStyle;
   isDark?: boolean;
+  isCard?: boolean;
   points?: string[];
   tags?: InfoTag[];
   customIcon?: string;
@@ -58,6 +59,7 @@ const InfoComponent: React.FC<InfoComponentProps> = ({
   style,
   textStyle,
   isDark = false,
+  isCard = false,
   points,
   tags,
   customIcon,
@@ -70,37 +72,48 @@ const InfoComponent: React.FC<InfoComponentProps> = ({
     const variantConfig = {
       [InfoVariant.SUCCESS]: {
         icon: 'checkmark-circle-outline',
-        color: themeColor.green,
-        background: themeColor.greenS1,
+        color: '#059669',
+        background: '#ECFDF5',
+        iconBg: '#ECFDF5',
       },
       [InfoVariant.INFO]: {
         icon: 'information-circle-outline',
-        color: themeColor.descriptionText,
+        color: themeColor.secondaryS2,
         background: themeColor.primaryS1,
+        iconBg: '#F1F5F9',
       },
       [InfoVariant.WARNING]: {
         icon: 'warning-outline',
-        color: themeColor.yellow,
-        background: themeColor.yellowS1,
+        color: '#D97706',
+        background: '#FEF9E7',
+        iconBg: '#FEF9E7',
       },
       [InfoVariant.ERROR]: {
         icon: 'alert-circle-outline',
         color: themeColor.red,
         background: themeColor.redS1,
+        iconBg: themeColor.redS1,
       },
       [InfoVariant.PAYMENT]: {
         icon: 'checkmark-circle-outline',
         color: themeColor.secondary,
         background: themeColor.white,
+        iconBg: themeColor.grayS3,
       },
     };
     return variantConfig[variant];
   }, [variant, themeColor]);
 
-  const backgroundColor = isDark ? themeColor.secondary : config.background;
-  const textColor = isDark ? themeColor.white : config.color;
+  const backgroundColor = isDark 
+    ? themeColor.secondary 
+    : isCard 
+      ? themeColor.white 
+      : config.background;
+
+  const textColor = isDark ? themeColor.white : themeColor.secondary;
+  const descriptionColor = isDark ? 'rgba(255,255,255,0.7)' : themeColor.secondaryS2;
   const iconColor = isDark ? themeColor.white : config.color;
-  const secondaryTextColor = isDark ? themeColor.lightTextwhite : config.color;
+  const iconBg = isDark ? 'rgba(255,255,255,0.1)' : config.iconBg;
 
   const renderIcon = (
     name: string,
@@ -129,9 +142,9 @@ const InfoComponent: React.FC<InfoComponentProps> = ({
   };
 
   return (
-    <View style={[styles.container, { backgroundColor }, style]}>
+    <View style={[styles.container, { backgroundColor }, isCard && styles.cardShadow, style]}>
       <View style={styles.contentRow}>
-        <View style={[styles.iconContainer, isDark && styles.darkIconContainer]}>
+        <View style={[styles.iconContainer, { backgroundColor: iconBg }, isDark && styles.darkIconContainer]}>
           {renderIcon(customIcon || config.icon, 24, iconColor, iconType)}
         </View>
         <View style={styles.textContainer}>
@@ -142,7 +155,7 @@ const InfoComponent: React.FC<InfoComponentProps> = ({
             <Text
               style={[
                 styles.description,
-                { color: secondaryTextColor },
+                { color: descriptionColor },
                 textStyle,
               ]}
             >
@@ -154,11 +167,11 @@ const InfoComponent: React.FC<InfoComponentProps> = ({
             <View style={styles.pointsContainer}>
               {points.map((point, index) => (
                 <View key={index} style={styles.pointRow}>
-                  <Text style={[styles.bullet, { color: secondaryTextColor }]}>
+                  <Text style={[styles.bullet, { color: descriptionColor }]}>
                     •
                   </Text>
                   <Text
-                    style={[styles.pointText, { color: secondaryTextColor }]}
+                    style={[styles.pointText, { color: descriptionColor }]}
                   >
                     {point}
                   </Text>
@@ -197,18 +210,27 @@ const createStyles = (themeColor: types.themeType) =>
       borderRadius: 24,
       marginVertical: 8,
     },
+    cardShadow: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 2,
+    },
     contentRow: {
       flexDirection: 'row',
+      alignItems: 'center',
     },
     iconContainer: {
-      marginRight: 12,
+      width: 48,
+      height: 48,
+      borderRadius: 14,
       justifyContent: 'center',
       alignItems: 'center',
+      marginRight: 12,
     },
     darkIconContainer: {
       backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      width: 48,
-      height: 48,
       borderRadius: 12,
     },
     textContainer: {
@@ -218,10 +240,10 @@ const createStyles = (themeColor: types.themeType) =>
     title: {
       fontSize: fontSize.f16,
       fontFamily: fontFamily.bold,
-      marginBottom: 4,
+      marginBottom: 2,
     },
     description: {
-      fontSize: fontSize.f14,
+      fontSize: fontSize.f13,
       fontFamily: fontFamily.medium,
       lineHeight: 20,
     },
@@ -267,6 +289,7 @@ const createStyles = (themeColor: types.themeType) =>
       marginLeft: 6,
     },
   });
+
 
 
 export default InfoComponent;
