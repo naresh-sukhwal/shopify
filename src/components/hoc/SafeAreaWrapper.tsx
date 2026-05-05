@@ -1,4 +1,4 @@
-import { store } from '@/store';
+import { useThemeStore } from '@/store/themeStore';
 import React from 'react';
 import { View, StyleSheet, ViewStyle, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,10 +15,8 @@ const SafeAreaWrapper = ({
   children,
   useSafeArea = true,
   style,
-  statusBarColor = store.getState().ThemeManager.themeColor.backgroundColor,
-  StatusBarStyle = store.getState().ThemeManager.isDarkTheme
-    ? 'light-content'
-    : 'dark-content',
+  statusBarColor = useThemeStore.getState().themeColor.backgroundColor,
+  StatusBarStyle = 'light-content',
 }: SafeAreaWrapperProps) => {
   const Wrapper = useSafeArea ? SafeAreaView : View;
 

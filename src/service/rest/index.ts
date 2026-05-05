@@ -3,9 +3,8 @@ import { API_URL } from '../config';
 import { ASYNC_KEYS } from '@/utils/contant.utils';
 import { getAsyncStorage } from '@/utils/helper.utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { store } from '@/store';
-import { setIsUnAutharized } from '@/store/GeneralSlice';
 import { refreshTokenRequest } from './CommonApi';
+import { useGeneralStore } from '@/store/generalStore';
 
 // ------------------ CREATE CLIENT ------------------
 export const client = axios.create({
@@ -116,7 +115,7 @@ client.interceptors.response.use(
       } catch (refreshError) {
         processQueue(refreshError, null);
         await clearTokens();
-        store.dispatch(setIsUnAutharized(true));
+        useGeneralStore.getState().setIsUnAutharized(true);
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;

@@ -2,7 +2,6 @@
 import { io, Socket } from 'socket.io-client';
 import { getAsyncStorage } from '@/utils/helper.utils';
 import { ASYNC_KEYS } from '@/utils/contant.utils';
-import { store } from '@/store';
 import { SOCKET_URL } from '../config';
 
 class SocketService {

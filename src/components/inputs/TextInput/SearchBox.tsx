@@ -6,12 +6,12 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import FilterIcon from '@/assets/svg/FilterIcon';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   value: string;
@@ -38,8 +38,8 @@ export default function SearchBox({
   onFocus,
   onBlur,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   return (
     <View style={[styles.searchContainer, style]}>
@@ -95,7 +95,7 @@ const createStyle = (themeColor: themeType) =>
       borderRadius: 8,
       padding: 10,
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       color: themeColor.text,
       width: '90%',
       height: 50,

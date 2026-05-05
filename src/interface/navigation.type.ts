@@ -11,10 +11,11 @@ import { CMS_TYPE, ERoles, EStatusFeedbackType } from './general.type';
 
 export type TRootStack = {
   SplashScreen: undefined;
-
+  LandingScreen: undefined;
   // These must wrap child stacks in NavigatorScreenParams
   MainStack: NavigatorScreenParams<TMainStack>;
   AuthStack: NavigatorScreenParams<TAuthStack>;
+  LanguageScreen: undefined;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -22,11 +23,7 @@ export type TRootStack = {
 /* -------------------------------------------------------------------------- */
 
 export type TAuthStack = {
-  LandingScreen: undefined;
-  Login: {
-    referralCode?: string;
-    role: ERoles;
-  };
+  Login: undefined;
   Signup: {
     role: ERoles;
   };
@@ -63,6 +60,10 @@ export type TAddressObj = {
 export type TMainStack = {
   TabStack: NavigatorScreenParams<TBottomTabStack>;
   DrawerStack: NavigatorScreenParams<TDrawerStack>;
+  KycDetails: undefined;
+  AddMoneyInitial: undefined;
+  AddMoney: undefined;
+  Withdraw: undefined;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -71,24 +72,24 @@ export type TMainStack = {
 
 export type TBottomTabStack = {
   HomeScreen: undefined;
-  SearchScreen: undefined;
-  StoreScreen: undefined;
-  LibraryScreen: undefined;
+  InvestScreen: undefined;
+  WalletScreen: undefined;
+  RewardScreen: undefined;
   ProfileScreen: undefined;
 };
 
 export type THomeScreenProps = StackScreenProps<TBottomTabStack, 'HomeScreen'>;
-export type TSearchScreenProps = StackScreenProps<
+export type TInvestScreenProps = StackScreenProps<
   TBottomTabStack,
-  'SearchScreen'
+  'InvestScreen'
 >;
-export type TStoreScreenProps = StackScreenProps<
+export type TWalletScreenProps = StackScreenProps<
   TBottomTabStack,
-  'StoreScreen'
+  'WalletScreen'
 >;
-export type TLibraryScreenProps = StackScreenProps<
+export type TRewardScreenProps = StackScreenProps<
   TBottomTabStack,
-  'LibraryScreen'
+  'RewardScreen'
 >;
 export type TProfileScreenProps = StackScreenProps<
   TBottomTabStack,
@@ -102,11 +103,15 @@ export type TProfileScreenProps = StackScreenProps<
 export type TRootStackProps = StackScreenProps<TRootStack, 'MainStack'>;
 
 export type TSplashStackProps = StackScreenProps<TRootStack, 'SplashScreen'>;
+export type TLanguageScreenProps = StackScreenProps<
+  TRootStack,
+  'LanguageScreen'
+>;
 
 /* ---------------------- Auth Stacks ------------------------------ */
 
 export type TLandingScreenStackProps = StackScreenProps<
-  TAuthStack,
+  TRootStack,
   'LandingScreen'
 >;
 
@@ -117,6 +122,13 @@ export type TSignupStackProps = StackScreenProps<TAuthStack, 'Signup'>;
 export type TOtpVerificationStackProps = StackScreenProps<
   TAuthStack,
   'OtpVerification'
+>;
+
+export type TWithdrawProps = StackScreenProps<TMainStack, 'Withdraw'>;
+export type TAddMoneyProps = StackScreenProps<TMainStack, 'AddMoney'>;
+export type TAddMoneyInitialProps = StackScreenProps<
+  TMainStack,
+  'AddMoneyInitial'
 >;
 
 /* -------------------------------------------------------------------------- */
@@ -130,3 +142,4 @@ export type SigninProps = CompositeScreenProps<
     StackScreenProps<TMainStack>
   >
 >;
+

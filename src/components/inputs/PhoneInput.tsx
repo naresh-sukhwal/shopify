@@ -8,12 +8,12 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
-import { fontSize, fontFamily, MaterialIcons } from '@/utils/fontIcon.utils';
+import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { ICountry } from '@/utils/countryData';
 import CountryPickerSheet from '@/components/bottomSheets/CountryPickerSheet';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface PhoneInputProps {
   value: string;
@@ -24,7 +24,6 @@ interface PhoneInputProps {
   placeholder?: string;
   containerStyle?: ViewStyle;
   editable?: boolean;
-  inputWrapperStyle?: ViewStyle;
   label?: string;
   labelStyle?: TextStyle;
 }
@@ -35,49 +34,34 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   selectedCountry,
   onSelectCountry,
   errorMsg,
-  placeholder = 'Mobile number',
+  placeholder = 'Enter 10-digit number',
   containerStyle,
   editable = true,
-  inputWrapperStyle,
   label,
   labelStyle,
 }) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = createStyle(themeColor);
-  const countrySheetRef = useRef<any>(null); // Ref for BottomSheet
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
+  const countrySheetRef = useRef<any>(null);
 
   return (
     <View style={[styles.container, containerStyle]}>
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-      <View style={[styles.inputWrapper, inputWrapperStyle]}>
-        {/* Country Picker Trigger */}
+      <View style={styles.inputRow}>
         <TouchableOpacity
-          style={styles.countryButton}
+          style={styles.countryBox}
           onPress={() => countrySheetRef.current?.open()}
           activeOpacity={0.7}
         >
-          <Text style={styles.flagText}>{selectedCountry?.flag}</Text>
-          <Text style={styles.dialCodeText}>{selectedCountry?.dialCode}</Text>
-          <MaterialIcons
-            name="keyboard-arrow-down"
-            size={24} // Slightly larger for better touch target
-            color={themeColor.text}
+          <Text style={styles.dialCode}>{selectedCountry?.dialCode}</Text>
+          <Ionicons
+            name="chevron-down"
+            size={fontSize.f14}
+            color={themeColor.secondary}
           />
         </TouchableOpacity>
 
-        {/* Separator - Exact match: Vertical line */}
-        <View style={styles.separatorContainer}>
-          <View style={styles.separator} />
-        </View>
-
-        {/* Phone Input */}
-        <View style={styles.textInputContainer}>
-          <MaterialIcons
-            name="local-phone"
-            size={20}
-            color={themeColor.textS2}
-            style={styles.icon}
-          />
+        <View style={styles.phoneInputBox}>
           <TextInput
             style={styles.textInput}
             placeholder={placeholder}
@@ -85,14 +69,13 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
             value={value}
             onChangeText={onChangeText}
             keyboardType="phone-pad"
-            maxLength={15}
+            maxLength={10}
             editable={editable}
           />
         </View>
       </View>
       {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
 
-      {/* Country Picker Sheet */}
       <CountryPickerSheet
         sheetRef={countrySheetRef}
         onSelect={onSelectCountry}
@@ -107,75 +90,55 @@ export default PhoneInput;
 const createStyle = (theme: themeType) =>
   StyleSheet.create({
     container: {
-      marginBottom: 10,
+      width: '100%',
     },
-    inputWrapper: {
+    label: {
+      color: theme.textS2,
+      fontFamily: fontFamily.medium,
+      fontSize: fontSize.f14,
+      marginBottom: 12,
+    },
+    inputRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      borderWidth: 1.5, // slightly thicker for prominence
-      borderColor: theme.primary, // Exact color match
-      borderRadius: 12,
-      backgroundColor: theme.backgroundColor,
-      height: 56, // Standard height
+    },
+    countryBox: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.primaryS3,
+      height: 60,
+      paddingHorizontal: 12,
+      borderRadius: 15,
+      marginRight: 12,
       overflow: 'hidden',
     },
-    countryButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 12,
-      height: '100%',
-    },
-    flagText: {
-      fontSize: 24,
-      marginRight: 6,
-      color: theme.text,
-    },
-    dialCodeText: {
-      fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
-      color: theme.text,
+    dialCode: {
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      color: theme.secondary,
       marginRight: 4,
     },
-    separatorContainer: {
-      height: '60%',
+    phoneInputBox: {
+      flex: 1,
+      height: 60,
+      backgroundColor: theme.backgroundColorS1,
+      borderWidth: 1,
+      borderColor: 'rgba(0,0,0,0.1)',
+      borderRadius: 15,
+      paddingHorizontal: 15,
       justifyContent: 'center',
     },
-    separator: {
-      width: 1,
-      height: '100%',
-      backgroundColor: theme.textS2, // Color for separator, using textS2 for subtle grey
-      opacity: 0.5,
-      marginHorizontal: 0,
-    },
-    textInputContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: 12,
-      height: '100%',
-    },
-    icon: {
-      marginRight: 8,
-    },
     textInput: {
-      flex: 1,
-      fontSize: fontSize.f16,
-      fontFamily: fontFamily.montserratMedium,
-      color: theme.text,
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      color: theme.secondary,
+      paddingVertical: 0,
       height: '100%',
     },
     errorText: {
       color: theme.red,
       fontSize: fontSize.f12,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.medium,
       marginTop: 4,
-      marginLeft: 4,
-    },
-    label: {
-      color: theme.text,
-      fontFamily: fontFamily.montserratSemiBold,
-      fontSize: fontSize.f16,
-      alignSelf: 'flex-start',
-      marginLeft: 4,
     },
   });

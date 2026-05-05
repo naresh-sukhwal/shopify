@@ -1,12 +1,5 @@
-import React, { useMemo } from 'react';
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import { useTranslation } from 'react-i18next';
 import { height } from '@/utils/responsive.utils';

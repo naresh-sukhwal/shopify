@@ -2,8 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ASYNC_KEYS } from './contant.utils';
 import moment from 'moment';
 import { Alert, I18nManager, Linking, Share, ToastAndroid } from 'react-native';
-import { store } from '@/store';
-import { resetUser } from '@/store/AuthSlice';
 import { EShare, OrderStatus } from '@/interface/general.type';
 import { themeType } from '@/interface/theme.type';
 import { navigateAndSimpleReset } from './navigation.utils';
@@ -11,6 +9,7 @@ import messaging from '@react-native-firebase/messaging';
 import { stopNotificationSound } from './notification.utils';
 import { clearTokens, client } from '@/service/rest';
 import { ENotificationType } from '@/interface/notification.type';
+import { useAuthStore } from '@/store/authStore';
 
 export const setAsyncStorage = async (key: string, value: any) => {
   if (!key) {
@@ -64,9 +63,9 @@ export const onLogout = async () => {
   // const topic = `user_${store.getState().AuthManager?.user?._id}`;
   // console.log('topic unscbscribe successfully: ', topic);
   // messaging().subscribeToTopic(topic);
-  await messaging().deleteToken();
-  await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
-  store.dispatch(resetUser());
+  // await messaging().deleteToken();
+  // await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
+  useAuthStore.getState().resetUser();
   clearTokens();
   delete client.defaults.headers.common['Authorization'];
   AsyncStorage.removeItem(ASYNC_KEYS.ACCESS_TOKEN);
@@ -228,4 +227,17 @@ export const setupTokenRefreshListener = () => {
       await setAsyncStorage(key, token);
     }
   });
+};
+
+export const getSalutation = () => {
+  const hour = moment().hour();
+  if (hour >= 5 && hour < 12) {
+    return 'common.good_morning';
+  } else if (hour >= 12 && hour < 17) {
+    return 'common.good_afternoon';
+  } else if (hour >= 17 && hour < 21) {
+    return 'common.good_evening';
+  } else {
+    return 'common.good_night';
+  }
 };

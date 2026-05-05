@@ -1,114 +1,87 @@
+import React from 'react';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { themeType } from '@/interface/theme.type';
-import { RootState } from '@/store';
-import {
-  fontSize as fs,
-  fontFamily,
-  Ionicons,
-  MaterialIcons,
-} from '@/utils/fontIcon.utils';
-import React, { useMemo } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
-import { IMAGES } from '@/assets';
-import { OptionMenuComponent } from '@/components';
-import { MenuOptionItem } from '@/components/modal/OptionMenuComponent';
-import { useNavigation } from '@react-navigation/native';
-import { onLogout } from '@/utils/helper.utils';
+import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { wp, hp } from '@/utils/responsive.utils';
 
-interface HeaderProps {
-  onProfilePress?: () => void;
+import LinearGradient from 'react-native-linear-gradient';
+
+import { useTranslation } from 'react-i18next';
+
+interface MainHeaderProps {
+  greeting?: string;
+  name?: string;
+  isKycVerified?: boolean;
+  isBankLinked?: boolean;
+  showUserIcon?: boolean;
+  onNotificationPress?: () => void;
+  onUserPress?: () => void;
 }
 
-const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
-  const navigation: any = useNavigation();
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const { walletData } = useSelector(
-    (state: RootState) => state.GeneralManager,
-  );
-  const { user } = useSelector((state: RootState) => state.AuthManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
-
-  const sidebarOptions: MenuOptionItem[] = [
-    { label: 'Profile', showDivider: true, action: () => {} },
-    {
-      label: 'Partners',
-      renderRight: () => (
-        <View style={styles.membershipBadge}>
-          <Text style={styles.membershipCode}>CORE</Text>
-          <MaterialIcons name="handshake" size={14} color="#B8860B" />
-        </View>
-      ),
-      action: () => navigation.navigate('PartnerFormScreen'),
-    },
-    { label: 'Social', action: () => navigation.navigate('SocialHome') },
-    { label: 'My Bookings', action: () => navigation.navigate('MyBooking') },
-    { label: 'Legal', showDivider: true, action: () => {} },
-    {
-      label: 'Membership',
-      renderRight: () => (
-        <View style={styles.membershipBadge}>
-          <Text style={styles.membershipCode}>CORE</Text>
-          <MaterialIcons name="diamond" size={14} color="#B8860B" />
-        </View>
-      ),
-      action: () => navigation.navigate('VIPMembershipScreen'),
-    },
-    {
-      label: 'My Library',
-      action: () => navigation.navigate('MyLibraryScreen'),
-    },
-    { label: 'Ads Center', action: () => {} },
-    {
-      label: 'Wallet',
-      showDivider: true,
-      renderRight: () => (
-        <View style={styles.walletDisplay}>
-          <Ionicons name="cash" size={16} color="#DAA520" />
-          <Text style={styles.walletBalance}>{walletData?.walletBalance}</Text>
-        </View>
-      ),
-      action: () => {
-        navigation.navigate('MyWallet');
-      },
-    },
-    { label: 'Settings', action: () => {} },
-    {
-      label: 'Logout',
-      action: () => {
-        onLogout();
-      },
-    },
-  ];
+const MainHeader: React.FC<MainHeaderProps> = ({
+  greeting = 'Good morning',
+  name = 'Aarav',
+  isKycVerified = true,
+  isBankLinked = true,
+  showUserIcon = true,
+  onNotificationPress,
+  onUserPress,
+}) => {
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftSection}>
-        <OptionMenuComponent
-          button={
-            <View style={styles.menuTriggerBtn}>
-              <Ionicons name="menu" size={35} color={themeColor.white} />
-              <Text style={styles.logoText}>Glimpzik</Text>
+      <View style={styles.contentWrapper}>
+        <View style={styles.leftSection}>
+          <Text style={styles.greetingText}>{greeting}</Text>
+          <Text style={styles.nameText}>{name}</Text>
+          
+          <View style={styles.statusPill}>
+            <View style={styles.statusItem}>
+              <View style={[styles.dot, { backgroundColor: isKycVerified ? themeColor.green : themeColor.red }]} />
+              <Text style={styles.statusText}>{t('wallet.kyc_verified')}</Text>
             </View>
-          }
-          triggerWidth={150}
-          options={sidebarOptions}
-          menuStyle={{ width: 250, marginTop: 10 }}
-        />
-      </View>
+            <View style={styles.separator} />
+            <View style={styles.statusItem}>
+              <Text style={styles.statusText}>{t('wallet.bank_linked')}</Text>
+            </View>
+          </View>
+        </View>
 
-      <TouchableOpacity
-        onPress={onProfilePress}
-        style={styles.profileContainer}
-        activeOpacity={0.8}
-      >
-        <Image
-          source={
-            user?.profilePhoto ? { uri: user.profilePhoto } : IMAGES.person
-          }
-          style={styles.profileImage}
-          tintColor={themeColor.secondary}
-        />
-      </TouchableOpacity>
+        <View style={styles.rightSection}>
+          <TouchableOpacity 
+            style={styles.iconButton} 
+            onPress={onNotificationPress}
+            activeOpacity={0.7}
+          >
+            <Ionicons name="notifications-outline" size={24} color={themeColor.secondary} />
+          </TouchableOpacity>
+          
+          {showUserIcon && (
+            <TouchableOpacity 
+              style={styles.iconButton} 
+              onPress={onUserPress}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="person-outline" size={24} color={themeColor.secondary} />
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+      <LinearGradient
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        colors={[
+          'rgba(225, 189, 58, 0)',
+          'rgba(225, 189, 58, 0.4)',
+          'rgba(225, 189, 58, 0)',
+        ]}
+        style={styles.bottomLine}
+      />
     </View>
   );
 };
@@ -116,62 +89,91 @@ const MainHeader: React.FC<HeaderProps> = ({ onProfilePress }) => {
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-      height: 80,
       backgroundColor: 'transparent',
     },
+    contentWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      paddingHorizontal: wp('5%'),
+      paddingTop: hp('1.5%'),
+      paddingBottom: hp('1%'),
+    },
     leftSection: {
+      flex: 1,
+    },
+    greetingText: {
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      color: themeColor.secondaryS2,
+    },
+    nameText: {
+      fontSize: fontSize.f24,
+      fontFamily: fontFamily.bold,
+      color: themeColor.secondary,
+      marginTop: -2,
+    },
+    statusPill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: themeColor.white,
+      borderRadius: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+      marginTop: 8,
+      alignSelf: 'flex-start',
+      borderWidth: 1,
+      borderColor: themeColor.primaryS1,
+    },
+    statusItem: {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    menuTriggerBtn: {
+    dot: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      marginRight: 6,
+    },
+    statusText: {
+      fontSize: fontSize.f11,
+      fontFamily: fontFamily.medium,
+      color: themeColor.secondary,
+    },
+    separator: {
+      width: 1,
+      height: 12,
+      backgroundColor: themeColor.borderColor,
+      marginHorizontal: 8,
+    },
+    rightSection: {
       flexDirection: 'row',
       alignItems: 'center',
+      gap: 10,
     },
-    logoText: {
-      color: '#FFFFFF',
-      fontSize: fs.f24,
-      fontFamily: fontFamily.montserratSemiBold,
-      marginLeft: 15,
-    },
-    profileContainer: {
-      width: 55,
-      height: 55,
-      borderRadius: 33,
-      borderWidth: 3,
-      borderColor: themeColor.secondary,
-      overflow: 'hidden',
-      padding: 2,
-      alignItems: 'center',
+    iconButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 14,
+      backgroundColor: themeColor.white,
       justifyContent: 'center',
-    },
-    profileImage: {
-      width: '80%',
-      height: '80%',
-      borderRadius: 30,
-    },
-    // Custom Menu Item Styles
-    membershipBadge: {
       alignItems: 'center',
+      shadowColor: themeColor.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 5,
+      elevation: 2,
     },
-    membershipCode: {
-      fontSize: 8,
-      color: '#B8860B',
-      fontFamily: fontFamily.montserratBold,
-    },
-    walletDisplay: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    walletBalance: {
-      fontSize: fs.f16,
-      color: '#4169E1',
-      marginLeft: 5,
-      fontFamily: fontFamily.montserratMedium,
+    bottomLine: {
+      height: 1.5,
+      width: wp('100%'),
+      position: 'absolute',
+      bottom: 0,
+      alignSelf: 'center',
     },
   });
 
+
+
 export default MainHeader;
+

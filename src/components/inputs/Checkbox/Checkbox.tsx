@@ -6,17 +6,16 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import {
-  Entypo,
   fontFamily,
   fontSize,
   MaterialDesignIcons,
 } from '@/utils/fontIcon.utils';
-import { fSize } from '@/utils/responsive.utils';
-import { RootState, store } from '@/store';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import { useThemeStore } from '@/store/themeStore';
 
 type props = {
   label?: string;
@@ -33,14 +32,14 @@ export default function Checkbox({
   value = false,
   onChange,
   label = '',
-  activeColor = store.getState().ThemeManager.themeColor.primary,
-  inactiveColor = store.getState().ThemeManager.themeColor.gray,
+  activeColor = useThemeStore.getState().themeColor.primary,
+  inactiveColor = useThemeStore.getState().themeColor.gray,
   containerStyle,
   checkboxStyle,
   labelStyle,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   return (
     <View style={[styles.container, containerStyle]}>
       <MaterialDesignIcons
@@ -63,7 +62,7 @@ const createStyle = (theme: themeType) =>
       gap: 10,
     },
     label: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
       color: theme.text,
     },

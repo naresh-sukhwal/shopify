@@ -1,9 +1,9 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   tabData: Array<{ label: string; value: string }>;
@@ -18,8 +18,8 @@ export default function TabHeader({
   currentTab,
   variant = 'underline',
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   // Pill Container Style
   const containerStyle =
@@ -95,7 +95,7 @@ const createStyle = (themeColor: themeType) =>
     },
     tabText: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
     },
     // Pill Styles
     pillContainer: {
@@ -115,6 +115,6 @@ const createStyle = (themeColor: themeType) =>
     },
     pillText: {
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
     },
   });

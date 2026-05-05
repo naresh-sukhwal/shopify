@@ -53,8 +53,6 @@ export const requestPermission = async (permissionType: any) => {
     permissionType == PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
   ) {
     msg = 'Please enable the Location permission in your app settings.';
-  } else if (permissionType == PERMISSIONS.ANDROID.POST_NOTIFICATIONS) {
-    msg = 'Enable notification permission to get update on app';
   }
 
   try {

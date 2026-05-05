@@ -3,6 +3,7 @@ export enum InfoVariant {
   INFO = 'info',
   WARNING = 'warning',
   ERROR = 'error',
+  PAYMENT = 'payment',
 }
 
 export enum OnlineStatus {

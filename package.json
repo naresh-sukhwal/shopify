@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
+    "type-check": "tsc --noEmit",
     "androidReleaseAPK": "yarn android --mode release",
     "gradleClean": "cd android/app && rm -rf build && cd ../.. && cd android && ./gradlew clean && cd ..",
     "debugbuild": "cd android && ./gradlew clean && cd .. && npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug",
@@ -16,6 +17,7 @@
   "dependencies": {
     "@notifee/react-native": "^9.1.8",
     "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/datetimepicker": "^8.5.1",
     "@react-native-community/netinfo": "^11.4.1",
     "@react-native-documents/picker": "^11.0.3",
@@ -72,7 +74,8 @@
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.3",
-    "yup": "^1.7.1"
+    "yup": "^1.7.1",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

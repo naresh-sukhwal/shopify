@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Pressable, ViewStyle } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize, Ionicons, Entypo } from '@/utils/fontIcon.utils';
 import { pick, types } from '@react-native-documents/picker';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { useTranslation } from 'react-i18next';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type Props = {
   type?: 'DOCUMENT';
@@ -27,8 +27,8 @@ export default function DocumentPicker({
   allowedTypes = [types.pdf, types.images, types.doc, types.docx],
   style,
 }: Props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const { t } = useTranslation();
 
   const handleDocumentSelect = async () => {
@@ -120,7 +120,7 @@ export default function DocumentPicker({
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     label: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f14,
       color: themeColor.black,
       marginBottom: 10,
@@ -145,7 +145,7 @@ const createStyle = (themeColor: themeType) =>
       paddingHorizontal: 20,
     },
     documentText: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
       color: themeColor.primary,
       textAlign: 'center',
@@ -165,14 +165,14 @@ const createStyle = (themeColor: themeType) =>
     },
     selectFileBtnText: {
       color: themeColor.primary,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f16,
     },
     maxSizeText: {
       marginTop: 15,
       color: '#8A94A6',
       fontSize: fontSize.f14,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       textAlign: 'center',
     },
     previewContainer: {
@@ -188,7 +188,7 @@ const createStyle = (themeColor: themeType) =>
     },
     fileName: {
       marginTop: 10,
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       fontSize: fontSize.f14,
       color: themeColor.text,
       maxWidth: 200,

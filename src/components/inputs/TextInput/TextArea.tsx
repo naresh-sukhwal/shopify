@@ -3,18 +3,19 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TextInputProps,
   TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React from 'react';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
-type props = {
+type props = TextInputProps & {
   placeHolder?: string;
   onChangeText: (e: string) => void;
   numberOfLines?: number;
@@ -41,8 +42,8 @@ const TextArea = ({
   isRequired = false,
   containerStyle,
 }: props) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const themeColor = useThemeColor();
+  const styles = useThemedStyles(createStyle);
   return (
     <View style={[style]}>
       {label !== '' ? (
@@ -91,16 +92,16 @@ const createStyle = (Colors: themeType) =>
       padding: 10,
       borderRadius: 7,
       textAlignVertical: 'top',
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       fontSize: fontSize.f14,
       color: Colors.text,
       height: 130,
       width: '100%',
     },
     label: {
-      color: Colors.primaryS1,
-      fontFamily: fontFamily.montserratSemiBold,
-      fontSize: fontSize.f12,
+      color: Colors.text,
+      fontFamily: fontFamily.semiBold,
+      fontSize: fontSize.f16,
       alignSelf: 'flex-start',
       marginLeft: 4,
     },

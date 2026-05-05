@@ -6,9 +6,7 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
-import React, { useMemo, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React, { useEffect, useRef } from 'react';
 import { themeType } from '@/interface/theme.type';
 import { height, width } from '@/utils/responsive.utils';
 import {
@@ -16,6 +14,8 @@ import {
   fontSize,
   MaterialDesignIcons,
 } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type Props = {
   title?: string;
@@ -30,10 +30,8 @@ export default function EmptyListComponent({
   buttonText,
   onPress,
 }: Props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
-
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const floatAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -135,13 +133,13 @@ const createStyle = (themeColor: themeType) =>
     },
     title: {
       marginTop: 20,
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f18,
       color: themeColor.text,
     },
     subtitle: {
       marginTop: 8,
-      fontFamily: fontFamily.montserratRegular,
+      fontFamily: fontFamily.regular,
       fontSize: fontSize.f14,
       color: themeColor.gray,
       textAlign: 'center',
@@ -156,7 +154,7 @@ const createStyle = (themeColor: themeType) =>
     },
     buttonText: {
       color: '#fff',
-      fontFamily: fontFamily.montserratSemiBold,
+      fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f14,
     },
   });

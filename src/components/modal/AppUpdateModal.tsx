@@ -1,14 +1,14 @@
 import { Linking, Modal, StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { CustomButton } from '..';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import FastImage from 'react-native-fast-image';
 import { IMAGES } from '@/assets';
 import { height, width } from '@/utils/responsive.utils';
 import VersionCheck from 'react-native-version-check';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   visible: boolean;
@@ -16,8 +16,8 @@ type props = {
 };
 
 export default function AppUpdateModal({ visible, onClose }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   const onPress = async () => {
     try {
@@ -66,13 +66,13 @@ export default function AppUpdateModal({ visible, onClose }: props) {
 const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     title: {
-      fontFamily: fontFamily.montserratBold,
+      fontFamily: fontFamily.bold,
       color: themeColor.descriptionText,
       fontSize: fontSize.f24,
       marginTop: 20,
     },
     subtitle: {
-      fontFamily: fontFamily.montserratMedium,
+      fontFamily: fontFamily.medium,
       color: themeColor.lightTextBlack,
       fontSize: fontSize.f16,
       textAlign: 'center',

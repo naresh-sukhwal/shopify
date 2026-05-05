@@ -1,4 +1,3 @@
-import { INITIAL_REGION } from '@/utils/contant.utils';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type initialStateType = {
