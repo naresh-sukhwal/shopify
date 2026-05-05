@@ -1,17 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useMemo} from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { fontSize } from '@/utils/fontIcon.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface props {
   errorMsg: string | undefined;
 }
 
-export default function ErrorText({errorMsg}: props) {
-  const {themeColor} = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+export default function ErrorText({ errorMsg }: props) {
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   return <Text style={styles.error}>{errorMsg}</Text>;
 }
 

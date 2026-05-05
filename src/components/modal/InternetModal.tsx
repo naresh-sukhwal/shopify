@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { CustomModal } from '..';
 import { fontFamily, fontSize, MaterialIcons } from '@/utils/fontIcon.utils';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   visible: boolean;
@@ -12,8 +12,8 @@ type props = {
 };
 
 export default function InternetModal({ visible, onClose }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   return (
     <CustomModal visibleModel={visible} closeModal={onClose}>
       <View style={{ alignItems: 'center', width: '100%' }}>

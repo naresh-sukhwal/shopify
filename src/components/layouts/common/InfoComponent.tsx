@@ -1,79 +1,297 @@
-// InfoComponent.tsx
 import { InfoVariant } from '@/interface/general.type';
-import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
-import React from 'react';
+import {
+  fontFamily,
+  fontSize,
+  Ionicons,
+  MaterialIcons,
+  MaterialDesignIcons,
+  Feather,
+  Entypo,
+  AntDesign,
+  Fontisto,
+} from '@/utils/fontIcon.utils';
+import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
+import * as types from '@/interface';
 
-interface InfoComponentProps {
-  message: string;
-  variant: InfoVariant;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+export interface InfoTag {
+  icon: string;
+  label: string;
+  iconType?:
+    | 'Ionicons'
+    | 'MaterialIcons'
+    | 'MaterialDesignIcons'
+    | 'Feather'
+    | 'Entypo'
+    | 'AntDesign'
+    | 'Fontisto';
 }
 
-const variantConfig = {
-  [InfoVariant.SUCCESS]: {
-    icon: 'checkmark-circle-outline',
-    color: '#2e7d32',
-    background: '#e8f5e9',
-  },
-  [InfoVariant.INFO]: {
-    icon: 'information-circle-outline',
-    color: '#0288d1',
-    background: '#e1f5fe',
-  },
-  [InfoVariant.WARNING]: {
-    icon: 'warning-outline',
-    color: '#f57c00',
-    background: '#fff3e0',
-  },
-  [InfoVariant.ERROR]: {
-    icon: 'alert-circle-outline',
-    color: '#d32f2f',
-    background: '#ffebee',
-  },
-};
+interface InfoComponentProps {
+  title?: string;
+  description?: string;
+  message?: string;
+  variant?: InfoVariant;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  isDark?: boolean;
+  isCard?: boolean;
+  points?: string[];
+  tags?: InfoTag[];
+  customIcon?: string;
+  iconType?:
+    | 'Ionicons'
+    | 'MaterialIcons'
+    | 'MaterialDesignIcons'
+    | 'Feather'
+    | 'Entypo'
+    | 'AntDesign'
+    | 'Fontisto';
+}
 
 const InfoComponent: React.FC<InfoComponentProps> = ({
+  title,
+  description,
   message,
-  variant,
+  variant = InfoVariant.INFO,
   style,
   textStyle,
+  isDark = false,
+  isCard = false,
+  points,
+  tags,
+  customIcon,
+  iconType = 'Ionicons',
 }) => {
-  const config = variantConfig[variant];
+  const styles = useThemedStyles(createStyles);
+  const themeColor = useThemeColor();
+
+  const config = useMemo(() => {
+    const variantConfig = {
+      [InfoVariant.SUCCESS]: {
+        icon: 'checkmark-circle-outline',
+        color: '#059669',
+        background: '#ECFDF5',
+        iconBg: '#ECFDF5',
+      },
+      [InfoVariant.INFO]: {
+        icon: 'information-circle-outline',
+        color: themeColor.secondaryS2,
+        background: themeColor.primaryS1,
+        iconBg: '#F1F5F9',
+      },
+      [InfoVariant.WARNING]: {
+        icon: 'warning-outline',
+        color: '#D97706',
+        background: '#FEF9E7',
+        iconBg: '#FEF9E7',
+      },
+      [InfoVariant.ERROR]: {
+        icon: 'alert-circle-outline',
+        color: themeColor.red,
+        background: themeColor.redS1,
+        iconBg: themeColor.redS1,
+      },
+      [InfoVariant.PAYMENT]: {
+        icon: 'checkmark-circle-outline',
+        color: themeColor.secondary,
+        background: themeColor.white,
+        iconBg: themeColor.grayS3,
+      },
+    };
+    return variantConfig[variant];
+  }, [variant, themeColor]);
+
+  const backgroundColor = isDark 
+    ? themeColor.secondary 
+    : isCard 
+      ? themeColor.white 
+      : config.background;
+
+  const textColor = isDark ? themeColor.white : themeColor.secondary;
+  const descriptionColor = isDark ? 'rgba(255,255,255,0.7)' : themeColor.secondaryS2;
+  const iconColor = isDark ? themeColor.white : config.color;
+  const iconBg = isDark ? 'rgba(255,255,255,0.1)' : config.iconBg;
+
+  const renderIcon = (
+    name: string,
+    size: number,
+    color: string,
+    type: string,
+  ) => {
+    switch (type) {
+      case 'MaterialIcons':
+        return <MaterialIcons name={name as any} size={size} color={color} />;
+      case 'MaterialDesignIcons':
+        return (
+          <MaterialDesignIcons name={name as any} size={size} color={color} />
+        );
+      case 'Feather':
+        return <Feather name={name as any} size={size} color={color} />;
+      case 'Entypo':
+        return <Entypo name={name as any} size={size} color={color} />;
+      case 'AntDesign':
+        return <AntDesign name={name as any} size={size} color={color} />;
+      case 'Fontisto':
+        return <Fontisto name={name as any} size={size} color={color} />;
+      default:
+        return <Ionicons name={name as any} size={size} color={color} />;
+    }
+  };
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: config.background }, style]}
-    >
-      <Ionicons
-        name={config.icon as any}
-        size={24}
-        color={config.color}
-        style={styles.icon}
-      />
-      <Text style={[styles.text, { color: config.color }, textStyle]}>
-        {message}
-      </Text>
+    <View style={[styles.container, { backgroundColor }, isCard && styles.cardShadow, style]}>
+      <View style={styles.contentRow}>
+        <View style={[styles.iconContainer, { backgroundColor: iconBg }, isDark && styles.darkIconContainer]}>
+          {renderIcon(customIcon || config.icon, 24, iconColor, iconType)}
+        </View>
+        <View style={styles.textContainer}>
+          {title && (
+            <Text style={[styles.title, { color: textColor }]}>{title}</Text>
+          )}
+          {(description || message) && (
+            <Text
+              style={[
+                styles.description,
+                { color: descriptionColor },
+                textStyle,
+              ]}
+            >
+              {description || message}
+            </Text>
+          )}
+
+          {points && points.length > 0 && (
+            <View style={styles.pointsContainer}>
+              {points.map((point, index) => (
+                <View key={index} style={styles.pointRow}>
+                  <Text style={[styles.bullet, { color: descriptionColor }]}>
+                    •
+                  </Text>
+                  <Text
+                    style={[styles.pointText, { color: descriptionColor }]}
+                  >
+                    {point}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+
+          {tags && tags.length > 0 && (
+            <View style={styles.tagsContainer}>
+              {tags.map((tag, index) => (
+                <View key={index} style={[styles.tag, isDark && styles.darkTag]}>
+                  {renderIcon(
+                    tag.icon,
+                    14,
+                    iconColor,
+                    tag.iconType || 'Ionicons',
+                  )}
+                  <Text style={[styles.tagText, { color: textColor }]}>
+                    {tag.label}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    padding: 12,
-    borderRadius: 8,
-    marginVertical: 6,
-  },
-  icon: {
-    marginRight: 8,
-  },
-  text: {
-    fontSize: fontSize.f14,
-    fontFamily: fontFamily.medium,
-    width: '90%',
-  },
-});
+const createStyles = (themeColor: types.themeType) =>
+  StyleSheet.create({
+    container: {
+      padding: 16,
+      borderRadius: 24,
+      marginVertical: 8,
+    },
+    cardShadow: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.05,
+      shadowRadius: 10,
+      elevation: 2,
+    },
+    contentRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    iconContainer: {
+      width: 48,
+      height: 48,
+      borderRadius: 14,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 12,
+    },
+    darkIconContainer: {
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      borderRadius: 12,
+    },
+    textContainer: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    title: {
+      fontSize: fontSize.f16,
+      fontFamily: fontFamily.bold,
+      marginBottom: 2,
+    },
+    description: {
+      fontSize: fontSize.f13,
+      fontFamily: fontFamily.medium,
+      lineHeight: 20,
+    },
+    pointsContainer: {
+      marginTop: 8,
+    },
+    pointRow: {
+      flexDirection: 'row',
+      marginBottom: 4,
+      alignItems: 'flex-start',
+    },
+    bullet: {
+      fontSize: fontSize.f14,
+      marginRight: 8,
+    },
+    pointText: {
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      flex: 1,
+    },
+    tagsContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 12,
+      gap: 8,
+    },
+    tag: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: themeColor.borderColor,
+    },
+    darkTag: {
+      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+      borderColor: 'transparent',
+    },
+    tagText: {
+      fontSize: fontSize.f12,
+      fontFamily: fontFamily.bold,
+      marginLeft: 6,
+    },
+  });
+
+
 
 export default InfoComponent;
+
+

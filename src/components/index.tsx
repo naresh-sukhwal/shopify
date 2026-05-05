@@ -36,6 +36,13 @@ export { default as TabHeader } from '@/components/layouts/tabHeader/TabHeader';
 export { default as BottomTab } from '@/components/layouts/tabHeader/BottomTab';
 export { default as InfoComponent } from '@/components/layouts/common/InfoComponent';
 export { default as AuthComponent } from '@/components/layouts/auth/AuthComponent';
+export { default as IconBackground } from '@/components/layouts/common/IconBackground';
+export { default as IconGradientBorder } from '@/components/layouts/common/IconGradientBorder';
+export { default as AutoMandateSettings } from '@/components/layouts/wallet/AutoMandateSettings';
+export { default as QuantitySelector } from '@/components/layouts/invest/QuantitySelector';
+export { default as CostSummary } from '@/components/layouts/invest/CostSummary';
+
+
 
 // ==================== @/components/loaders ====================
 export { default as PageLoading } from '@/components/loaders/PageLoading';

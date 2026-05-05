@@ -17,7 +17,7 @@ export const LightThemeColors = {
   // Secondary / Tertiary
   secondary: '#0F172A',
   secondaryS1: '#121F3A',
-  secondaryS2: '#0F172A',
+  secondaryS2: '#64748B',
   tertiary: '#9DB2CE',
 
   // Texts
@@ -43,12 +43,18 @@ export const LightThemeColors = {
   grayS2: '#E5E5E5',
   grayS3: '#F9F9FB',
   green: '#00AC47',
-  greenS1: '#D3ECDE',
+  greenS1: '#ECFDF5',
+  greenS2: '#065F46',
   brown: '#301230',
   yellow: '#FAB71D',
   yellowS1: '#FFEFAC75',
   lightOrange: '#FFA432',
+  gold: '#F59E0B',
+  goldLight: '#FDE68A',
+  goldLighter: '#FEF9E7',
+  goldGradient: ['#FDE68A', '#FEF9E7'],
 };
+
 
 // === DARK THEME ===
 // export const DarkThemeColors: themeType = {
@@ -97,7 +103,7 @@ export const LightThemeColors = {
 //   lightOrange: '#FFA432',
 // };
 
-export const DarkThemeColors = LightThemeColors
+export const DarkThemeColors = LightThemeColors;
 // {
 //   // === Base ===
 //   backgroundColor: '#0D0D0D', // Main app background

@@ -1,9 +1,8 @@
-import {Modal, Pressable, StyleSheet, Text, View} from 'react-native';
-import React, {useContext, useMemo} from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import { Modal, StyleSheet, View } from 'react-native';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { height, width } from '@/utils/responsive.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
 type props = {
   closeModal: () => void;
   visibleModel: boolean;
@@ -15,15 +14,15 @@ export default function PopUpModal({
   visibleModel,
   children,
 }: props) {
-  const {themeColor} = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
   return (
     <Modal
       style={styles.modalView}
       animationType="slide"
       transparent={true}
       onRequestClose={closeModal}
-      visible={visibleModel}>
+      visible={visibleModel}
+    >
       <View style={styles.modalView}>
         <View style={[styles.CentredView]}>{children}</View>
       </View>
@@ -41,7 +40,7 @@ const createStyle = (theme: themeType) =>
       justifyContent: 'center',
       alignItems: 'center',
       elevation: 10,
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
     },
     CentredView: {

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,6 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { useNavigationState } from '@react-navigation/native';
@@ -16,6 +14,8 @@ import { onLogout } from '@/utils/helper.utils';
 import { wp, hp } from '@/utils/responsive.utils';
 import { ERoles } from '@/interface';
 import { navigate } from '@/utils/navigation.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 const userProfile = {
   name: 'Kat Deo',
@@ -24,9 +24,8 @@ const userProfile = {
 };
 
 const CustomDrawerContent = ({ navigation }: any) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const { role } = useSelector((state: RootState) => state.AuthManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   const state = useNavigationState((state: any) => state);
   const currentRoute = state?.routes?.[state.index]?.name;
@@ -83,21 +82,21 @@ const CustomDrawerContent = ({ navigation }: any) => {
       label: 'Earn working as an EYE',
       iconName: 'file-tray-stacked-outline',
       screen: 'Earn',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.SEEKER],
     },
     {
       label: 'Refer a Friend',
       iconName: 'share-social-outline',
       screen: 'Refer',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {
       label: 'Legal',
       iconName: 'documents-outline',
       screen: 'Legal',
-      onPress: () => { },
+      onPress: () => {},
       roles: [ERoles.COMMUNITY, ERoles.EYES, ERoles.SEEKER],
     },
     {
@@ -127,8 +126,7 @@ const CustomDrawerContent = ({ navigation }: any) => {
       <ScrollView showsVerticalScrollIndicator={false} style={styles.menuList}>
         {drawerItems.map((item, index) => {
           const isActive = isRouteActive(item.screen);
-          const isRoleActive = item?.roles?.includes(role as any) ?? false;
-          return isRoleActive ? (
+          return (
             <TouchableOpacity
               key={index}
               style={[styles.menuItem, isActive && styles.activeMenuItem]}
@@ -137,7 +135,7 @@ const CustomDrawerContent = ({ navigation }: any) => {
               <View style={styles.iconBox}>{renderIcon(item, isActive)}</View>
               <Text style={styles.menuLabel}>{item.label}</Text>
             </TouchableOpacity>
-          ) : null;
+          );
         })}
       </ScrollView>
     </View>

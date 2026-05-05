@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import BottomSheet from '@/components/bottomSheets/BottomSheet';
 import {
   Entypo,
@@ -15,8 +15,6 @@ import {
   fontSize,
   Ionicons,
 } from '@/utils/fontIcon.utils';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { height, width } from '@/utils/responsive.utils';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -25,21 +23,24 @@ import { useTranslation } from 'react-i18next';
 import FastImage from 'react-native-fast-image';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { IMAGE_MAX_SIZE } from '@/utils/validations.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type dataType = { uri: string | undefined; mime: string; size: number };
 
 type props = {
-  type: 'PROFILE' | 'DOCUMENT' | 'EDIT';
+  type: 'PROFILE' | 'DOCUMENT' | 'EDIT' | 'CUSTOM';
   style?: ViewStyle;
   multiple?: boolean;
   minFile?: number;
   maxFile?: number;
-  onSelectImage: (data: dataType) => void;
+  onSelectImage: (data: any) => void;
   mediaType?: 'photo' | 'video' | 'any';
   title?: string;
   value?: string;
   onDelete?: () => void;
   errorMsg?: string;
+  children?: React.ReactNode;
 };
 
 export default function CustomImagePicker({
@@ -54,14 +55,24 @@ export default function CustomImagePicker({
   value,
   onDelete,
   errorMsg,
+  children,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const bottomSheetRef = useRef<any>(null);
   const { t } = useTranslation();
 
   const renderContent = () => {
     switch (type) {
+      case 'CUSTOM':
+        return (
+          <Pressable
+            style={style}
+            onPress={() => bottomSheetRef.current?.open()}
+          >
+            {children}
+          </Pressable>
+        );
       case 'PROFILE':
         return (
           <Pressable

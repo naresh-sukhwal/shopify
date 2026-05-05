@@ -8,12 +8,12 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { ICountry } from '@/utils/countryData';
 import CountryPickerSheet from '@/components/bottomSheets/CountryPickerSheet';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface PhoneInputProps {
   value: string;
@@ -40,8 +40,8 @@ const PhoneInput: React.FC<PhoneInputProps> = ({
   label,
   labelStyle,
 }) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = createStyle(themeColor);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const countrySheetRef = useRef<any>(null);
 
   return (
@@ -110,7 +110,7 @@ const createStyle = (theme: themeType) =>
       paddingHorizontal: 12,
       borderRadius: 15,
       marginRight: 12,
-      overflow: 'hidden'
+      overflow: 'hidden',
     },
     dialCode: {
       fontSize: fontSize.f14,
@@ -142,5 +142,3 @@ const createStyle = (theme: themeType) =>
       marginTop: 4,
     },
   });
-
-

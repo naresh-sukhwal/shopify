@@ -8,20 +8,13 @@ import {
   Text,
   ActivityIndicator,
   Keyboard,
-  Platform,
 } from 'react-native';
-import React, {
-  useMemo,
-  useCallback,
-  useRef,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import { themeType } from '@/interface/theme.type';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { GOOGLE_API_KEY } from '@/service/config';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type PlacePrediction = {
   place_id: string;
@@ -73,8 +66,8 @@ export default function GoogleAutocomplete({
   fetchDetails = true,
   renderAbove = false,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [predictions, setPredictions] = useState<PlacePrediction[]>([]);

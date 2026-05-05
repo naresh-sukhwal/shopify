@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import React, { useMemo } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { useSelector } from 'react-redux';
 import { fontFamily, fontSize } from '@/utils/fontIcon.utils';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface props {
   title: string;
@@ -41,8 +41,8 @@ export default function CustomButton({
   img,
   isGradiantRequired = true,
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   const isDisabled = useMemo(() => {
     return disable || loading;
@@ -56,7 +56,11 @@ export default function CustomButton({
     >
       <LinearGradient
         style={[styles.container, style]}
-        colors={[themeColor.secondary, themeColor.secondaryS1, themeColor.secondaryS2]}
+        colors={[
+          themeColor.secondary,
+          themeColor.secondaryS1,
+          themeColor.secondary,
+        ]}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
       >
@@ -103,7 +107,6 @@ const createStyle = (theme: themeType) =>
       color: theme.white,
       fontFamily: fontFamily.semiBold,
       fontSize: fontSize.f16,
-      textTransform: 'uppercase',
       letterSpacing: 1,
     },
   });

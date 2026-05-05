@@ -7,9 +7,9 @@ import {
 } from 'react-native-popup-menu';
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
-import { RootState } from '@/store';
-import { useSelector } from 'react-redux';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export interface MenuOptionItem {
   label: string;
@@ -36,8 +36,8 @@ export default function OptionMenuComponent({
   menuStyle,
   triggerWidth = 32,
 }: Props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
 
   return (
     <Menu>
@@ -79,8 +79,8 @@ export default function OptionMenuComponent({
                           color: option.disabled
                             ? themeColor.grayS1
                             : option.isDelete
-                              ? themeColor.red
-                              : themeColor.text,
+                            ? themeColor.red
+                            : themeColor.text,
                         },
                       ]}
                     >

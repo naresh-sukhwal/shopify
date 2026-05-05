@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, Pressable, ViewStyle } from 'react-native';
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
+import React from 'react';
 import { themeType } from '@/interface/theme.type';
 import { fontFamily, fontSize, Ionicons, Entypo } from '@/utils/fontIcon.utils';
 import { pick, types } from '@react-native-documents/picker';
 import ErrorText from '@/components/layouts/error/ErrorText';
 import { useTranslation } from 'react-i18next';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type Props = {
   type?: 'DOCUMENT';
@@ -27,8 +27,8 @@ export default function DocumentPicker({
   allowedTypes = [types.pdf, types.images, types.doc, types.docx],
   style,
 }: Props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const { t } = useTranslation();
 
   const handleDocumentSelect = async () => {

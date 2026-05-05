@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import { BottomSheet } from '@/components';
 import { countryData, ICountry } from '@/utils/countryData';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { themeType } from '@/interface/theme.type';
 import { fontSize, fontFamily, MaterialIcons } from '@/utils/fontIcon.utils';
 import { height } from '@/utils/responsive.utils';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface CountryPickerSheetProps {
   sheetRef: any;
@@ -26,8 +26,8 @@ const CountryPickerSheet: React.FC<CountryPickerSheetProps> = ({
   onSelect,
   selectedCountry,
 }) => {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredData = useMemo(() => {

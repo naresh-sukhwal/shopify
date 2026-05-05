@@ -1,12 +1,12 @@
 import { Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store';
 import { formatDate } from '@/utils/helper.utils';
 import { fSize } from '@/utils/responsive.utils';
 import { fontFamily, Fontisto, fontSize } from '@/utils/fontIcon.utils';
 import { themeType } from '@/interface/theme.type';
+import { useThemedStyles } from '@/hooks/useThemedStyles';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 type props = {
   date: Date | undefined;
@@ -29,8 +29,8 @@ export default function DateTimeInput({
   style,
   mode = 'date',
 }: props) {
-  const { themeColor } = useSelector((state: RootState) => state.ThemeManager);
-  const styles = useMemo(() => createStyle(themeColor), [themeColor]);
+  const styles = useThemedStyles(createStyle);
+  const themeColor = useThemeColor();
   const [open, setOpen] = useState(false);
   return (
     <View style={[styles.containerStyle, style]}>
