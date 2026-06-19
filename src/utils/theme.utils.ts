@@ -9,10 +9,10 @@ export const LightThemeColors = {
   backgroundColorS3: '#EFE8DB',
 
   // Primary Family
-  primary: '#E1BD3A',
-  primaryS1: '#FFEFAC75',
-  primaryS2: '#F2F1FD',
-  primaryS3: '#F9F8FF',
+  primary: '#C3D9E8',
+  primaryS1: '#E0F2FF',
+  primaryS2: '#D5E7F3',
+  primaryS3: '#EDF7FF',
 
   // Secondary / Tertiary
   secondary: '#0F172A',

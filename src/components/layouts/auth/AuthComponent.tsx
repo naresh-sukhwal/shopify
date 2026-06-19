@@ -1,207 +1,187 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  ViewStyle,
 } from 'react-native';
-import { themeType } from '@/interface';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
-import {
-  fontFamily,
-  fontSize,
-  Ionicons,
-  MaterialDesignIcons,
-} from '@/utils/fontIcon.utils';
+import { fontFamily, fontSize, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
-import { useTranslation } from 'react-i18next';
-import LinearGradient from 'react-native-linear-gradient';
-import GradiantBackground from '@/components/background/GradiantBackground';
+import { IMAGES } from '@/assets';
+import SafeAreaWrapper from '@/components/hoc/SafeAreaWrapper';
 
-interface AuthComponentProps {
-  children: React.ReactNode;
+type Props = {
   title: string;
-  subtitle: string;
-  cardLabel: string;
-  cardTitle: string;
-  badgeVisible?: boolean;
-  containerStyle?: ViewStyle;
-}
+  children: ReactNode;
+  bottomContent?: ReactNode;
+  cardLabel?: string;
+  onLanguagePress?: () => void;
+  languageLabel?: string;
+};
 
-const AuthComponent: React.FC<AuthComponentProps> = ({
-  children,
+export default function AuthComponent({
   title,
-  subtitle,
+  children,
+  bottomContent,
   cardLabel,
-  cardTitle,
-  badgeVisible = true,
-  containerStyle,
-}) => {
+  onLanguagePress,
+  languageLabel = 'English',
+}: Props) {
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const { t } = useTranslation();
 
   return (
-    <GradiantBackground>
+    <ImageBackground
+      source={IMAGES.landingScreenBg}
+      style={styles.background}
+      resizeMode="cover"
+    >
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <ScrollView
-          contentContainerStyle={[styles.scrollContent, containerStyle]}
+          contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
-          <View style={styles.headerContainer}>
-            <Text style={[styles.title, { color: themeColor.secondary }]}>
-              {title}
-            </Text>
-            <Text style={[styles.subtitle, { color: themeColor.textS2 }]}>
-              {subtitle}
-            </Text>
+          <View style={[styles.topRow,]}>
+            <Pressable
+              style={styles.languagePill}
+              onPress={onLanguagePress}
+              disabled={!onLanguagePress}
+            >
+              <Ionicons
+                name="globe-outline"
+                size={fontSize.f16}
+                color={themeColor.secondary}
+              />
+              <Text style={styles.languageText}>{languageLabel}</Text>
+              <Ionicons
+                name="chevron-forward"
+                size={fontSize.f14}
+                color={themeColor.secondary}
+              />
+            </Pressable>
           </View>
+
+          <View style={styles.logoWrap}>
+            <Image
+              source={IMAGES.logoWithName}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
+
+          <Text style={styles.title}>{title}</Text>
 
           <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <View style={styles.cardLabelContainer}>
-                <Text style={[styles.label, { color: themeColor.textS2 }]}>
-                  {cardLabel}
-                </Text>
-                {badgeVisible && (
-                  <LinearGradient
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    colors={['#FFE49A', '#FFF9E9']}
-                    style={[styles.badge]}
-                  >
-                    <MaterialDesignIcons
-                      name="check-decagram-outline"
-                      size={fontSize.f16}
-                      color={themeColor.secondary}
-                    />
-                    <Text
-                      style={[
-                        styles.badgeText,
-                        { color: themeColor.secondary },
-                      ]}
-                    >
-                      {t('auth.trusted_vault')}
-                    </Text>
-                  </LinearGradient>
-                )}
-              </View>
-              <Text style={[styles.cardTitle, { color: themeColor.secondary }]}>
-                {cardTitle}
-              </Text>
-            </View>
-
+            {cardLabel ? (
+              <Text style={styles.cardLabel}>{cardLabel}</Text>
+            ) : null}
             {children}
-
-            <View style={styles.footer}>
-              <Text style={[styles.footerText, { color: themeColor.textS2 }]}>
-                {t('auth.terms_privacy_start')}
-              </Text>
-              <Text
-                style={[styles.link, { color: themeColor.secondary }]}
-                onPress={() => {}}
-              >
-                {t('auth.terms_privacy_link')}
-              </Text>
-            </View>
           </View>
+
+          {bottomContent ? (
+            <View style={styles.bottomContent}>{bottomContent}</View>
+          ) : null}
         </ScrollView>
       </KeyboardAvoidingView>
-    </GradiantBackground>
+    </ImageBackground>
   );
-};
+}
 
-export default AuthComponent;
-
-const createStyle = (themeColor: themeType) =>
+const createStyle = (themeColor: any) =>
   StyleSheet.create({
-    container: {
+    flex: {
+      flex: 1,
+    },
+    safeArea: {
+      flex: 1,
+      backgroundColor: themeColor.primary,
+    },
+    background: {
       flex: 1,
     },
     scrollContent: {
       flexGrow: 1,
-      paddingHorizontal: wp('5%'),
-      paddingBottom: hp('5%'),
+      paddingHorizontal: wp('6%'),
+      paddingTop: hp('3%'),
+      paddingBottom: hp('4%'),
     },
-    headerContainer: {
-      marginTop: hp('6%'),
+    topRow: {
+      alignItems: 'flex-end',
+      marginBottom: hp('2%'),
+    },
+    languagePill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: themeColor.white,
+      paddingHorizontal: wp('4%'),
+      paddingVertical: hp('1.1%'),
+      borderRadius: 24,
+      borderWidth: 1,
+      borderColor: 'rgba(15, 23, 42, 0.06)',
+      shadowColor: '#000',
+      shadowOpacity: 0.12,
+      shadowOffset: { width: 0, height: 6 },
+      shadowRadius: 10,
+      elevation: 4,
+    },
+    languageText: {
+      fontFamily: fontFamily.semiBold,
+      fontSize: fontSize.f14,
+      color: themeColor.secondary,
+      marginHorizontal: 6,
+    },
+    logoWrap: {
+      alignItems: 'center',
+      marginTop: hp('1%'),
+      marginBottom: hp('1.2%'),
+    },
+    logo: {
+      width: wp('34%'),
+      height: wp('34%'),
     },
     title: {
       fontFamily: fontFamily.extraBold,
       fontSize: fontSize.f24,
-      lineHeight: 42,
-      marginBottom: hp('1%'),
-    },
-    subtitle: {
-      fontFamily: fontFamily.medium,
-      fontSize: fontSize.f14,
-      lineHeight: fontSize.f24,
+      lineHeight: fontSize.f30,
+      textAlign: 'center',
+      color: themeColor.secondary,
+      marginTop: hp('1%'),
+      marginBottom: hp('3.2%'),
     },
     card: {
-      paddingHorizontal: wp('4.5%'),
-      paddingTop: hp('3%'),
-      paddingBottom: hp('6%'),
-      elevation: 5,
-      backgroundColor: '#FAF9F5',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 10 },
-      shadowOpacity: 0.1,
-      shadowRadius: 20,
-      borderRadius: 40,
-      marginTop: hp('4%'),
-      overflow: 'hidden',
+      width: '100%',
+      borderRadius: 28,
+      borderWidth: 1,
+      borderColor: 'rgba(255,255,255,0.75)',
+      backgroundColor: 'rgba(255,255,255,0.48)',
+      paddingHorizontal: wp('5.2%'),
+      paddingTop: hp('2.8%'),
+      paddingBottom: hp('3.2%'),
+      shadowColor: '#94A3B8',
+      shadowOpacity: 0.18,
+      shadowOffset: { width: 0, height: 14 },
+      shadowRadius: 24,
+      elevation: 6,
     },
-    cardLabelContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    cardHeader: {
-      marginBottom: hp('2%'),
-    },
-    label: {
-      fontFamily: fontFamily.medium,
-      fontSize: fontSize.f12,
-      // marginBottom: 2,
-    },
-    cardTitle: {
-      fontFamily: fontFamily.bold,
-      fontSize: fontSize.f16,
-      marginTop: 4,
-    },
-    badge: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      paddingHorizontal: 12,
-      paddingVertical: 8,
-      borderRadius: 20,
-    },
-    badgeText: {
-      fontFamily: fontFamily.semiBold,
-      fontSize: fontSize.f11,
-      marginLeft: 4,
-    },
-    footer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    footerText: {
-      fontFamily: fontFamily.medium,
-      fontSize: fontSize.f12,
+    cardLabel: {
       textAlign: 'center',
-      lineHeight: 20,
+      color: themeColor.textS2,
+      fontSize: fontSize.f14,
+      fontFamily: fontFamily.medium,
+      marginBottom: hp('2.2%'),
     },
-    link: {
-      textDecorationLine: 'underline',
-      fontFamily: fontFamily.bold,
-      fontSize: fontSize.f12,
+    bottomContent: {
+      marginTop: hp('2.2%'),
     },
   });

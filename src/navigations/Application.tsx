@@ -95,19 +95,15 @@ export default function Application() {
             component={LandingScreen}
             name="LandingScreen"
           />
-          <RootNavigator.Screen
-            component={LanguageScreen}
-            name="LanguageScreen"
-          />
           <RootNavigator.Screen component={AuthStack} name="AuthStack" />
           <RootNavigator.Screen component={MainStack} name="MainStack" />
         </RootNavigator.Navigator>
       </NavigationContainer>
 
       <AuthSheet />
-      <InternetModal visible={!isConnected} onClose={() => {}} />
-      <AppUpdateModal visible={showUpdateModal} onClose={() => {}} />
-      <UnAutheriseModal visible={isUnAutharized} onClose={() => {}} />
+      <InternetModal visible={!isConnected} onClose={() => { }} />
+      <AppUpdateModal visible={showUpdateModal} onClose={() => { }} />
+      <UnAutheriseModal visible={isUnAutharized} onClose={() => { }} />
     </>
   );
 }

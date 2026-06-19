@@ -9,10 +9,6 @@ import DrawerStack from './DrawerStack';
 import { useState } from 'react';
 import { COMMON_KEYS } from '@/utils/contant.utils';
 import TabStack from './TabStack';
-import KycDetails from '@/screens/main/kyc/KycDetails';
-import AddMoneyInitial from '@/screens/main/wallet/AddMoneyInitial';
-import AddMoney from '@/screens/main/wallet/AddMoney';
-import Withdraw from '@/screens/main/wallet/Withdraw';
 
 const MainNavigator = createNativeStackNavigator<TMainStack>();
 
@@ -88,13 +84,6 @@ export default function MainStack() {
   return (
     <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
       <MainNavigator.Screen name="TabStack" component={TabStack} />
-      <MainNavigator.Screen name="KycDetails" component={KycDetails} />
-      <MainNavigator.Screen
-        name="AddMoneyInitial"
-        component={AddMoneyInitial}
-      />
-      <MainNavigator.Screen name="AddMoney" component={AddMoney} />
-      <MainNavigator.Screen name="Withdraw" component={Withdraw} />
     </MainNavigator.Navigator>
   );
 }
