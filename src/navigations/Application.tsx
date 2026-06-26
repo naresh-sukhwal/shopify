@@ -18,7 +18,6 @@ import {
 } from '@/components';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import VersionCheck from 'react-native-version-check';
-import LanguageScreen from '@/screens/language/LanguageScreen';
 import LandingScreen from '@/screens/landing/LandingScreen';
 import { getAsyncStorage } from '@/utils/helper.utils';
 import { ASYNC_KEYS } from '@/utils/contant.utils';
@@ -91,19 +90,19 @@ export default function Application() {
     <>
       <NavigationContainer ref={navigationRef} onReady={onNavigationReady}>
         <RootNavigator.Navigator screenOptions={{ headerShown: false }}>
-          <RootNavigator.Screen
+          {/*  <RootNavigator.Screen
             component={LandingScreen}
             name="LandingScreen"
-          />
-          <RootNavigator.Screen component={AuthStack} name="AuthStack" />
+          /> 
+          <RootNavigator.Screen component={AuthStack} name="AuthStack" />*/}
           <RootNavigator.Screen component={MainStack} name="MainStack" />
         </RootNavigator.Navigator>
       </NavigationContainer>
 
       <AuthSheet />
-      <InternetModal visible={!isConnected} onClose={() => { }} />
-      <AppUpdateModal visible={showUpdateModal} onClose={() => { }} />
-      <UnAutheriseModal visible={isUnAutharized} onClose={() => { }} />
+      <InternetModal visible={!isConnected} onClose={() => {}} />
+      <AppUpdateModal visible={showUpdateModal} onClose={() => {}} />
+      <UnAutheriseModal visible={isUnAutharized} onClose={() => {}} />
     </>
   );
 }
