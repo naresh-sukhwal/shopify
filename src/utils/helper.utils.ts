@@ -7,7 +7,8 @@ import { themeType } from '@/interface/theme.type';
 import { navigateAndSimpleReset } from './navigation.utils';
 import messaging from '@react-native-firebase/messaging';
 import { stopNotificationSound } from './notification.utils';
-import { clearTokens, client } from '@/service/rest';
+// Legacy REST imports (commented out — Axios layer is now inactive)
+// import { clearTokens, client } from '@/service/rest';
 import { ENotificationType } from '@/interface/notification.type';
 import { useAuthStore } from '@/store/authStore';
 
@@ -66,9 +67,10 @@ export const onLogout = async () => {
   // await messaging().deleteToken();
   // await AsyncStorage.removeItem(ASYNC_KEYS.FCM_TOKEN);
   useAuthStore.getState().resetUser();
-  clearTokens();
-  delete client.defaults.headers.common['Authorization'];
-  AsyncStorage.removeItem(ASYNC_KEYS.ACCESS_TOKEN);
+  // Legacy Axios token cleanup (commented out — Axios layer is now inactive)
+  // clearTokens();
+  // delete client.defaults.headers.common['Authorization'];
+  await AsyncStorage.removeItem(ASYNC_KEYS.ACCESS_TOKEN);
   navigateAndSimpleReset('AuthStack');
 };
 

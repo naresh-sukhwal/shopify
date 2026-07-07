@@ -48,11 +48,10 @@
     "resend_otp": "ओटीपी पुनः भेजें?"
   },
   "tabs": {
-    "home": "Home",
-    "invest": "Invest",
-    "wallet": "Wallet",
-    "reward": "Reward",
-    "profile": "Profile"
+    "home": "होम",
+    "search": "खोज",
+    "wishlist": "विशलिस्ट",
+    "profile": "प्रोफ़ाइल"
   },
   "kyc": {
     "verification_title": "केवाईसी सत्यापन",
@@ -107,7 +106,8 @@
     "good_morning": "शुभ प्रभात",
     "good_afternoon": "नमस्ते",
     "good_evening": "शुभ संध्या",
-    "good_night": "शुभ रात्रि"
+    "good_night": "शुभ रात्रि",
+    "back": "वापस"
   },
   "wallet": {
 
@@ -299,5 +299,42 @@
     "kyc_verified": "KYC सत्यापित",
     "bank_linked": "बैंक लिंक किया गया",
     "bank_verified": "बैंक सत्यापित"
+  },
+  "product": {
+    "color": "रंग",
+    "select_size": "आकार चुनें",
+    "size_guide": "साइज़ गाइड",
+    "quantity": "मात्रा",
+    "description": "विवरण",
+    "materials": "सामग्री",
+    "care": "देखभाल",
+    "shipping_returns": "शिपिंग और रिटर्न",
+    "buy_now": "अभी खरीदें",
+    "read_more": "और पढ़ें",
+    "read_less": "कम पढ़ें",
+    "added_to_cart": "उत्पाद कार्ट में जोड़ा गया!",
+    "failed_add_cart": "कार्ट में जोड़ने में विफल"
+  },
+  "category": {
+    "shop_by_category": "श्रेणी द्वारा खरीदें",
+    "mens_shirts": "पुरुषों की शर्ट",
+    "tshirts": "टी-शर्ट",
+    "polo_shirts": "पोलो शर्ट",
+    "jeans": "जींस",
+    "trousers": "ट्राउज़र",
+    "items": "आइटम",
+    "no_products": "कोई उत्पाद नहीं मिला",
+    "failed_to_load": "उत्पाद लोड करने में विफल",
+    "retry": "पुनः प्रयास करें",
+    "search": "खोजें"
+  },
+  "search": {
+    "title": "खोज",
+    "placeholder": "कपड़े, स्टाइल खोजें...",
+    "cancel": "रद्द करें",
+    "no_results": "\"{{query}}\" के लिए कोई परिणाम नहीं",
+    "try_different": "कोई अलग कीवर्ड आज़माएं",
+    "recent_searches": "हाल की खोजें",
+    "clear_all": "सभी मिटाएं"
   }
 }

@@ -15,8 +15,7 @@ export default function CustomTabBar({ state, descriptors, navigation }: any) {
     <View style={styles.container}>
       <View style={styles.tabWrapper}>
         {state?.routes?.map((route: any, index: number) => {
-          const { options } = descriptors[route.key];
-          const isFocused = state?.index == index;
+          const isFocused = state?.index === index;
           const onPress = () => {
             if (!isFocused) {
               navigation.navigate(route.name);
@@ -27,27 +26,21 @@ export default function CustomTabBar({ state, descriptors, navigation }: any) {
           const Label = TabData[index].name;
 
           return (
-            <Pressable key={index} style={styles.tabColumn} onPress={onPress}>
-              <View style={[styles.tabItem, isFocused && styles.activeTabItem]}>
+            <Pressable key={index} style={styles.tabItem} onPress={onPress}>
+              <View
+                style={[styles.tabInner, isFocused && styles.activeTabInner]}
+              >
                 <Icon
-                  width={24}
-                  height={24}
+                  width={20}
+                  height={20}
                   stroke={isFocused ? themeColor.white : themeColor.secondaryS2}
                 />
+                {isFocused && (
+                  <Text style={styles.activeLabel} numberOfLines={1}>
+                    {Label}
+                  </Text>
+                )}
               </View>
-              <Text
-                style={[
-                  styles.label,
-                  {
-                    color: isFocused
-                      ? themeColor.secondary
-                      : themeColor.secondaryS2,
-                    fontFamily: isFocused ? fontFamily.bold : fontFamily.medium,
-                  },
-                ]}
-              >
-                {Label}
-              </Text>
             </Pressable>
           );
         })}
@@ -60,7 +53,7 @@ const createStyle = (theme: themeType) =>
   StyleSheet.create({
     container: {
       position: 'absolute',
-      bottom: 10,
+      bottom: 12,
       width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
@@ -68,41 +61,45 @@ const createStyle = (theme: themeType) =>
     },
     tabWrapper: {
       flexDirection: 'row',
-      backgroundColor: 'white', // Dark semi-transparent
-      width: width * 0.9,
-      height: 84,
-      borderRadius: 25,
+      backgroundColor: theme.backgroundColorS1,
+      width: width * 0.88,
+      height: 72,
+      borderRadius: 36,
       alignItems: 'center',
-      justifyContent: 'space-around',
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: 'rgba(255, 255, 255, 0.7)',
-      // Shadow for depth
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 10,
-      elevation: 5,
+      justifyContent: 'space-between',
+      paddingHorizontal: 12,
+      // iOS shadow
+      shadowColor: theme.black,
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.1,
+      shadowRadius: 16,
+      // Android shadow
+      elevation: 8,
     },
     tabItem: {
-      width: 45,
-      height: 45,
-      borderRadius: 15,
+      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: 'transparent',
-      borderWidth: 1,
-      borderColor: theme.white,
+      borderRadius: 999,
+      overflow: 'hidden',
     },
-    activeTabItem: {
-      backgroundColor: theme.secondary, // Light circular background
-    },
-    label: {
-      color: '#2D0C33', // Darker purple from image
-      fontFamily: fontFamily.medium,
-      fontSize: fontSize.f12,
-    },
-    tabColumn: {
+    tabInner: {
+      flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: 14,
+      overflow: 'hidden',
+    },
+
+    activeTabInner: {
+      backgroundColor: theme.buttonBackground,
+      borderRadius: 999,
+    },
+    activeLabel: {
+      color: theme.white,
+      fontFamily: fontFamily.semiBold,
+      fontSize: fontSize.f14,
+      marginLeft: 2,
     },
   });

@@ -24,6 +24,8 @@ type props = {
   onPress?: () => void;
   onFocus?: () => void;
   onBlur?: () => void;
+  onSubmitEditing?: () => void;
+  returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
 };
 
 export default function SearchBox({
@@ -37,6 +39,8 @@ export default function SearchBox({
   style,
   onFocus,
   onBlur,
+  onSubmitEditing,
+  returnKeyType = 'search',
 }: props) {
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
@@ -50,6 +54,12 @@ export default function SearchBox({
         ]}
         onPress={onPress ? onPress : undefined}
       >
+        <Ionicons
+          name="search"
+          size={fontSize.f20}
+          color={themeColor.gray}
+          style={styles.searchIcon}
+        />
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -59,11 +69,8 @@ export default function SearchBox({
           editable={!disabled}
           onFocus={onFocus}
           onBlur={onBlur}
-        />
-        <Ionicons
-          name="search"
-          size={fontSize.f24}
-          color={themeColor.primary}
+          onSubmitEditing={onSubmitEditing}
+          returnKeyType={returnKeyType}
         />
       </Pressable>
       {isFilterRequired && (
@@ -91,22 +98,27 @@ const createStyle = (themeColor: themeType) =>
       width: 50,
       height: 50,
     },
+    searchIcon: {
+      marginRight: 8,
+    },
     input: {
-      borderRadius: 8,
-      padding: 10,
-      fontSize: fontSize.f14,
+      flex: 1,
+      fontSize: fontSize.f13,
       fontFamily: fontFamily.regular,
       color: themeColor.text,
-      width: '90%',
       height: 50,
     },
     inputContainer: {
       flexDirection: 'row',
       alignItems: 'center',
       width: '100%',
-      borderRadius: 30,
-      paddingHorizontal: 10,
-      backgroundColor: themeColor.grayS3,
-      borderColor: themeColor.grayS1,
+      borderRadius: 25,
+      paddingHorizontal: 16,
+      backgroundColor: themeColor.white, // Made white for new UI
+      shadowColor: '#000',
+      shadowOpacity: 0.05,
+      shadowOffset: { width: 0, height: 2 },
+      shadowRadius: 6,
+      elevation: 2,
     },
   });

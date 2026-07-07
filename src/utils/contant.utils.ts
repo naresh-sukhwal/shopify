@@ -22,34 +22,27 @@ export const COMMON_KEYS = Object.freeze({
 export const TabData = [
   {
     id: 1,
-    name: 'Home',
+    name: ' Home',
     Icon: [SVG.HomeIcon, SVG.HomeIcon],
     width: 25,
     height: 25,
   },
   {
     id: 2,
-    name: 'Invest',
-    Icon: [SVG.InvestIcon, SVG.InvestIcon],
+    name: 'Search',
+    Icon: [SVG.SearchIcon, SVG.SearchIcon],
     width: 25,
     height: 25,
   },
   {
     id: 3,
-    name: 'Wallet',
-    Icon: [SVG.WalletIcon, SVG.WalletIcon],
+    name: ' Wish',
+    Icon: [SVG.WishlistIcon, SVG.WishlistIcon],
     width: 25,
     height: 25,
   },
   {
     id: 4,
-    name: 'Reward',
-    Icon: [SVG.RewardIcon, SVG.RewardIcon],
-    width: 25,
-    height: 25,
-  },
-  {
-    id: 5,
     name: 'Profile',
     Icon: [SVG.ProfileIcon, SVG.ProfileIcon],
     width: 25,
@@ -140,7 +133,6 @@ export const TIME_OPTIONS = (() => {
 export const DATE_OPTIONS = Array.from({ length: 30 }, (_, i) =>
   (i + 1).toString(),
 );
-
 
 export const quickActionsData = [
   {

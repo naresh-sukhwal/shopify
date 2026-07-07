@@ -4,7 +4,6 @@ import { ToastProvider } from 'react-native-toast-notifications';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { LogBox, Appearance } from 'react-native';
 import Application from '@/navigations/Application';
-import { StripeProvider } from '@stripe/stripe-react-native';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useThemeStore } from '@/store/themeStore';
 

@@ -19,9 +19,8 @@
   },
   "tabs": {
     "home": "Home",
-    "invest": "Invest",
-    "wallet": "Wallet",
-    "reward": "Reward",
+    "search": "Search",
+    "wishlist": "Wishlist",
     "profile": "Profile"
   },
   "buttons": {
@@ -109,7 +108,6 @@
     "updated": "Updated",
     "just_now": "just now",
     "wallet_balance": "Wallet balance",
-
     "locked": "Locked",
     "available": "Available",
     "weekly_interest": "Weekly interest",
@@ -117,6 +115,7 @@
     "next_credit_in": "Next credit in {{days}} days",
     "quick_actions": "Quick actions",
     "view_all": "View all",
+    "see_all": "See All",
     "add_money_subtitle": "UPI / Bank",
     "withdraw_subtitle": "₹1000 min",
     "invest_subtitle": "Buy gold",
@@ -130,7 +129,18 @@
     "weekly_earnings": "Weekly earnings",
     "added_money": "Added money",
     "secure_withdrawals": "Secure withdrawals",
-    "secure_withdrawals_desc": "Minimum withdrawal ₹ 1,000 • One withdrawal per day • ₹ 100 stays locked in wallet"
+    "secure_withdrawals_desc": "Minimum withdrawal ₹ 1,000 • One withdrawal per day • ₹ 100 stays locked in wallet",
+    "featured_products": "Featured Products",
+    "new_arrivals": "New Arrivals",
+    "best_sellers": "Best Sellers",
+    "add_to_cart": "Add to Cart",
+    "out_of_stock": "Out of Stock",
+    "off": "off",
+    "loading_products": "Loading products...",
+    "no_products": "No products found",
+    "failed_to_load": "Failed to load products",
+    "retry": "Retry",
+    "shop_now": "Shop Now"
   },
 
   "common": {
@@ -145,7 +155,8 @@
     "good_morning": "Good morning",
     "good_afternoon": "Good afternoon",
     "good_evening": "Good evening",
-    "good_night": "Good night"
+    "good_night": "Good night",
+    "back": "Back"
   },
 
   "wallet": {
@@ -337,5 +348,42 @@
     "kyc_verified": "KYC verified",
     "bank_linked": "Bank linked",
     "bank_verified": "Bank verified"
+  },
+  "product": {
+    "color": "Color",
+    "select_size": "Select Size",
+    "size_guide": "Size Guide",
+    "quantity": "Quantity",
+    "description": "Description",
+    "materials": "Materials",
+    "care": "Care",
+    "shipping_returns": "Shipping & Returns",
+    "buy_now": "Buy Now",
+    "read_more": "Read more",
+    "read_less": "Read less",
+    "added_to_cart": "Product added to cart!",
+    "failed_add_cart": "Failed to add to cart"
+  },
+  "category": {
+    "shop_by_category": "Shop by Category",
+    "mens_shirts": "Men's Shirts",
+    "tshirts": "T-Shirts",
+    "polo_shirts": "Polo Shirts",
+    "jeans": "Jeans",
+    "trousers": "Trousers",
+    "items": "items",
+    "no_products": "No products found",
+    "failed_to_load": "Failed to load products",
+    "retry": "Retry",
+    "search": "Search"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search clothes, styles...",
+    "cancel": "Cancel",
+    "no_results": "No results for \"{{query}}\"",
+    "try_different": "Try a different keyword",
+    "recent_searches": "Recent Searches",
+    "clear_all": "Clear All"
   }
 }

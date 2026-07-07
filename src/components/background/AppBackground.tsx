@@ -27,6 +27,6 @@ const createStyle = (themeColor: themeType) =>
   StyleSheet.create({
     gradiantBackground: {
       flex: 1,
-      backgroundColor: themeColor.backgroundColor,
+      backgroundColor: themeColor.primary,
     },
   });

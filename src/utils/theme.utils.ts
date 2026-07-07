@@ -6,11 +6,11 @@ export const LightThemeColors = {
   backgroundColor: '#F9F7F4',
   backgroundColorS1: '#FFFFFF',
   backgroundColorS2: '#F7F3E9',
-  backgroundColorS3: '#EFE8DB',
+  backgroundColorS3: '#e17b4e',
 
   // Primary Family
-  primary: '#C3D9E8',
-  primaryS1: '#E0F2FF',
+  primary: '#F7F5F0',
+  primaryS1: '#fff8f5',
   primaryS2: '#D5E7F3',
   primaryS3: '#EDF7FF',
 
@@ -28,10 +28,11 @@ export const LightThemeColors = {
   extraLightText: '#999696',
   lightTextBlack: '#979797',
   lightTextwhite: 'rgba(255, 255, 255, 0.7)',
+  buttonBackground: '#9b441d',
 
   // Border / Placeholder
-  borderColor: '#DEE0EC',
-  placeHolderColor: '#8D8D8D',
+  borderColor: '#dcc1b7',
+  placeHolderColor: '#dcc1b7',
 
   // Utility colors
   white: '#FFFFFF',
@@ -54,7 +55,6 @@ export const LightThemeColors = {
   goldLighter: '#FEF9E7',
   goldGradient: ['#FDE68A', '#FEF9E7'],
 };
-
 
 // === DARK THEME ===
 // export const DarkThemeColors: themeType = {

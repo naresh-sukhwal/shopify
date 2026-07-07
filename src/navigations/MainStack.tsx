@@ -9,6 +9,8 @@ import DrawerStack from './DrawerStack';
 import { useState } from 'react';
 import { COMMON_KEYS } from '@/utils/contant.utils';
 import TabStack from './TabStack';
+import ProductDetailScreen from '@/screens/main/product/ProductDetailScreen';
+import CategoryProductsScreen from '@/screens/main/tab/CategoryProductsScreen';
 
 const MainNavigator = createNativeStackNavigator<TMainStack>();
 
@@ -84,6 +86,8 @@ export default function MainStack() {
   return (
     <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
       <MainNavigator.Screen name="TabStack" component={TabStack} />
+      <MainNavigator.Screen name="ProductDetail" component={ProductDetailScreen} />
+      <MainNavigator.Screen name="CategoryProducts" component={CategoryProductsScreen} />
     </MainNavigator.Navigator>
   );
 }

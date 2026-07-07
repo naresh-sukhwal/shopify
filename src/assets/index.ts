@@ -1,10 +1,4 @@
-import {
-  HomeIcon,
-  InvestIcon,
-  RewardIcon,
-  WalletIcon,
-  ProfileIcon,
-} from './svg/TabBar';
+import { HomeIcon, SearchIcon, WishlistIcon, ProfileIcon } from './svg/TabBar';
 import MagicIcon from './svg/Magic.svg';
 
 export const IMAGES = {
@@ -21,9 +15,8 @@ export const IMAGES = {
 
 export const SVG = {
   HomeIcon,
-  WalletIcon,
-  InvestIcon,
-  RewardIcon,
+  SearchIcon,
+  WishlistIcon,
   ProfileIcon,
-  MagicIcon
+  MagicIcon,
 };

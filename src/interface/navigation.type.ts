@@ -4,6 +4,7 @@ import {
 } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { CMS_TYPE, ERoles, EStatusFeedbackType } from './general.type';
+import type { Product } from '@/types/app.types';
 
 /* -------------------------------------------------------------------------- */
 /*                                 Root Stack                                 */
@@ -64,6 +65,12 @@ export type TMainStack = {
   AddMoneyInitial: undefined;
   AddMoney: undefined;
   Withdraw: undefined;
+  ProductDetail: { product: Product };
+  CategoryProducts: {
+    categoryTitle: string;
+    sortKey?: string;
+    query?: string;
+  };
 };
 
 /* -------------------------------------------------------------------------- */
@@ -72,29 +79,25 @@ export type TMainStack = {
 
 export type TBottomTabStack = {
   HomeScreen: undefined;
-  InvestScreen: undefined;
-  WalletScreen: undefined;
-  RewardScreen: undefined;
+  SearchScreen: undefined;
+  WishlistScreen: undefined;
   ProfileScreen: undefined;
 };
 
 export type THomeScreenProps = StackScreenProps<TBottomTabStack, 'HomeScreen'>;
-export type TInvestScreenProps = StackScreenProps<
+export type TSearchScreenProps = StackScreenProps<
   TBottomTabStack,
-  'InvestScreen'
+  'SearchScreen'
 >;
-export type TWalletScreenProps = StackScreenProps<
+export type TWishlistScreenProps = StackScreenProps<
   TBottomTabStack,
-  'WalletScreen'
->;
-export type TRewardScreenProps = StackScreenProps<
-  TBottomTabStack,
-  'RewardScreen'
+  'WishlistScreen'
 >;
 export type TProfileScreenProps = StackScreenProps<
   TBottomTabStack,
   'ProfileScreen'
 >;
+
 
 /* -------------------------------------------------------------------------- */
 /*                                 Screen Props                               */
