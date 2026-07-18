@@ -71,6 +71,39 @@ export type TMainStack = {
     sortKey?: string;
     query?: string;
   };
+  OrderHistoryScreen: { orders?: import('@/types/app.types').CustomerOrder[] } | undefined;
+  OrderDetailsScreen: { order: import('@/types/app.types').CustomerOrder };
+  CartScreen: undefined;
+  CheckoutAddressScreen: {
+    isDirectBuy?: boolean;
+    directCartId?: string;
+    directCheckoutUrl?: string;
+    directAmount?: string;
+    directCurrency?: string;
+    isFromProfile?: boolean;
+  } | undefined;
+  AddAddressScreen: undefined;
+  PaymentScreen: {
+    addressId: string;
+    totalAmount: string;
+    shippingAmount: string;
+    currency: string;
+    isDirectBuy?: boolean;
+    directCartId?: string;
+    directCheckoutUrl?: string;
+  };
+  ShopifyCheckoutScreen: {
+    checkoutUrl: string;
+    totalAmount: string;
+    shippingAmount: string;
+    currency: string;
+  };
+  OrderSuccessScreen: {
+    orderId: string;
+    totalAmount: string;
+    shippingAmount: string;
+    currency: string;
+  };
 };
 
 /* -------------------------------------------------------------------------- */
@@ -97,7 +130,6 @@ export type TProfileScreenProps = StackScreenProps<
   TBottomTabStack,
   'ProfileScreen'
 >;
-
 
 /* -------------------------------------------------------------------------- */
 /*                                 Screen Props                               */
@@ -145,4 +177,3 @@ export type SigninProps = CompositeScreenProps<
     StackScreenProps<TMainStack>
   >
 >;
-

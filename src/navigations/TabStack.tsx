@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TBottomTabStack } from '@/interface/navigation.type';
-import { AppBackground, CustomTabBar } from '@/components';
+import { AppBackground, CustomTabBar, SafeAreaWrapper } from '@/components';
 import HomeScreen from '@/screens/main/tab/HomeScreen';
 import ProfileScreen from '@/screens/main/tab/ProfileScreen';
 import SearchScreen from '@/screens/main/tab/SearchScreen';
@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator<TBottomTabStack>();
 
 export default function TabStack() {
   return (
-    <AppBackground>
+    <AppBackground useTopPadding={false}>
       <Tab.Navigator
         tabBar={props => <CustomTabBar {...props} />}
         screenOptions={{

@@ -1,3 +1,4 @@
+import CartScreen from '@/screens/main/cart/CartScreen';
 import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TMainStack } from '@/interface/navigation.type';
@@ -11,6 +12,13 @@ import { COMMON_KEYS } from '@/utils/contant.utils';
 import TabStack from './TabStack';
 import ProductDetailScreen from '@/screens/main/product/ProductDetailScreen';
 import CategoryProductsScreen from '@/screens/main/tab/CategoryProductsScreen';
+import CheckoutAddressScreen from '@/screens/main/checkout/CheckoutAddressScreen';
+import AddAddressScreen from '@/screens/main/checkout/AddAddressScreen';
+import PaymentScreen from '@/screens/main/checkout/PaymentScreen';
+import ShopifyCheckoutScreen from '@/screens/main/checkout/ShopifyCheckoutScreen';
+import OrderSuccessScreen from '@/screens/main/checkout/OrderSuccessScreen';
+import OrderHistoryScreen from '@/screens/main/order/OrderHistoryScreen';
+import OrderDetailsScreen from '@/screens/main/order/OrderDetailsScreen';
 
 const MainNavigator = createNativeStackNavigator<TMainStack>();
 
@@ -83,11 +91,20 @@ export default function MainStack() {
   //   };
   // }, []);
 
+
   return (
     <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
       <MainNavigator.Screen name="TabStack" component={TabStack} />
       <MainNavigator.Screen name="ProductDetail" component={ProductDetailScreen} />
       <MainNavigator.Screen name="CategoryProducts" component={CategoryProductsScreen} />
+      <MainNavigator.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} />
+      <MainNavigator.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
+      <MainNavigator.Screen name="CartScreen" component={CartScreen} />
+      <MainNavigator.Screen name="CheckoutAddressScreen" component={CheckoutAddressScreen} />
+      <MainNavigator.Screen name="AddAddressScreen" component={AddAddressScreen} />
+      <MainNavigator.Screen name="PaymentScreen" component={PaymentScreen} />
+      <MainNavigator.Screen name="ShopifyCheckoutScreen" component={ShopifyCheckoutScreen} />
+      <MainNavigator.Screen name="OrderSuccessScreen" component={OrderSuccessScreen} />
     </MainNavigator.Navigator>
   );
 }

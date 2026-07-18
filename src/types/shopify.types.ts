@@ -176,6 +176,13 @@ export interface ShopifyAddress {
   lastName?: string;
 }
 
+export interface ShopifyOrderLineItem {
+  title: string;
+  variant?: {
+    image?: ShopifyImage | null;
+  } | null;
+}
+
 export interface ShopifyOrder {
   id: string;
   name: string;
@@ -184,6 +191,7 @@ export interface ShopifyOrder {
   fulfillmentStatus: string;
   totalPrice: ShopifyMoneyV2;
   statusUrl: string;
+  lineItems?: ShopifyConnection<ShopifyOrderLineItem>;
 }
 
 export interface ShopifyCustomer {
@@ -205,7 +213,9 @@ export interface ShopifyCustomer {
 // ─── GraphQL Response Wrappers ────────────────────────────────────────────────
 
 export interface GetProductsData {
-  products: ShopifyNodesConnection<ShopifyProduct> & { pageInfo: ShopifyPageInfo };
+  products: ShopifyNodesConnection<ShopifyProduct> & {
+    pageInfo: ShopifyPageInfo;
+  };
 }
 
 export interface GetProductByHandleData {
@@ -213,7 +223,9 @@ export interface GetProductByHandleData {
 }
 
 export interface GetCollectionsData {
-  collections: ShopifyNodesConnection<ShopifyCollection> & { pageInfo: ShopifyPageInfo };
+  collections: ShopifyNodesConnection<ShopifyCollection> & {
+    pageInfo: ShopifyPageInfo;
+  };
 }
 
 export interface GetCollectionByHandleData {

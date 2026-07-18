@@ -17,15 +17,18 @@ import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useToastMessage } from '@/hooks/useToastMessage';
 import { useCartStore } from '@/store/cartStore';
+import { useAddressStore } from '@/store/addressStore';
 import { addCartLines, createCart, getProductByHandle } from '@/api';
 import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
 import { themeType } from '@/interface/theme.type';
-import type { Product, ProductVariant } from '@/types/app.types';
+import StringUtils from '@/utils/string.utils';
+import type { Product } from '@/types/app.types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SafeAreaWrapper from '@/components/hoc/SafeAreaWrapper';
 import FavoriteButton from '@/components/buttons/FavoriteButton';
 import Price from '@/components/common/Price';
+import { useWishlist } from '@/hooks/useWishlist';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -115,12 +118,14 @@ export default function ProductDetailScreen() {
   const styles = useThemedStyles(createStyle);
   const toast = useToastMessage();
   const { cartId, setCart } = useCartStore();
+  const { addresses } = useAddressStore();
 
   const initialProduct = route.params?.product as Product;
   const [product, setProduct] = useState<Product | null>(
     initialProduct || null,
   );
   const [loading, setLoading] = useState<boolean>(false);
+  const { isWishlisted, toggleWishlist } = useWishlist();
 
   useEffect(() => {
     const fetchFullDetails = async () => {
@@ -175,7 +180,6 @@ export default function ProductDetailScreen() {
   }, [product]);
 
   const [quantity, setQuantity] = useState<number>(1);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [isBuying, setIsBuying] = useState<boolean>(false);
@@ -223,6 +227,42 @@ export default function ProductDetailScreen() {
       return isColorMatch && isSizeMatch;
     }) || product.variants[0];
 
+  const isColorAvailable = (color: string) => {
+    if (!product) return false;
+    return product.variants.some(v => {
+      const isColorMatch = v.selectedOptions.some(
+        opt =>
+          (opt.name.toLowerCase() === 'color' ||
+            opt.name.toLowerCase() === 'colors') &&
+          opt.value === color,
+      );
+      // We check if *any* variant with this color is available
+      return isColorMatch && v.availableForSale;
+    });
+  };
+
+  const isSizeAvailable = (size: string) => {
+    if (!product) return false;
+    return product.variants.some(v => {
+      const isColorMatch =
+        colorOption && selectedColor
+          ? v.selectedOptions.some(
+              opt =>
+                (opt.name.toLowerCase() === 'color' ||
+                  opt.name.toLowerCase() === 'colors') &&
+                opt.value === selectedColor,
+            )
+          : true;
+      const isSizeMatch = v.selectedOptions.some(
+        opt =>
+          (opt.name.toLowerCase() === 'size' ||
+            opt.name.toLowerCase() === 'sizes') &&
+          opt.value === size,
+      );
+      return isColorMatch && isSizeMatch && v.availableForSale;
+    });
+  };
+
   // Scroll to matching variant image when selectedColor changes
   useEffect(() => {
     if (activeVariant?.image && product.images?.length > 0) {
@@ -251,16 +291,29 @@ export default function ProductDetailScreen() {
 
   const handleAddToCart = async () => {
     if (!activeVariant) return;
+
+    if (
+      !product.availableForSale ||
+      !activeVariant.availableForSale ||
+      quantity <= 0
+    ) {
+      toast.showError(t('product.out_of_stock', 'Product is out of stock'));
+      return;
+    }
+
     setIsAdding(true);
     try {
       let currentCartId = cartId;
+      let updatedCart;
       if (!currentCartId) {
-        const newCart = await createCart([
+        updatedCart = await createCart([
           { merchandiseId: activeVariant.id, quantity },
         ]);
-        setCart(newCart);
+        setCart(updatedCart);
       } else {
-        const updatedCart = await addCartLines(currentCartId, [
+        console.log('Quantity:', quantity);
+        console.log('Variant ID:', activeVariant.id);
+        updatedCart = await addCartLines(currentCartId, [
           { merchandiseId: activeVariant.id, quantity },
         ]);
         setCart(updatedCart);
@@ -276,29 +329,44 @@ export default function ProductDetailScreen() {
 
   const handleBuyNow = async () => {
     if (!activeVariant) return;
+
+    if (
+      !product.availableForSale ||
+      !activeVariant.availableForSale ||
+      quantity <= 0
+    ) {
+      toast.showError(t('product.out_of_stock', 'Product is out of stock'));
+      return;
+    }
+
     setIsBuying(true);
     try {
-      let currentCartId = cartId;
-      let checkoutUrl = '';
-      if (!currentCartId) {
-        const newCart = await createCart([
-          { merchandiseId: activeVariant.id, quantity },
-        ]);
-        setCart(newCart);
-        checkoutUrl = newCart.checkoutUrl;
+      // Create a direct checkout cart just for this item
+      const newCart = await createCart([
+        { merchandiseId: activeVariant.id, quantity },
+      ]);
+      
+      const directAmount = (activeVariant.price.amount * quantity).toString();
+      const directCurrency = activeVariant.price.currencyCode;
+
+      if (addresses.length > 0) {
+        navigation.navigate('CheckoutAddressScreen', {
+          isDirectBuy: true,
+          directCartId: newCart.id,
+          directCheckoutUrl: newCart.checkoutUrl,
+          directAmount,
+          directCurrency,
+        });
       } else {
-        const updatedCart = await addCartLines(currentCartId, [
-          { merchandiseId: activeVariant.id, quantity },
-        ]);
-        setCart(updatedCart);
-        checkoutUrl = updatedCart.checkoutUrl;
+        // Fallback: If no address, user adds one. 
+        // We'll have to just go to AddAddressScreen (it won't know about direct buy, but this is an edge case)
+        navigation.navigate('AddAddressScreen');
       }
-      // Open Checkout URL or navigate
-      toast.showSuccess(t('product.redirecting', 'Redirecting to checkout...'));
-      console.log('Checkout URL:', checkoutUrl);
     } catch (error) {
       console.error(error);
-      toast.showError(t('product.failed_checkout', 'Checkout failed'));
+      toast.showError(
+        t('product.failed_buy_now', 'Failed to initiate checkout'),
+      );
     } finally {
       setIsBuying(false);
     }
@@ -444,8 +512,8 @@ export default function ProductDetailScreen() {
                   />
                 </TouchableOpacity>
                 <FavoriteButton
-                  selected={isFavorite}
-                  onPress={() => setIsFavorite(!isFavorite)}
+                  selected={product ? isWishlisted(product.id) : false}
+                  onPress={() => product && toggleWishlist(product.id)}
                   size={20}
                   style={StyleSheet.flatten([
                     styles.headerButton,
@@ -505,6 +573,7 @@ export default function ProductDetailScreen() {
                 <View style={styles.colorList}>
                   {colorOption.values.map(color => {
                     const isSelected = selectedColor === color;
+                    const available = isColorAvailable(color);
                     return (
                       <TouchableOpacity
                         key={color}
@@ -513,6 +582,7 @@ export default function ProductDetailScreen() {
                           isSelected && {
                             borderColor: themeColor.buttonBackground,
                           },
+                          !available && { opacity: 0.3 },
                         ]}
                         onPress={() => setSelectedColor(color)}
                         activeOpacity={0.8}
@@ -558,6 +628,7 @@ export default function ProductDetailScreen() {
                 <View style={styles.sizeList}>
                   {sizeOption.values.map(size => {
                     const isSelected = selectedSize === size;
+                    const available = isSizeAvailable(size);
                     return (
                       <TouchableOpacity
                         key={size}
@@ -571,6 +642,7 @@ export default function ProductDetailScreen() {
                           isSelected && {
                             backgroundColor: themeColor.primaryS1,
                           },
+                          !available && { opacity: 0.3 },
                         ]}
                         onPress={() => setSelectedSize(size)}
                         activeOpacity={0.8}
@@ -702,51 +774,71 @@ export default function ProductDetailScreen() {
               },
             ]}
           >
-            <TouchableOpacity
-              style={[
-                styles.btnOutline,
-                { borderColor: themeColor.buttonBackground },
-              ]}
-              onPress={handleAddToCart}
-              disabled={isAdding}
-              activeOpacity={0.8}
-            >
-              {isAdding ? (
-                <ActivityIndicator
-                  size="small"
-                  color={themeColor.buttonBackground}
-                />
-              ) : (
-                <Text
-                  style={[
-                    styles.btnOutlineText,
-                    { color: themeColor.buttonBackground },
-                  ]}
-                >
-                  {t('home.add_to_cart', 'Add to Cart')}
-                </Text>
-              )}
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.btnFilled,
-                { backgroundColor: themeColor.buttonBackground },
-              ]}
-              onPress={handleBuyNow}
-              disabled={isBuying}
-              activeOpacity={0.8}
-            >
-              {isBuying ? (
-                <ActivityIndicator size="small" color={themeColor.white} />
-              ) : (
+            {!product.availableForSale || !activeVariant?.availableForSale ? (
+              <View
+                style={[
+                  styles.btnFilled,
+                  { backgroundColor: themeColor.placeHolderColor, flex: 1 },
+                ]}
+              >
                 <Text
                   style={[styles.btnFilledText, { color: themeColor.white }]}
                 >
-                  {t('product.buy_now', 'Buy Now')}
+                  {t('product.out_of_stock', 'Out of Stock')}
                 </Text>
-              )}
-            </TouchableOpacity>
+              </View>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={[
+                    styles.btnOutline,
+                    { borderColor: themeColor.buttonBackground },
+                  ]}
+                  onPress={handleAddToCart}
+                  disabled={isAdding}
+                  activeOpacity={0.8}
+                >
+                  {isAdding ? (
+                    <ActivityIndicator
+                      size="small"
+                      color={themeColor.buttonBackground}
+                    />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.btnOutlineText,
+                        { color: themeColor.buttonBackground },
+                      ]}
+                    >
+                      {t('home.add_to_cart', 'Add to Cart')}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.btnFilled,
+                    { backgroundColor: themeColor.buttonBackground },
+                  ]}
+                  onPress={handleBuyNow}
+                  disabled={isBuying}
+                  activeOpacity={0.8}
+                >
+                  {isBuying ? (
+                    <ActivityIndicator size="small" color={themeColor.white} />
+                  ) : (
+                    <Text
+                      style={[
+                        styles.btnFilledText,
+                        { color: themeColor.white },
+                      ]}
+                    >
+                      {t('product.buy_now', 'Buy Now')}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </SafeAreaView>
       </View>

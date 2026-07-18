@@ -34,6 +34,9 @@ export type PlaceDetails = {
     latitude: number;
     longitude: number;
   };
+  addressLine1?: string;
+  addressLine2?: string;
+  pincode?: string;
   city?: string;
   state?: string;
   country?: string;
@@ -105,12 +108,12 @@ export default function GoogleAutocomplete({
           console.warn('Google API Key is missing');
           return;
         }
-
         const response = await fetch(
           `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
             input,
           )}&key=${GOOGLE_API_KEY}&language=en`,
         );
+
         const data = await response.json();
 
         if (isMounted.current) {
@@ -156,6 +159,7 @@ export default function GoogleAutocomplete({
           `https://maps.googleapis.com/maps/api/place/details/json?place_id=${prediction.place_id}&key=${GOOGLE_API_KEY}`,
         );
         const data = await response.json();
+        console.log('data.result--->', data);
 
         if (data.result && data.result.geometry) {
           const addressComponents = data.result.address_components || [];
@@ -163,6 +167,32 @@ export default function GoogleAutocomplete({
           let state = '';
           let country = '';
           let countryCode = '';
+          let pincode = '';
+
+          const getComp = (type: string) =>
+            addressComponents.find((c: any) => c.types.includes(type))
+              ?.long_name || '';
+
+          const streetNumber = getComp('street_number');
+          const route = getComp('route');
+          const sublocality3 = getComp('sublocality_level_3');
+          const sublocality2 = getComp('sublocality_level_2');
+
+          let addressLine1 = [streetNumber, route, sublocality3, sublocality2]
+            .filter(Boolean)
+            .join(', ');
+
+          const sublocality1 = getComp('sublocality_level_1');
+          const neighborhood = getComp('neighborhood');
+
+          let addressLine2 = [neighborhood, sublocality1]
+            .filter(Boolean)
+            .join(', ');
+
+          const plusCode = getComp('plus_code');
+          if (!addressLine1 && plusCode) {
+            addressLine1 = plusCode;
+          }
 
           addressComponents.forEach((component: any) => {
             const types = component.types;
@@ -173,16 +203,14 @@ export default function GoogleAutocomplete({
             } else if (types.includes('country')) {
               country = component.long_name;
               countryCode = component.short_name;
+            } else if (types.includes('postal_code')) {
+              pincode = component.long_name;
             }
           });
 
           // Fallback for city if locality is missing
           if (!city) {
-            addressComponents.forEach((component: any) => {
-              if (component.types.includes('sublocality_level_1')) {
-                city = component.long_name;
-              }
-            });
+            city = getComp('sublocality_level_1');
           }
 
           const photoUrl =
@@ -199,6 +227,9 @@ export default function GoogleAutocomplete({
               latitude: data.result.geometry.location.lat,
               longitude: data.result.geometry.location.lng,
             },
+            addressLine1,
+            addressLine2,
+            pincode,
             city,
             state,
             country,

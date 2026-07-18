@@ -17,14 +17,18 @@ export {
   getProductByHandle,
   getCollections,
   getCollectionByHandle,
+  getCollectionProductsPaginated,
   searchProducts,
   getRecommendedProducts,
+  getShopPolicies,
   // Mappers (exported for reuse)
   mapProduct,
   mapMoney,
   mapMoneyRequired,
   mapImage,
 } from './services/product.service';
+
+export type { ShopPolicy, ShopPolicies } from './services/product.service';
 
 // Cart Service
 export {

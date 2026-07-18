@@ -14,6 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useProducts } from '@/hooks/useProducts';
+import { useCollectionProducts } from '@/hooks/useCollectionProducts';
 import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
 import { themeType } from '@/interface/theme.type';
@@ -28,6 +29,35 @@ const COLUMN_GAP = wp('3%');
 const CARD_WIDTH =
   (SCREEN_WIDTH - HORIZONTAL_PADDING * 2 - COLUMN_GAP) / NUM_COLUMNS;
 
+// ─── Wrapper hook: picks the right data source based on params ────────────────
+function useCategoryProducts(params: {
+  handle?: string;
+  sortKey?: string;
+  query?: string;
+}) {
+  const { handle, sortKey, query } = params;
+
+  // Collection-scoped fetch (when a Shopify collection handle is available)
+  const collectionResult = useCollectionProducts(
+    handle ?? '',
+    sortKey ?? 'BEST_SELLING',
+    20,
+  );
+
+  // Fallback: generic product query (e.g. "product_type:Jeans")
+  const queryResult = useProducts({
+    first: 20,
+    sortKey: sortKey,
+    query: query,
+  });
+
+  // Prefer collection-scoped data when a handle is provided
+  if (handle) {
+    return collectionResult;
+  }
+  return queryResult;
+}
+
 export default function CategoryProductsScreen() {
   const { t } = useTranslation();
   const route = useRoute<any>();
@@ -35,10 +65,11 @@ export default function CategoryProductsScreen() {
   const themeColor = useThemeColor();
   const styles = useThemedStyles(createStyle);
 
-  const { categoryTitle, sortKey, query } = route.params as {
+  const { categoryTitle, sortKey, query, handle } = route.params as {
     categoryTitle: string;
     sortKey?: string;
     query?: string;
+    handle?: string;
   };
 
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
@@ -52,11 +83,7 @@ export default function CategoryProductsScreen() {
     hasNextPage,
     loadMore,
     refresh,
-  } = useProducts({
-    first: 10,
-    sortKey: sortKey,
-    query: query,
-  });
+  } = useCategoryProducts({ handle, sortKey, query });
 
   const handleProductPress = useCallback(
     (product: Product) => {
@@ -73,17 +100,13 @@ export default function CategoryProductsScreen() {
     );
   }, []);
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: Product;
-    index: number;
-  }) => (
+  const renderItem = ({ item, index }: { item: Product; index: number }) => (
     <View
       style={[
         styles.cardWrapper,
-        index % 2 === 0 ? { marginRight: COLUMN_GAP / 2 } : { marginLeft: COLUMN_GAP / 2 },
+        index % 2 === 0
+          ? { marginRight: COLUMN_GAP / 2 }
+          : { marginLeft: COLUMN_GAP / 2 },
       ]}
     >
       <ProductCard
@@ -113,11 +136,7 @@ export default function CategoryProductsScreen() {
     if (loading) return null;
     return (
       <View style={styles.emptyContainer}>
-        <Ionicons
-          name="shirt-outline"
-          size={64}
-          color={themeColor.textS1}
-        />
+        <Ionicons name="shirt-outline" size={64} color={themeColor.textS1} />
         <Text style={[styles.emptyText, { color: themeColor.textS1 }]}>
           {error
             ? t('category.failed_to_load', 'Failed to load products')
@@ -141,8 +160,17 @@ export default function CategoryProductsScreen() {
   };
 
   return (
-    <SafeAreaWrapper useSafeArea={false} statusBarColor={themeColor.backgroundColor} StatusBarStyle="dark-content">
-      <View style={[styles.container, { backgroundColor: themeColor.backgroundColor }]}>
+    <SafeAreaWrapper
+      useSafeArea={false}
+      statusBarColor={themeColor.backgroundColor}
+      StatusBarStyle="dark-content"
+    >
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: themeColor.backgroundColor },
+        ]}
+      >
         {/* ─── Header ─── */}
         <SafeAreaView edges={['top']} style={styles.header}>
           <TouchableOpacity
@@ -173,8 +201,7 @@ export default function CategoryProductsScreen() {
           <View style={styles.subHeader}>
             <Text style={[styles.itemCount, { color: themeColor.textS1 }]}>
               {products.length}
-              {hasNextPage ? '+' : ''}{' '}
-              {t('category.items', 'items')}
+              {hasNextPage ? '+' : ''} {t('category.items', 'items')}
             </Text>
           </View>
         )}

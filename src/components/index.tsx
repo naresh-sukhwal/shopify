@@ -10,6 +10,7 @@ export { default as CountryPickerSheet } from '@/components/bottomSheets/Country
 export { default as AuthHeader } from '@/components/headers/AuthHeader';
 export { default as MainHeader } from '@/components/headers/MainHeader';
 export { default as StackHeader } from '@/components/headers/StackHeader';
+export { default as SimpleHeader } from '@/components/headers/SimpleHeader';
 
 // ==================== @/components/hoc ====================
 export { default as SafeAreaWrapper } from '@/components/hoc/SafeAreaWrapper';

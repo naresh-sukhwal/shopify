@@ -78,6 +78,7 @@ export async function shopifyGraphQLRequest<
     Accept: 'application/json',
     'X-Shopify-Storefront-Access-Token': SHOPIFY_TOKEN,
   };
+  // console.log('SHOPIFY_TOKEN--->', SHOPIFY_TOKEN);
 
   // Inject customer token for authenticated queries (e.g. getCustomer, orders)
   if (options?.customerToken) {
@@ -110,7 +111,6 @@ export async function shopifyGraphQLRequest<
       response.status,
     );
   }
-
   const json: GraphQLResponse<TData> = await response.json();
 
   // Dev-mode response logging

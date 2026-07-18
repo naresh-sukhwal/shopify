@@ -110,7 +110,6 @@
     "back": "वापस"
   },
   "wallet": {
-
     "add_money": "पैसे जोड़ें",
     "wallet_label": "वॉलेट",
     "skip": "छोड़ें",
@@ -298,7 +297,15 @@
     "help_text": "मदद की ज़रूरत है? लेनदेन इतिहास से सहायता लें।",
     "kyc_verified": "KYC सत्यापित",
     "bank_linked": "बैंक लिंक किया गया",
-    "bank_verified": "बैंक सत्यापित"
+    "bank_verified": "बैंक सत्यापित",
+    "profile_details": "प्रोफ़ाइल विवरण",
+    "order_history": "ऑर्डर इतिहास",
+    "saved_wishlist": "सहेजी गई विशलिस्ट",
+    "addresses": "पते",
+    "payment_methods": "भुगतान के तरीके",
+    "invite_friends": "दोस्तों को आमंत्रित करें",
+    "invite_desc": "अपने दोस्तों को उनके पहले ऑर्डर पर $20 की छूट दें और खुद $20 प्राप्त करें।",
+    "invite_now": "अभी आमंत्रित करें"
   },
   "product": {
     "color": "रंग",
@@ -309,10 +316,15 @@
     "materials": "सामग्री",
     "care": "देखभाल",
     "shipping_returns": "शिपिंग और रिटर्न",
+    "return_refund_policy": "वापसी और धनवापसी नीति",
+    "shipping_policy": "शिपिंग नीति",
+    "loading_policies": "नीतियां लोड हो रही हैं...",
+    "no_policy_set": "इस स्टोर के लिए कोई नीति नहीं बनाई गई है।",
     "buy_now": "अभी खरीदें",
     "read_more": "और पढ़ें",
     "read_less": "कम पढ़ें",
     "added_to_cart": "उत्पाद कार्ट में जोड़ा गया!",
+    "out_of_stock_variant": "यह वेरिएंट वर्तमान में स्टॉक में नहीं है।",
     "failed_add_cart": "कार्ट में जोड़ने में विफल"
   },
   "category": {
@@ -328,13 +340,101 @@
     "retry": "पुनः प्रयास करें",
     "search": "खोजें"
   },
+  "collection": {
+    "casual_wear": "कैजुअल वियर",
+    "summer_sale": "समर सेल",
+    "jeans": "जींस",
+    "shirt": "शर्ट"
+  },
   "search": {
     "title": "खोज",
-    "placeholder": "कपड़े, स्टाइल खोजें...",
+    "placeholder": "कपड़े, स्टाइल खोजें...",
     "cancel": "रद्द करें",
     "no_results": "\"{{query}}\" के लिए कोई परिणाम नहीं",
     "try_different": "कोई अलग कीवर्ड आज़माएं",
     "recent_searches": "हाल की खोजें",
     "clear_all": "सभी मिटाएं"
+  },
+  "wishlist": {
+    "title": "विशलिस्ट",
+    "items_saved": "{{count}} आइटम सहेजे",
+    "recently_added": "हाल ही में जोड़े गए",
+    "empty_title": "आपकी विशलिस्ट खाली है",
+    "empty_desc": "जो आइटम पसंद हों उन्हें सहेजें और कभी भी वापस आएं।",
+    "start_shopping": "खरीदारी शुरू करें",
+    "shop": "खरीदें",
+    "remove": "हटाएं"
+  },
+  "cart": {
+    "title": "शॉपिंग बैग",
+    "item_added": "आइटम बैग में जोड़ा गया!",
+    "subtotal": "उप-कुल",
+    "shipping": "शिपिंग",
+    "shipping_calculated": "चेकआउट के समय गणना की जाएगी",
+    "free": "मुफ़्त",
+    "total": "कुल",
+    "total_amount": "कुल राशि",
+    "items": "आइटम",
+    "proceed_to_checkout": "चेकआउट के लिए आगे बढ़ें",
+    "empty_title": "आपका बैग खाली है",
+    "empty_subtitle": "लगता है कि आपने अभी तक अपने बैग में कुछ नहीं जोड़ा है।",
+    "start_shopping": "खरीदारी शुरू करें"
+  },
+  "checkout": {
+    "address_title": "शिपिंग पता",
+    "address_subtitle": "हमें आपका ऑर्डर कहाँ भेजना चाहिए?",
+    "home": "घर",
+    "default": "डिफ़ॉल्ट",
+    "design_studio": "डिजाइन स्टूडियो",
+    "add_new_address": "नया पता जोड़ें",
+    "no_addresses": "अभी तक कोई सहेजा गया पता नहीं है। जारी रखने के लिए एक जोड़ें।",
+    "estimated_total": "अनुमानित कुल",
+    "continue_to_payment": "भुगतान के लिए आगे बढ़ें",
+    "review_continue": "समीक्षा और जारी रखें",
+    "steps_address": "पता",
+    "steps_payment": "भुगतान",
+    "steps_review": "समीक्षा",
+    "add_address": "पता जोड़ें",
+    "delivery_details": "वितरण विवरण",
+    "where_send": "हम आपके खजाने कहाँ भेजें?",
+    "contact_info": "संपर्क जानकारी",
+    "first_name": "पहला नाम",
+    "last_name": "अंतिम नाम",
+    "phone_number": "फ़ोन नंबर",
+    "email_address": "ईमेल पता",
+    "address_section": "पता",
+    "address_line_1": "पता पंक्ति 1",
+    "address_line_2": "पता पंक्ति 2 (वैकल्पिक)",
+    "landmark": "सीमाचिह्न (वैकल्पिक)",
+    "city": "शहर",
+    "state": "राज्य",
+    "postal_code": "पोस्टल कोड",
+    "work": "कार्य",
+    "save_address": "पता सहेजें"
+  },
+  "errors": {
+    "required": "आवश्यक",
+    "invalid_email": "अमान्य ईमेल"
+  },
+  "payment": {
+    "title": "भुगतान",
+    "order_summary": "ऑर्डर सारांश",
+    "delivering_to": "यहाँ डिलीवर होगा",
+    "pay_with_razorpay": "Razorpay से भुगतान करें",
+    "proceed_to_payment": "भुगतान के लिए आगे बढ़ें",
+    "processing": "चेकआउट लोड हो रहा है...",
+    "secure_payment": "Shopify द्वारा सुरक्षित · 256-bit SSL",
+    "payment_failed": "भुगतान विफल",
+    "payment_failed_desc": "कुछ गलत हुआ। कृपया पुनः प्रयास करें।"
+  },
+  "order": {
+    "success_title": "ऑर्डर हो गया! 🎉",
+    "success_subtitle": "आपका ऑर्डर सफलतापूर्वक दर्ज हो गया है और तैयार किया जा रहा है।",
+    "order_id": "ऑर्डर आईडी",
+    "status": "स्थिति",
+    "confirmed": "पुष्टि हो गई",
+    "delivery_note": "आपके पंजीकृत ईमेल पर पुष्टि और ट्रैकिंग विवरण भेजा जाएगा।",
+    "continue_shopping": "खरीदारी जारी रखें",
+    "view_orders": "ऑर्डर देखें"
   }
 }

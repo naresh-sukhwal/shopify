@@ -10,4 +10,7 @@ declare module '@env' {
   export const SHOPIFY_STORE_DOMAIN: string;        // e.g. your-store.myshopify.com
   export const SHOPIFY_STOREFRONT_TOKEN: string;    // Public Storefront API access token
   export const SHOPIFY_API_VERSION: string;          // e.g. 2025-01
+
+  // ─── Razorpay ─────────────────────────────────────────────────────────────────
+  export const RAZORPAY_KEY_ID: string;              // Razorpay key ID (test/live)
 }

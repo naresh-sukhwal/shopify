@@ -19,6 +19,11 @@ export const COMMON_KEYS = Object.freeze({
   CURRENCY: '$',
 });
 
+/**
+ * Flat shipping fee applied to every order (in the cart's currency).
+ * Change this single value to update shipping costs app-wide.
+ */
+
 export const TabData = [
   {
     id: 1,

@@ -347,7 +347,15 @@
     "help_text": "Need help? Contact support from Transaction History.",
     "kyc_verified": "KYC verified",
     "bank_linked": "Bank linked",
-    "bank_verified": "Bank verified"
+    "bank_verified": "Bank verified",
+    "profile_details": "Profile Details",
+    "order_history": "Order History",
+    "saved_wishlist": "Saved Wishlist",
+    "addresses": "Addresses",
+    "payment_methods": "Payment Methods",
+    "invite_friends": "Invite Friends",
+    "invite_desc": "Give your friends $20 off their first order and get $20 for yourself.",
+    "invite_now": "Invite Now"
   },
   "product": {
     "color": "Color",
@@ -358,10 +366,15 @@
     "materials": "Materials",
     "care": "Care",
     "shipping_returns": "Shipping & Returns",
+    "return_refund_policy": "Return & Refund Policy",
+    "shipping_policy": "Shipping Policy",
+    "loading_policies": "Loading policies...",
+    "no_policy_set": "No policy has been set for this store.",
     "buy_now": "Buy Now",
     "read_more": "Read more",
     "read_less": "Read less",
     "added_to_cart": "Product added to cart!",
+    "out_of_stock_variant": "This variant is currently out of stock.",
     "failed_add_cart": "Failed to add to cart"
   },
   "category": {
@@ -377,6 +390,12 @@
     "retry": "Retry",
     "search": "Search"
   },
+  "collection": {
+    "casual_wear": "Casual Wear",
+    "summer_sale": "Summer Sale",
+    "jeans": "Jeans",
+    "shirt": "Shirt"
+  },
   "search": {
     "title": "Search",
     "placeholder": "Search clothes, styles...",
@@ -385,5 +404,93 @@
     "try_different": "Try a different keyword",
     "recent_searches": "Recent Searches",
     "clear_all": "Clear All"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "items_saved": "{{count}} ITEMS SAVED",
+    "recently_added": "Recently Added",
+    "empty_title": "Your wishlist is empty",
+    "empty_desc": "Save items you love and come back to them anytime.",
+    "start_shopping": "Start Shopping",
+    "shop": "Shop",
+    "remove": "Remove"
+  },
+  "cart": {
+    "title": "Shopping Bag",
+    "item_added": "Item added to bag!",
+    "subtotal": "Subtotal",
+    "shipping": "Additional shipping charges may apply. ",
+    "shipping_calculated": "Calculated at checkout",
+    "free": "Free",
+    "total": "Total",
+    "total_amount": "TOTAL AMOUNT",
+    "items": "ITEMS",
+    "proceed_to_checkout": "Proceed to Checkout",
+    "empty_title": "Your bag is empty",
+    "empty_subtitle": "Looks like you haven't added anything to your bag yet.",
+    "start_shopping": "Start Shopping"
+  },
+  "checkout": {
+    "address_title": "Shipping Address",
+    "address_subtitle": "Where should we send your order?",
+    "home": "Home",
+    "default": "DEFAULT",
+    "design_studio": "Design Studio",
+    "add_new_address": "Add New Address",
+    "no_addresses": "No saved addresses yet. Add one to continue.",
+    "estimated_total": "Estimated Total",
+    "continue_to_payment": "Continue to Payment",
+    "review_continue": "Review & Continue",
+    "steps_address": "Address",
+    "steps_payment": "Payment",
+    "steps_review": "Review",
+    "add_address": "Add Address",
+    "delivery_details": "Delivery Details",
+    "where_send": "Where shall we send your treasures?",
+    "contact_info": "Contact Info",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone_number": "Phone Number",
+    "email_address": "Email Address",
+    "address_section": "Address",
+    "address_line_1": "Address Line 1",
+    "address_line_2": "Address Line 2 (Optional)",
+    "landmark": "Landmark (Optional)",
+    "city": "City",
+    "state": "State",
+    "postal_code": "Postal Code",
+    "work": "Work",
+    "save_address": "Save Address"
+  },
+  "errors": {
+    "required": "Required",
+    "invalid_email": "Invalid email"
+  },
+  "payment": {
+    "title": "Payment",
+    "order_summary": "Order Summary",
+    "delivering_to": "Delivering to",
+    "pay_with_razorpay": "Pay with Razorpay",
+    "proceed_to_payment": "Proceed to Payment",
+    "processing": "Loading checkout...",
+    "secure_payment": "Secured by Shopify · 256-bit SSL",
+    "payment_failed": "Payment Failed",
+    "payment_failed_desc": "Something went wrong. Please try again."
+  },
+  "order": {
+    "success_title": "Order Placed! 🎉",
+    "success_subtitle": "Your order has been successfully placed and is being prepared.",
+    "order_id": "Order ID",
+    "status": "Status",
+    "confirmed": "Confirmed",
+    "delivery_note": "You will receive a confirmation and tracking details on your registered email.",
+    "continue_shopping": "Continue Shopping",
+    "view_orders": "View Orders",
+    "history": "Order History",
+    "all": "All",
+    "processing": "Processing",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "view_details": "View Details"
   }
 }

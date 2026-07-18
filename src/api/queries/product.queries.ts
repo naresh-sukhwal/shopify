@@ -262,3 +262,23 @@ export const GET_RECOMMENDED_PRODUCTS = `
     }
   }
 `;
+
+// ─── GET_SHOP_POLICIES ────────────────────────────────────────────────────────
+/** Fetches the store's return/refund policy and shipping policy — used on
+ *  Product Detail screen's "Shipping & Returns" accordion. */
+export const GET_SHOP_POLICIES = `
+  query GetShopPolicies {
+    shop {
+      refundPolicy {
+        title
+        body
+        url
+      }
+      shippingPolicy {
+        title
+        body
+        url
+      }
+    }
+  }
+`;

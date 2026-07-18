@@ -228,45 +228,43 @@ export const requestMicrophonePermission = async () => {
   }
 };
 
-// export const requestLocationPermissions = async () => {
-//   const permission =
-//     Platform.OS === 'ios'
-//       ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-//       : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+export const requestLocationPermissions = async () => {
+  const permission =
+    Platform.OS === 'ios'
+      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
-//   let permissionGranted = false;
+  let permissionGranted = false;
 
-//   while (!permissionGranted) {
-//     const result = await check(permission);
+  while (!permissionGranted) {
+    const result = await check(permission);
 
-//     if (result === RESULTS.GRANTED) {
-//       await checkLocationAvailability();
-//       return true;
-//     }
+    if (result === RESULTS.GRANTED) {
+      return true;
+    }
 
-//     if (result === RESULTS.BLOCKED) {
-//       console.log('Location permission blocked');
-//       showLocationSettingsAlert();
-//       return false;
-//     }
+    if (result === RESULTS.BLOCKED) {
+      console.log('Location permission blocked');
+      showLocationSettingsAlert();
+      return false;
+    }
 
-//     const requestResult = await request(permission);
-//     console.log('requestLocationPermissions', requestResult);
+    const requestResult = await request(permission);
+    console.log('requestLocationPermissions', requestResult);
 
-//     if (requestResult === RESULTS.GRANTED) {
-//       await checkLocationAvailability();
-//       return true;
-//     }
+    if (requestResult === RESULTS.GRANTED) {
+      return true;
+    }
 
-//     if (requestResult === RESULTS.BLOCKED) {
-//       console.log('Location permission blocked after request');
-//       showLocationSettingsAlert();
-//       return false;
-//     }
+    if (requestResult === RESULTS.BLOCKED) {
+      console.log('Location permission blocked after request');
+      showLocationSettingsAlert();
+      return false;
+    }
 
-//     console.log('User denied location permission, requesting again...');
-//   }
-// };
+    console.log('User denied location permission, requesting again...');
+  }
+};
 
 const showLocationSettingsAlert = () => {
   Alert.alert(

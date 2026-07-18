@@ -14,6 +14,7 @@ import {
   GET_COLLECTION_BY_HANDLE,
   SEARCH_PRODUCTS,
   GET_RECOMMENDED_PRODUCTS,
+  GET_SHOP_POLICIES,
 } from '@/api/queries/product.queries';
 import type {
   GetProductsData,
@@ -166,7 +167,6 @@ export async function getProducts(
     reverse,
     query,
   });
-  console.log('data----->', data);
 
   return {
     items: data.products.nodes.map(mapProduct),
@@ -249,6 +249,53 @@ export async function getCollectionByHandle(
 }
 
 /**
+ * Fetch a paginated list of products scoped to a specific collection.
+ * Returns both the mapped products and the pageInfo for cursor-based pagination.
+ */
+export async function getCollectionProductsPaginated(
+  handle: string,
+  first = 20,
+  after?: string,
+  sortKey?: string,
+  reverse?: boolean,
+): Promise<
+  | (PaginatedResult<Product> & {
+      collectionTitle: string;
+      collectionImage: import('@/types/app.types').AppImage | null;
+    })
+  | null
+> {
+  const data = await shopifyRequest<GetCollectionByHandleData>(
+    GET_COLLECTION_BY_HANDLE,
+    {
+      handle,
+      first,
+      after,
+      sortKey,
+      reverse,
+    },
+  );
+
+  if (!data.collection) return null;
+
+  const raw = data.collection;
+  const products = raw.products?.nodes?.map(mapProduct) ?? [];
+  const pageInfo = raw.products?.pageInfo;
+
+  return {
+    items: products,
+    pageInfo: {
+      hasNextPage: pageInfo?.hasNextPage ?? false,
+      hasPreviousPage: pageInfo?.hasPreviousPage ?? false,
+      endCursor: pageInfo?.endCursor ?? null,
+      startCursor: pageInfo?.startCursor ?? null,
+    },
+    collectionTitle: raw.title,
+    collectionImage: mapImage(raw.image),
+  };
+}
+
+/**
  * Search products by query string.
  */
 export async function searchProducts(
@@ -283,4 +330,36 @@ export async function getRecommendedProducts(
     productRecommendations: ShopifyProduct[];
   }>(GET_RECOMMENDED_PRODUCTS, { productId });
   return (data.productRecommendations ?? []).map(mapProduct);
+}
+
+// ─── Shop Policies ───────────────────────────────────────────────────────────
+
+export interface ShopPolicy {
+  title: string;
+  body: string;
+  url: string;
+}
+
+export interface ShopPolicies {
+  refundPolicy: ShopPolicy | null;
+  shippingPolicy: ShopPolicy | null;
+}
+
+interface GetShopPoliciesData {
+  shop: {
+    refundPolicy: ShopPolicy | null;
+    shippingPolicy: ShopPolicy | null;
+  };
+}
+
+/**
+ * Fetch the store's written Return & Refund policy and Shipping policy.
+ * These are configured in Shopify Admin → Settings → Policies.
+ */
+export async function getShopPolicies(): Promise<ShopPolicies> {
+  const data = await shopifyRequest<GetShopPoliciesData>(GET_SHOP_POLICIES, {});
+  return {
+    refundPolicy: data.shop?.refundPolicy ?? null,
+    shippingPolicy: data.shop?.shippingPolicy ?? null,
+  };
 }

@@ -59,6 +59,18 @@ export const GET_CUSTOMER = `
             fulfillmentStatus
             totalPrice { amount currencyCode }
             statusUrl
+            lineItems(first: 10) {
+              edges {
+                node {
+                  title
+                  variant {
+                    image {
+                      url
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -113,3 +125,4 @@ export const GET_CART = `
     }
   }
 `;
+

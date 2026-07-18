@@ -6,6 +6,7 @@ import {
   SHOPIFY_STORE_DOMAIN,
   SHOPIFY_STOREFRONT_TOKEN,
   SHOPIFY_API_VERSION,
+  RAZORPAY_KEY_ID,
 } from '@env';
 
 let MODE: 'DEV' | 'PROD' = __DEV__ ? 'DEV' : 'PROD';
@@ -15,6 +16,7 @@ export const SOCKET_URL = BASE_URL;
 export const API_URL = `${BASE_URL}/api/v1`;
 export const ASSETS_URL = `${BUCKET_URL}`;
 export const GOOGLE_API_KEY = GOOGLE_MAP_API_KEY;
+export const RAZORPAY_KEY = RAZORPAY_KEY_ID;
 
 // ─── Shopify Storefront GraphQL ──────────────────────────────────────────────
 // SHOPIFY_STORE_DOMAIN can be either:
@@ -44,5 +46,9 @@ export const ENDPOINTS = {
   },
   COMMON: {
     CONFIG: 'config/all',
+  },
+  PAYMENT: {
+    CREATE_ORDER: 'payment/create-order',
+    VERIFY_PAYMENT: 'payment/verify',
   },
 };

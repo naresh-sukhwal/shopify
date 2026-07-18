@@ -7,6 +7,8 @@ import Application from '@/navigations/Application';
 import { MenuProvider } from 'react-native-popup-menu';
 import { useThemeStore } from '@/store/themeStore';
 
+import { SuccessToast } from '@/components/toast/CustomToast';
+
 export default function App() {
   useEffect(() => {
     LogBox.ignoreAllLogs();
@@ -27,7 +29,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ContextProvider>
-        <ToastProvider>
+        <ToastProvider renderType={{ success: (toast) => <SuccessToast toast={toast} /> }}>
           <MenuProvider>
             <Application />
           </MenuProvider>

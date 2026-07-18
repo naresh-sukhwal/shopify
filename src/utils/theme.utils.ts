@@ -6,7 +6,7 @@ export const LightThemeColors = {
   backgroundColor: '#F9F7F4',
   backgroundColorS1: '#FFFFFF',
   backgroundColorS2: '#F7F3E9',
-  backgroundColorS3: '#e17b4e',
+  backgroundColorS3: '#e47f55',
 
   // Primary Family
   primary: '#F7F5F0',

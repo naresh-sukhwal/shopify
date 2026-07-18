@@ -19,6 +19,7 @@ import {
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import VersionCheck from 'react-native-version-check';
 import LandingScreen from '@/screens/landing/LandingScreen';
+import SplashScreen from '@/screens/auth/SplashScreen';
 import { getAsyncStorage } from '@/utils/helper.utils';
 import { ASYNC_KEYS } from '@/utils/contant.utils';
 
@@ -88,8 +89,9 @@ export default function Application() {
 
   return (
     <>
-      <NavigationContainer ref={navigationRef} onReady={onNavigationReady}>
+      <NavigationContainer ref={navigationRef}>
         <RootNavigator.Navigator screenOptions={{ headerShown: false }}>
+          <RootNavigator.Screen component={SplashScreen} name="SplashScreen" />
           {/*  <RootNavigator.Screen
             component={LandingScreen}
             name="LandingScreen"

@@ -50,15 +50,24 @@ const mapAddress = (raw: ShopifyAddress): Address => ({
   lastName: raw.lastName ?? '',
 });
 
-const mapOrder = (raw: ShopifyOrder): CustomerOrder => ({
-  id: raw.id,
-  name: raw.name,
-  processedAt: raw.processedAt,
-  financialStatus: raw.financialStatus,
-  fulfillmentStatus: raw.fulfillmentStatus,
-  totalPrice: mapMoneyRequired(raw.totalPrice),
-  statusUrl: raw.statusUrl,
-});
+const mapOrder = (raw: ShopifyOrder): CustomerOrder => {
+  const allImages =
+    raw.lineItems?.edges
+      ?.map(e => e.node.variant?.image?.url)
+      .filter((url): url is string => !!url) ?? [];
+
+  return {
+    id: raw.id,
+    name: raw.name,
+    processedAt: raw.processedAt,
+    financialStatus: raw.financialStatus,
+    fulfillmentStatus: raw.fulfillmentStatus,
+    totalPrice: mapMoneyRequired(raw.totalPrice),
+    statusUrl: raw.statusUrl,
+    images: allImages.slice(0, 3),
+    extraCount: allImages.length > 3 ? allImages.length - 3 : 0,
+  };
+};
 
 const mapCustomer = (raw: ShopifyCustomer): Customer => ({
   id: raw.id,
@@ -236,3 +245,4 @@ export async function recoverCustomerPassword(email: string): Promise<void> {
     'Password recovery failed: ',
   );
 }
+

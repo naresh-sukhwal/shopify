@@ -8,15 +8,15 @@ import {
   ActivityIndicator,
   Dimensions,
   Keyboard,
+  RefreshControl,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemedStyles } from '@/hooks/useThemedStyles';
 import { useThemeColor } from '@/hooks/useThemeColor';
 import { useSearchProducts } from '@/hooks/useProducts';
 import { useRecentSearches } from '@/hooks/useRecentSearches';
-import { FASHION_CATEGORIES } from '@/utils/categories.utils';
+import { useCollections } from '@/hooks/useCollections';
 import type { FashionCategory } from '@/utils/categories.utils';
 import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
@@ -25,6 +25,7 @@ import type { Product } from '@/types/app.types';
 import SearchBox from '@/components/inputs/TextInput/SearchBox';
 import CategoryCard from '@/components/cards/CategoryCard';
 import ProductCard from '@/components/cards/ProductCard';
+import { AppBackground } from '@/components';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const HORIZONTAL_PADDING = wp('4%');
@@ -38,11 +39,16 @@ const CATEGORY_CARD_HEIGHT = hp('20%');
 export default function SearchScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
+  const route = useRoute<any>();
   const themeColor = useThemeColor();
   const styles = useThemedStyles(createStyle);
 
   const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const { recentSearches, addSearch, clearSearches } = useRecentSearches();
+
+  const { categories, refresh: refreshCollections } = useCollections(20);
+
+  const initialQuery = route.params?.initialQuery || '';
 
   const {
     products,
@@ -53,12 +59,28 @@ export default function SearchScreen() {
     setSearchQuery,
     error,
     hasNextPage,
-  } = useSearchProducts();
+    refresh: refreshSearch,
+  } = useSearchProducts(initialQuery);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(async () => {
+    Keyboard.dismiss();
+    setRefreshing(true);
+    try {
+      await Promise.all([
+        refreshCollections(),
+        // Only refresh search results when user is actively searching
+        searchQuery.trim().length > 0 ? refreshSearch() : Promise.resolve(),
+      ]);
+    } catch (_) {
+      // errors are handled inside each hook
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refreshCollections, refreshSearch, searchQuery]);
 
   const isSearching = searchQuery.trim().length > 0;
-
-  // ─── Handlers ───────────────────────────────────────────────────────────────
-
   const handleProductPress = useCallback(
     (product: Product) => {
       navigation.navigate('ProductDetail', { product });
@@ -81,6 +103,7 @@ export default function SearchScreen() {
         categoryTitle: category.title,
         sortKey: category.sortKey,
         query: category.query,
+        handle: category.handle, // collection handle for accurate product fetch
       });
     },
     [navigation],
@@ -99,9 +122,6 @@ export default function SearchScreen() {
     },
     [setSearchQuery, addSearch],
   );
-
-  // ─── Render helpers ──────────────────────────────────────────────────────────
-
   const renderProductItem = ({
     item,
     index,
@@ -142,30 +162,47 @@ export default function SearchScreen() {
 
   const renderRecentSearches = () => {
     if (recentSearches.length === 0) return null;
-    
+
     return (
       <View style={styles.recentSearchesSection}>
         <View style={styles.recentHeaderRow}>
-          <Text style={[styles.sectionTitle, { color: themeColor.text, marginBottom: 0 }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: themeColor.text, marginBottom: 0 },
+            ]}
+          >
             {t('search.recent_searches', 'Recent Searches')}
           </Text>
           <TouchableOpacity onPress={clearSearches}>
-            <Text style={[styles.clearAllText, { color: themeColor.buttonBackground }]}>
+            <Text
+              style={[
+                styles.clearAllText,
+                { color: themeColor.buttonBackground },
+              ]}
+            >
               {t('search.clear_all', 'CLEAR ALL')}
             </Text>
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.recentSearchesContainer}>
           {recentSearches.map((query, index) => {
-            const displayText = query.length > 20 ? query.substring(0, 20) + '...' : query;
+            const displayText =
+              query.length > 20 ? query.substring(0, 20) + '...' : query;
             return (
               <TouchableOpacity
                 key={`recent-${index}`}
-                style={[styles.recentSearchChip, { backgroundColor: themeColor.backgroundColorS1 }]}
+                style={[
+                  styles.recentSearchChip,
+                  { backgroundColor: themeColor.backgroundColorS1 },
+                ]}
                 onPress={() => handleRecentSearchPress(query)}
               >
-                <Text style={[styles.recentSearchText, { color: themeColor.text }]} numberOfLines={1}>
+                <Text
+                  style={[styles.recentSearchText, { color: themeColor.text }]}
+                  numberOfLines={1}
+                >
                   {displayText}
                 </Text>
               </TouchableOpacity>
@@ -183,10 +220,9 @@ export default function SearchScreen() {
       </Text>
 
       <View style={styles.categoryGrid}>
-        {FASHION_CATEGORIES.map((cat, index) => {
+        {categories.map((cat, index) => {
           const isLastOdd =
-            FASHION_CATEGORIES.length % 2 !== 0 &&
-            index === FASHION_CATEGORIES.length - 1;
+            categories.length % 2 !== 0 && index === categories.length - 1;
           return (
             <View
               key={cat.id}
@@ -196,7 +232,7 @@ export default function SearchScreen() {
               ]}
             >
               <CategoryCard
-                title={t(cat.titleKey, cat.title)}
+                title={cat.title}
                 image={cat.image}
                 onPress={() => handleCategoryPress(cat)}
                 cardWidth={
@@ -285,69 +321,79 @@ export default function SearchScreen() {
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: themeColor.backgroundColor },
-      ]}
-    >
-      {/* ─── Sticky Header: Safe area + search bar ─── */}
-      {/* <SafeAreaView edges={['top']} style={styles.headerSafeArea}> */}
-      <View style={styles.header}>
-        <Text style={[styles.screenTitle, { color: themeColor.text }]}>
-          {t('search.title', 'Search')}
-        </Text>
+    <AppBackground backgroundColor={themeColor.primary}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: themeColor.backgroundColor },
+        ]}
+      >
+        {/* ─── Sticky Header: Safe area + search bar ─── */}
+        {/* <SafeAreaView edges={['top']} style={styles.headerSafeArea}> */}
+        <View style={styles.header}>
+          <Text style={[styles.screenTitle, { color: themeColor.text }]}>
+            {t('search.title', 'Search')}
+          </Text>
 
-        <View style={styles.searchRow}>
-          <SearchBox
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeHolder={t('search.placeholder', 'Search clothes, styles...')}
-            style={styles.searchBox}
-            onSubmitEditing={() => addSearch(searchQuery)}
-            returnKeyType="search"
-          />
+          <View style={styles.searchRow}>
+            <SearchBox
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeHolder={t('search.placeholder', 'Search clothes, styles...')}
+              style={styles.searchBox}
+              onSubmitEditing={() => addSearch(searchQuery)}
+              returnKeyType="search"
+            />
 
-          {isSearching && (
-            <TouchableOpacity
-              style={styles.cancelBtn}
-              onPress={handleClearSearch}
-              accessibilityLabel={t('search.cancel', 'Cancel')}
-            >
-              <Text
-                style={[
-                  styles.cancelText,
-                  { color: themeColor.buttonBackground },
-                ]}
+            {isSearching && (
+              <TouchableOpacity
+                style={styles.cancelBtn}
+                onPress={handleClearSearch}
+                accessibilityLabel={t('search.cancel', 'Cancel')}
               >
-                {t('search.cancel', 'Cancel')}
-              </Text>
-            </TouchableOpacity>
-          )}
+                <Text
+                  style={[
+                    styles.cancelText,
+                    { color: themeColor.buttonBackground },
+                  ]}
+                >
+                  {t('search.cancel', 'Cancel')}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
-      </View>
-      {/* </SafeAreaView> */}
+        {/* </SafeAreaView> */}
 
-      {/* ─── Scrollable body ─── */}
-      <FlatList
-        data={[]}
-        renderItem={null}
-        keyExtractor={() => 'dummy'}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-        ListHeaderComponent={
-          isSearching ? (
-            renderSearchResults()
-          ) : (
-            <View>
-              {renderRecentSearches()}
-              {renderCategories()}
-            </View>
-          )
-        }
-        contentContainerStyle={styles.scrollContent}
-      />
-    </View>
+        {/* ─── Scrollable body ─── */}
+        <FlatList
+          data={[]}
+          renderItem={null}
+          keyExtractor={() => 'dummy'}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[themeColor.buttonBackground]}
+              tintColor={themeColor.buttonBackground}
+            />
+          }
+          ListHeaderComponent={
+            isSearching ? (
+              renderSearchResults()
+            ) : (
+              <View>
+                {renderRecentSearches()}
+                {renderCategories()}
+              </View>
+            )
+          }
+          contentContainerStyle={styles.scrollContent}
+        />
+      </View>
+    </AppBackground>
   );
 }
 
@@ -363,7 +409,7 @@ const createStyle = (theme: themeType) =>
     },
     header: {
       paddingHorizontal: HORIZONTAL_PADDING,
-      paddingTop: hp('1%'),
+      // paddingTop: hp('1%'),
       paddingBottom: hp('1.5%'),
       gap: hp('1.2%'),
     },

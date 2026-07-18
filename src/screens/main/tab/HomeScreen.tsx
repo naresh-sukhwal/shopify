@@ -2,11 +2,13 @@ import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
+  ActivityIndicator,
   StyleSheet,
   ScrollView,
   FlatList,
   TouchableOpacity,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
@@ -15,14 +17,19 @@ import { useThemeColor } from '@/hooks/useThemeColor';
 import { fontSize, fontFamily, Ionicons } from '@/utils/fontIcon.utils';
 import { hp, wp } from '@/utils/responsive.utils';
 import { themeType } from '@/interface/theme.type';
-import { useProducts } from '@/hooks/useProducts';
+import { useProducts, useSearchProducts } from '@/hooks/useProducts';
+import { useCollections } from '@/hooks/useCollections';
+import { useWishlist } from '@/hooks/useWishlist';
+import { useCartStore } from '@/store/cartStore';
+import { useCartOperations } from '@/hooks/useCartOperations';
 import type { Product } from '@/types/app.types';
+import type { FashionCategory } from '@/utils/categories.utils';
 import SearchBox from '@/components/inputs/TextInput/SearchBox';
 import CategoryChip from '@/components/cards/CategoryChip';
+import ProductCard from '@/components/cards/ProductCard';
 import BannerCarousel from '@/components/cards/BannerCarousel';
 import HorizontalProductList from '@/components/lists/HorizontalProductList';
-import { FASHION_CATEGORIES } from '@/utils/categories.utils';
-import type { FashionCategory } from '@/utils/categories.utils';
+import { AppBackground } from '@/components';
 
 // Dummy Data
 const DUMMY_BANNERS = [
@@ -48,48 +55,39 @@ const DUMMY_BANNERS = [
   },
 ];
 
-const DUMMY_CATEGORIES = [
-  {
-    id: '1',
-    title: 'Jewelry',
-    image:
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=200&fit=crop',
-  },
-  {
-    id: '2',
-    title: 'Bags',
-    image:
-      'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?w=200&fit=crop',
-  },
-  {
-    id: '3',
-    title: 'Shoes',
-    image:
-      'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=200&fit=crop',
-  },
-  {
-    id: '4',
-    title: 'Accessories',
-    image:
-      'https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?w=200&fit=crop',
-  },
-  {
-    id: '5',
-    title: 'Clothing',
-    image:
-      'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=200&fit=crop',
-  },
-];
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const HORIZONTAL_PADDING = wp('4%');
+const COLUMN_GAP = wp('3%');
+const NUM_COLUMNS = 2;
+const CARD_WIDTH =
+  (SCREEN_WIDTH - HORIZONTAL_PADDING * 2 - COLUMN_GAP) / NUM_COLUMNS;
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const navigation = useNavigation<any>();
   const styles = useThemedStyles(createStyle);
   const themeColor = useThemeColor();
-  const [search, setSearch] = useState('');
+  const {
+    products: searchResults,
+    loading: searchLoading,
+    searchQuery: search,
+    setSearchQuery: setSearch,
+  } = useSearchProducts();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const { isWishlisted, toggleWishlist } = useWishlist();
+  const { totalQuantity } = useCartStore();
+  const { refreshCart } = useCartOperations();
+
+  React.useEffect(() => {
+    refreshCart();
+  }, [refreshCart]);
+  // Collections (categories from Shopify Storefront)
+  const {
+    categories,
+    loading: categoriesLoading,
+    refresh: refreshCategories,
+  } = useCollections(20);
 
   // APIs
   const {
@@ -131,11 +129,13 @@ export default function HomeScreen() {
     setRefreshing(true);
     try {
       await Promise.all([
+        refreshCategories(),
         refreshFlashSale(),
         refreshFeatured(),
         refreshBestSellers(),
         refreshRecommended(),
         refreshRecentlyViewed(),
+        refreshCart(),
       ]);
     } catch (error) {
       console.error('Refresh error:', error);
@@ -143,6 +143,7 @@ export default function HomeScreen() {
       setRefreshing(false);
     }
   }, [
+    refreshCategories,
     refreshFlashSale,
     refreshFeatured,
     refreshBestSellers,
@@ -157,13 +158,12 @@ export default function HomeScreen() {
     [navigation],
   );
 
-  const handleWishlistPress = useCallback((product: Product) => {
-    setFavoriteIds(prev =>
-      prev.includes(product.id)
-        ? prev.filter(id => id !== product.id)
-        : [...prev, product.id],
-    );
-  }, []);
+  const handleWishlistPress = useCallback(
+    (product: Product) => {
+      toggleWishlist(product.id);
+    },
+    [toggleWishlist],
+  );
 
   const handleCategoryPress = useCallback(
     (category: FashionCategory) => {
@@ -171,193 +171,246 @@ export default function HomeScreen() {
         categoryTitle: category.title,
         sortKey: category.sortKey,
         query: category.query,
+        handle: category.handle, // collection handle for accurate product fetch
       });
     },
     [navigation],
   );
 
   return (
-    <View style={styles.container}>
-      {/* --- Header --- */}
-      <View style={styles.header}>
-        <Text
-          style={[styles.storeName, { color: themeColor.buttonBackground }]}
-        >
-          Stylo
-        </Text>
-        <View style={styles.headerIcons}>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons
-              name="notifications-outline"
-              size={24}
-              color={themeColor.text}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconButton}>
-            <Ionicons name="bag-outline" size={24} color={themeColor.text} />
-            <View
-              style={[
-                styles.cartBadge,
-                { backgroundColor: themeColor.buttonBackground },
-              ]}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            colors={[themeColor.buttonBackground]}
-            tintColor={themeColor.buttonBackground}
-          />
-        }
-      >
-        {/* --- Search --- */}
-        <View style={styles.searchSection}>
-          <SearchBox
-            value={search}
-            onChangeText={setSearch}
-            placeHolder={t(
-              'home.search_placeholder',
-              'Search for collections...',
-            )}
-          />
-        </View>
-
-        {/* --- Banner --- */}
-        <BannerCarousel data={DUMMY_BANNERS} autoPlay={true} />
-
-        {/* --- Shop by Category --- */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: themeColor.text }]}>
-              Shop by Category
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
-              <Text
-                style={[
-                  styles.seeAllText,
-                  { color: themeColor.buttonBackground },
-                ]}
-              >
-                View All
-              </Text>
+    <AppBackground useSafeArea={false} backgroundColor={themeColor.primary}>
+      <View style={styles.container}>
+        {/* --- Header --- */}
+        <View style={styles.header}>
+          <Text
+            style={[styles.storeName, { color: themeColor.buttonBackground }]}
+          >
+            Stylo
+          </Text>
+          <View style={styles.headerIcons}>
+            <TouchableOpacity style={styles.iconButton}>
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color={themeColor.text}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.iconButton}
+              onPress={() => navigation.navigate('CartScreen')}
+            >
+              <Ionicons name="bag-outline" size={24} color={themeColor.text} />
+              {totalQuantity > 0 && (
+                <View
+                  style={[
+                    styles.cartBadge,
+                    { backgroundColor: themeColor.buttonBackground },
+                  ]}
+                >
+                  <Text style={styles.cartBadgeText}>
+                    {totalQuantity > 9 ? '9+' : totalQuantity}
+                  </Text>
+                </View>
+              )}
             </TouchableOpacity>
           </View>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={FASHION_CATEGORIES}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (
-              <CategoryChip
-                title={item.title}
-                image={item.image}
-                selected={selectedCategory === item.id}
-                onPress={() => handleCategoryPress(item)}
-              />
-            )}
-            contentContainerStyle={styles.categoryList}
-          />
         </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              colors={[themeColor.buttonBackground]}
+              tintColor={themeColor.buttonBackground}
+            />
+          }
+        >
+          <View style={styles.searchSection}>
+            <SearchBox
+              value={search}
+              onChangeText={setSearch}
+              placeHolder={t(
+                'home.search_placeholder',
+                'Search for collections...',
+              )}
+            />
+          </View>
 
-        {/* --- Flash Sale --- */}
-        {flashSaleProducts.length > 0 && (
-          <HorizontalProductList
-            title="Flash Sale"
-            products={flashSaleProducts}
-            onProductPress={handleProductPress}
-            // titleBadge={
-            //   <View
-            //      style={[styles.timerBadge, { backgroundColor: themeColor.red }]}
-            //    >
-            //     <Text style={styles.timerText}>04:23:13</Text>
-            //    </View>
-            // }
-            onWishlistPress={handleWishlistPress}
-            getIsFavorite={product => favoriteIds.includes(product.id)}
-            showWishlist={true}
-            showDiscount={false}
-            showRating={false}
-            getCartIcon={() => (
-              <Ionicons
-                name="cart-outline"
-                size={16}
-                color={themeColor.white}
+          {search.trim().length > 0 ? (
+            <View style={{ paddingHorizontal: wp('4%') }}>
+              {searchLoading ? (
+                <View style={{ padding: 40, alignItems: 'center' }}>
+                  <ActivityIndicator size="large" color={themeColor.buttonBackground} />
+                </View>
+              ) : searchResults.length > 0 ? (
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                  {searchResults.map((item, index) => (
+                    <View
+                      key={item.id}
+                      style={{
+                        marginBottom: hp('2%'),
+                      }}
+                    >
+                      <ProductCard
+                        item={item}
+                        cardWidth={CARD_WIDTH}
+                        showWishlist
+                        showDiscount
+                        showOldPrice
+                        showRating={false}
+                        isFavorite={isWishlisted(item.id)}
+                        onPress={handleProductPress}
+                        onWishlist={handleWishlistPress}
+                      />
+                    </View>
+                  ))}
+                </View>
+              ) : (
+                <View style={{ padding: 40, alignItems: 'center' }}>
+                  <Text style={{ color: themeColor.textS1 }}>No products found for "{search}"</Text>
+                </View>
+              )}
+            </View>
+          ) : (
+            <>
+              {/* --- Banner --- */}
+              <BannerCarousel data={DUMMY_BANNERS} autoPlay={true} />
+
+          {/* --- Shop by Category --- */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <Text style={[styles.sectionTitle, { color: themeColor.text }]}>
+                {t('category.shop_by_category')}
+              </Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('SearchScreen')}
+              >
+                <Text
+                  style={[
+                    styles.seeAllText,
+                    { color: themeColor.buttonBackground },
+                  ]}
+                >
+                  {t('home.view_all')}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {categoriesLoading ? (
+              <ActivityIndicator
+                size="small"
+                color={themeColor.buttonBackground}
+                style={styles.categoryLoader}
+              />
+            ) : (
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={categories}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                  <CategoryChip
+                    title={item.title}
+                    image={item.image}
+                    selected={selectedCategory === item.id}
+                    onPress={() => handleCategoryPress(item)}
+                  />
+                )}
+                contentContainerStyle={styles.categoryList}
               />
             )}
-            onEndReached={loadMoreFlashSale}
-          />
-        )}
+          </View>
 
-        {/* --- Featured Products --- */}
-        {featuredProducts.length > 0 && (
-          <HorizontalProductList
-            title="Featured Products"
-            products={featuredProducts}
-            onProductPress={handleProductPress}
-            onWishlistPress={handleWishlistPress}
-            getIsFavorite={product => favoriteIds.includes(product.id)}
-            showWishlist={true} // Heart icon
-            showOldPrice={false}
-            showDiscount={false}
-            onEndReached={loadMoreFeatured}
-          />
-        )}
+          {/* --- Flash Sale --- */}
+          {flashSaleProducts.length > 0 && (
+            <HorizontalProductList
+              title="Flash Sale"
+              products={flashSaleProducts}
+              onProductPress={handleProductPress}
+              // titleBadge={
+              //   <View
+              //      style={[styles.timerBadge, { backgroundColor: themeColor.red }]}
+              //    >
+              //     <Text style={styles.timerText}>04:23:13</Text>
+              //    </View>
+              // }
+              onWishlistPress={handleWishlistPress}
+              getIsFavorite={product => isWishlisted(product.id)}
+              showWishlist={true}
+              showDiscount={false}
+              showRating={false}
+              onEndReached={loadMoreFlashSale}
+            />
+          )}
 
-        {/* --- Best Sellers --- */}
-        {bestSellers.length > 0 && (
-          <HorizontalProductList
-            title="Best Sellers"
-            products={bestSellers}
-            onProductPress={handleProductPress}
-            onWishlistPress={handleWishlistPress}
-            getIsFavorite={product => favoriteIds.includes(product.id)}
-            showWishlist={true}
-            showOldPrice={false}
-            showDiscount={false}
-            getBadgeText={(_product, index) => `#${index + 1}`}
-            onEndReached={loadMoreBestSellers}
-          />
-        )}
+          {/* --- Featured Products --- */}
+          {featuredProducts.length > 0 && (
+            <HorizontalProductList
+              title="Featured Products"
+              products={featuredProducts}
+              onProductPress={handleProductPress}
+              onWishlistPress={handleWishlistPress}
+              getIsFavorite={product => isWishlisted(product.id)}
+              showWishlist={true} // Heart icon
+              showOldPrice={false}
+              showDiscount={false}
+              onEndReached={loadMoreFeatured}
+            />
+          )}
 
-        {/* --- Recommended for You --- */}
-        {recommendedProducts.length > 0 && (
-          <HorizontalProductList
-            title="Recommended for You"
-            products={recommendedProducts}
-            onProductPress={handleProductPress}
-            onWishlistPress={handleWishlistPress}
-            getIsFavorite={product => favoriteIds.includes(product.id)}
-            showWishlist={true}
-            showOldPrice={false}
-            showDiscount={false}
-            showSeeAll={false}
-            onEndReached={loadMoreRecommended}
-          />
-        )}
+          {/* --- Best Sellers --- */}
+          {bestSellers.length > 0 && (
+            <HorizontalProductList
+              title="Best Sellers"
+              products={bestSellers}
+              onProductPress={handleProductPress}
+              onWishlistPress={handleWishlistPress}
+              getIsFavorite={product => isWishlisted(product.id)}
+              showWishlist={true}
+              showOldPrice={false}
+              showDiscount={false}
+              getBadgeText={(_product, index) => `#${index + 1}`}
+              onEndReached={loadMoreBestSellers}
+            />
+          )}
 
-        {/* --- Recently Viewed --- */}
-        {recentlyViewed.length > 0 && (
-          <HorizontalProductList
-            title="Recently Viewed"
-            products={recentlyViewed}
-            onProductPress={handleProductPress}
-            onWishlistPress={handleWishlistPress}
-            getIsFavorite={product => favoriteIds.includes(product.id)}
-            showWishlist={true}
-            showOldPrice={false}
-            showDiscount={false}
-            showSeeAll={false}
-            onEndReached={loadMoreRecentlyViewed}
-          />
-        )}
-      </ScrollView>
-    </View>
+          {/* --- Recommended for You --- */}
+          {recommendedProducts.length > 0 && (
+            <HorizontalProductList
+              title="Recommended for You"
+              products={recommendedProducts}
+              onProductPress={handleProductPress}
+              onWishlistPress={handleWishlistPress}
+              getIsFavorite={product => isWishlisted(product.id)}
+              showWishlist={true}
+              showOldPrice={false}
+              showDiscount={false}
+              showSeeAll={false}
+              onEndReached={loadMoreRecommended}
+            />
+          )}
+
+          {/* --- Recently Viewed --- */}
+          {recentlyViewed.length > 0 && (
+            <HorizontalProductList
+              title="Recently Viewed"
+              products={recentlyViewed}
+              onProductPress={handleProductPress}
+              onWishlistPress={handleWishlistPress}
+              getIsFavorite={product => isWishlisted(product.id)}
+              showWishlist={true}
+              showOldPrice={false}
+              showDiscount={false}
+              showSeeAll={false}
+              onEndReached={loadMoreRecentlyViewed}
+            />
+          )}
+            </>
+          )}
+        </ScrollView>
+      </View>
+    </AppBackground>
   );
 }
 
@@ -396,13 +449,21 @@ const createStyle = (theme: themeType) =>
     },
     cartBadge: {
       position: 'absolute',
-      top: 0,
-      right: 0,
-      width: 8,
-      height: 8,
-      borderRadius: 4,
+      top: -2,
+      right: -4,
+      minWidth: 16,
+      height: 16,
+      borderRadius: 8,
       borderWidth: 1,
       borderColor: theme.backgroundColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 3,
+    },
+    cartBadgeText: {
+      color: theme.white,
+      fontSize: fontSize.f8,
+      fontFamily: fontFamily.bold,
     },
 
     // Search
@@ -449,5 +510,9 @@ const createStyle = (theme: themeType) =>
     categoryList: {
       paddingLeft: wp('2%'),
       paddingRight: wp('4%'),
+    },
+    categoryLoader: {
+      marginVertical: hp('2%'),
+      alignSelf: 'center',
     },
   });

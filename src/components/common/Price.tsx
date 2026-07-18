@@ -47,14 +47,27 @@ export default function Price({
     }
   };
 
+  const getCurrencySymbol = (code: string) => {
+    switch (code.toUpperCase()) {
+      case 'USD': return '$';
+      case 'EUR': return '€';
+      case 'GBP': return '£';
+      case 'INR': return '₹';
+      case 'JPY': return '¥';
+      default: return code;
+    }
+  };
+
+  const currencySymbol = getCurrencySymbol(currency);
+
   return (
     <View style={styles.container}>
       <Text style={[getPriceStyle(), { color: themeColor.buttonBackground }]}>
-        {currency}{price}
+        {currencySymbol}{price}
       </Text>
       {oldPrice && (
         <Text style={[getOldPriceStyle(), { color: themeColor.textS2 }]}>
-          {currency}{oldPrice}
+          {currencySymbol}{oldPrice}
         </Text>
       )}
       {discount && discount > 0 && (

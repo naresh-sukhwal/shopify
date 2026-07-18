@@ -138,6 +138,11 @@ export interface CustomerOrder {
   fulfillmentStatus: string;
   totalPrice: Money;
   statusUrl: string;
+  images: string[];
+  extraCount: number;
+  trackingNumber?: string;
+  carrier?: string;
+  estimatedDelivery?: string;
 }
 
 export interface Customer {

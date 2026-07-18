@@ -45,7 +45,9 @@ const mapCartLine = (line: ShopifyCartLine): CartItem => ({
     productId: line.merchandise.product.id,
     productTitle: line.merchandise.product.title,
     productHandle: line.merchandise.product.handle,
-    image: mapImage(line.merchandise.image ?? line.merchandise.product.featuredImage),
+    image: mapImage(
+      line.merchandise.image ?? line.merchandise.product.featuredImage,
+    ),
     price: mapMoneyRequired(line.merchandise.price),
     compareAtPrice: mapMoney(line.merchandise.compareAtPrice),
     selectedOptions: line.merchandise.selectedOptions,
@@ -54,21 +56,25 @@ const mapCartLine = (line: ShopifyCartLine): CartItem => ({
   subtotalAmount: mapMoneyRequired(line.cost.subtotalAmount),
 });
 
-export const mapCart = (raw: ShopifyCart): Cart => ({
-  id: raw.id,
-  checkoutUrl: raw.checkoutUrl,
-  totalQuantity: raw.totalQuantity,
-  totalAmount: mapMoneyRequired(raw.cost.totalAmount),
-  subtotalAmount: mapMoneyRequired(raw.cost.subtotalAmount),
-  totalTaxAmount: mapMoney(raw.cost.totalTaxAmount),
-  items: raw.lines.edges.map(e => mapCartLine(e.node)),
-});
+export const mapCart = (raw: ShopifyCart): Cart => {
+  const validEdges = raw.lines.edges.filter(e => e.node.quantity > 0);
+  return {
+    id: raw.id,
+    checkoutUrl: raw.checkoutUrl,
+    totalQuantity: validEdges.reduce((acc, e) => acc + e.node.quantity, 0),
+    totalAmount: mapMoneyRequired(raw.cost.totalAmount),
+    subtotalAmount: mapMoneyRequired(raw.cost.subtotalAmount),
+    totalTaxAmount: mapMoney(raw.cost.totalTaxAmount),
+    items: validEdges.map(e => mapCartLine(e.node)),
+  };
+};
 
 // ─── Helper: extract cart or throw user errors ────────────────────────────────
 
 function extractCart(
   cart: ShopifyCart | null,
   userErrors: { field?: string[] | string; message: string }[],
+  checkForGhostItems: boolean = false,
 ): Cart {
   if (userErrors.length > 0) {
     throw new Error(userErrors.map(e => e.message).join(' | '));
@@ -76,6 +82,14 @@ function extractCart(
   if (!cart) {
     throw new Error('Shopify returned an empty cart response');
   }
+
+  if (checkForGhostItems) {
+    const hasGhost = cart.lines.edges.some(e => e.node.quantity === 0);
+    if (hasGhost) {
+      throw new Error('Product is out of stock or unavailable');
+    }
+  }
+
   return mapCart(cart);
 }
 
@@ -89,10 +103,7 @@ export async function createCart(lines: CartLineInput[] = []): Promise<Cart> {
     input: { lines },
   });
 
-  return extractCart(
-    data.cartCreate.cart,
-    data.cartCreate.userErrors,
-  );
+  return extractCart(data.cartCreate.cart, data.cartCreate.userErrors, true);
 }
 
 /**
@@ -115,10 +126,11 @@ export async function addCartLines(
     cartId,
     lines,
   });
-
+  console.log('data add cart-->', data);
   return extractCart(
     data.cartLinesAdd.cart,
     data.cartLinesAdd.userErrors,
+    true,
   );
 }
 
@@ -166,13 +178,39 @@ export async function associateCustomerWithCart(
   cartId: string,
   customerAccessToken: string,
 ): Promise<Cart> {
-  const data = await shopifyRequest<{ cartBuyerIdentityUpdate: { cart: ShopifyCart | null; userErrors: { message: string }[] } }>(
-    CART_BUYER_IDENTITY_UPDATE,
-    {
-      cartId,
-      buyerIdentity: { customerAccessToken },
-    },
+  const data = await shopifyRequest<{
+    cartBuyerIdentityUpdate: {
+      cart: ShopifyCart | null;
+      userErrors: { message: string }[];
+    };
+  }>(CART_BUYER_IDENTITY_UPDATE, {
+    cartId,
+    buyerIdentity: { customerAccessToken },
+  });
+
+  return extractCart(
+    data.cartBuyerIdentityUpdate.cart,
+    data.cartBuyerIdentityUpdate.userErrors,
   );
+}
+
+/**
+ * Update the cart buyer identity (email, phone, delivery preferences).
+ * Used to pre-fill checkout.
+ */
+export async function updateCartBuyerIdentity(
+  cartId: string,
+  buyerIdentity: any,
+): Promise<Cart> {
+  const data = await shopifyRequest<{
+    cartBuyerIdentityUpdate: {
+      cart: ShopifyCart | null;
+      userErrors: { message: string }[];
+    };
+  }>(CART_BUYER_IDENTITY_UPDATE, {
+    cartId,
+    buyerIdentity,
+  });
 
   return extractCart(
     data.cartBuyerIdentityUpdate.cart,
