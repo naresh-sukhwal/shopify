@@ -4,7 +4,7 @@ import React from 'react';
 const LandingScreen = () => {
   return (
     <View>
-      <Text>LandingScreen</Text>
+      <Text>LandingScreennnn</Text>
     </View>
   );
 };
